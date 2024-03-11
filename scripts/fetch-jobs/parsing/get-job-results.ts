@@ -1,6 +1,6 @@
-import { ScrapedIndeedJob } from "@/scripts/scripts.types";
-import { extractJobResults } from "@/scripts/parsing/extract-job-results";
-import { fetchPageZenrows } from "@/scripts/requests/zenrows";
+import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
+import { extractJobResults } from "@/scripts/fetch-jobs/parsing/extract-job-results";
+import { fetchPageZenrows } from "@/scripts/fetch-jobs/requests/zenrows";
 
 import { getNextPageUrl } from "./get-next-page-url";
 

@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 
-import { ScrapedIndeedJob } from "../scripts.types";
+import { ScrapedIndeedJob } from "@/scripts/scripts.types";
 
 export const extractJobResults = (
   htmlPage: string,

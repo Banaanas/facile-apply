@@ -4,7 +4,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import https from "https";
 
-dotenv.config({ path: path.join(__dirname, "../../.env.local") });
+dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
 
 const proxyHost = process.env.BRIGHT_DATA_PROXY_HOST;
 const proxyPort = process.env.BRIGHT_DATA_PROXY_PORT;

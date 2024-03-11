@@ -2,11 +2,12 @@ import { Browser, firefox } from "playwright";
 
 import { countryUrls } from "@/scripts/data/urls/country-urls";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database";
-import { getJobResults } from "@/scripts/parsing/get-job-results";
-import { getSearchCountry } from "@/scripts/parsing/get-search-country";
-import { transformJobResults } from "@/scripts/parsing/transform-job-results";
-import { fetchPageZenrows } from "@/scripts/requests/zenrows";
+
 import { buildSearchUrl } from "@/scripts/utils/url-builder";
+import { fetchPageZenrows } from "@/scripts/fetch-jobs/requests/zenrows";
+import { getJobResults } from "@/scripts/fetch-jobs/parsing/get-job-results";
+import { getSearchCountry } from "@/scripts/fetch-jobs/parsing/get-search-country";
+import { transformJobResults } from "@/scripts/fetch-jobs/parsing/transform-job-results";
 
 const main = async () => {
   const browser: Browser = await firefox.launch();

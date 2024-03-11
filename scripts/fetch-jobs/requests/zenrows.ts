@@ -3,7 +3,7 @@ import path from "node:path";
 import axios from "axios";
 import dotenv from "dotenv";
 
-dotenv.config({ path: path.join(__dirname, "../../.env.local") });
+dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
 
 export const fetchPageZenrows = async (targetUrl: string): Promise<string> => {
   const zenrowsApiKey = process.env.ZENROWS_API_KEY;

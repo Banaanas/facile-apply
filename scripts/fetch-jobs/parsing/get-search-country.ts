@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 
-import { ScrapedIndeedJob } from "@/scripts/scripts.types";
-import { JobData } from "@/scripts/parsing/extract-job-results";
+import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
+import { JobData } from "@/scripts/fetch-jobs/parsing/extract-job-results";
 
 export const getSearchCountry = (
   htmlPage: string,

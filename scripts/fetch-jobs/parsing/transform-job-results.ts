@@ -3,7 +3,7 @@ import { IndeedJob } from "@prisma/client";
 import {
   ScrapedIndeedJob,
   TransformedScrapedIndeedJob,
-} from "@/scripts/scripts.types";
+} from "@/scripts/fetch-jobs/fetch-jobs.types";
 
 const extractJobDetails = (
   searchResult: ScrapedIndeedJob,

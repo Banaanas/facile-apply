@@ -1,0 +1,10 @@
+/.eslintrc.json
+/next-sitemap.config.js
+/next.config.js
+/package-lock.json
+/package.json
+
+# tests
+/playwright-report/
+/playwright/.cache/
+/.tests/tests-results/

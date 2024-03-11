@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: on-failure
+    env_file:
+      - database.env
+    ports:
+      - "5434:5432"
+    volumes:
+      - indeed_apply_data:/var/lib/postgresql/data
+
+volumes:
+  indeed_apply_data:

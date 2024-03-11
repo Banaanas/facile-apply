@@ -28,10 +28,8 @@ const DataTableRowActions = <TData,>({
   const [status, setStatus] = useState<IndeedJob["status"]>(indeedJob.status);
 
   const handleOnValueChange = async (newStatus: IndeedJob["status"]) => {
-    console.log(newStatus);
-    console.log(indeedJob.id);
-
     await updateJobStatus(indeedJob.id, newStatus);
+    setStatus(newStatus);
   };
   return (
     <DropdownMenu>

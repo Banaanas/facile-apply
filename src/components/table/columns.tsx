@@ -1,5 +1,6 @@
 "use client";
 
+import DataTableRowActions  from "@components/table/data-table-row-actions";
 import SortingButton from "@components/table/SortingButton";
 import {
   flagComponents,
@@ -111,8 +112,14 @@ export const columns: ColumnDef<IndeedJob>[] = [
         </div>
       );
     },
+
+    // Necessary to Faced Filter
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];

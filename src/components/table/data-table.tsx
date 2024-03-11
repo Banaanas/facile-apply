@@ -1,5 +1,6 @@
 "use client";
 
+import { statuses } from "@components/table/data/data";
 import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 import DataTablePagination from "@components/table/DataTablePagination";
 import { Button } from "@components/ui/button";
@@ -15,12 +16,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import {
-  BanIcon,
-  CheckIcon,
-  CircleDashed,
-  XIcon as CrossIcon,
-} from "lucide-react";
+import { XIcon as CrossIcon } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -44,29 +40,16 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export const statuses = [
-  {
-    value: "NotReviewed",
-    label: "Not Reviewed",
-    icon: CircleDashed,
-  },
-  {
-    value: "Applied",
-    label: "Applied",
-    icon: CheckIcon,
-  },
-  {
-    value: "Ignored",
-    label: "Ignored",
-    icon: BanIcon,
-  },
-];
-
 export const DataTable = <TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "createDate", // Must be equal to the accessorKey of the coulmn you want sorted by default
+      desc: true,
+    },
+  ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
@@ -92,6 +75,7 @@ export const DataTable = <TData, TValue>({
   const isFiltered = table.getState().columnFilters.length > 0;
 
   console.log(table.getState().columnFilters);
+
   return (
     <div className="rounded-md border">
       <div className="flex items-center p-4">

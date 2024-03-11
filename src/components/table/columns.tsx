@@ -101,6 +101,7 @@ export const columns: ColumnDef<IndeedJob>[] = [
     header: ({ column }) => {
       return <SortingButton column={column}>Status</SortingButton>;
     },
+
     cell: ({ row }) => {
       const status: IndeedJob["status"] = row.getValue("status");
 
@@ -109,6 +110,9 @@ export const columns: ColumnDef<IndeedJob>[] = [
           {getReadableStatus(status)}
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
 ];

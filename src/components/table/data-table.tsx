@@ -15,7 +15,12 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { BanIcon, CheckIcon, CircleDashed, CrossIcon } from "lucide-react";
+import {
+  BanIcon,
+  CheckIcon,
+  CircleDashed,
+  XIcon as CrossIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -86,6 +91,7 @@ export const DataTable = <TData, TValue>({
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
+  console.log(table.getState().columnFilters);
   return (
     <div className="rounded-md border">
       <div className="flex items-center p-4">

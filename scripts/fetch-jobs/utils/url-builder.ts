@@ -1,5 +1,5 @@
-import { countryUrls } from "@/scripts/data/urls/country-urls";
-import { Country } from "@/scripts/scripts.types";
+import { countryUrls } from "@/scripts/fetch-jobs/data/urls/country-urls";
+import { Country } from "@/scripts/fetch-jobs/fetch-jobs.types";
 
 export const buildSearchUrl = (
   country: Country,

@@ -15,25 +15,24 @@ interface Search {
 }
 
 export type Country = "CA" | "CH" | "FR" | "US";
-type USSearchKeys =
+
+type CASearchKeys =
+  | "front-end"
   | "next-js"
-  | "react"
   | "ui-developer"
   | "ux-developer"
-  | "css-in-js";
-type CASearchKeys =
-  | "next-js"
   | "react"
-  | "ui-developer"
-  | "front-end"
   | "web-developer";
-type CHSearchKeys = "next-js" | "react" | "integrateur-web";
+type CHSearchKeys = "integrateur-web" | "react" | "next-js";
+
 type FRSearchKeys =
+  | "developpeur-ui"
+  | "integrateur-web"
   | "next-js"
   | "react"
-  | "developpeur-ui"
-  | "developpeur-ux"
-  | "css-in-js";
+  | "developpeur-ux";
+
+type USSearchKeys = "next-js" | "react" | "ui-developer" | "ux-developer";
 
 export type CountryUrls = {
   US: {

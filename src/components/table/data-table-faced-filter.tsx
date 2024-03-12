@@ -93,8 +93,6 @@ export const DataTableFacetedFilter = <TData, TValue>({
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
-
-
                       if (isSelected) {
                         selectedValues.delete(option.value);
                       } else {

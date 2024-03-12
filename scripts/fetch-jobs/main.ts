@@ -1,22 +1,27 @@
 import { Browser, firefox } from "playwright";
 
-import { countryUrls } from "@/scripts/data/urls/country-urls";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database";
+import { countryUrls } from "@/scripts/fetch-jobs/data/urls/country-urls";
 import { getJobResults } from "@/scripts/fetch-jobs/parsing/get-job-results";
 import { getSearchCountry } from "@/scripts/fetch-jobs/parsing/get-search-country";
 import { transformJobResults } from "@/scripts/fetch-jobs/parsing/transform-job-results";
 import { fetchPageZenrows } from "@/scripts/fetch-jobs/requests/zenrows";
-import { buildSearchUrl } from "@/scripts/utils/url-builder";
+import { buildSearchUrl } from "@/scripts/fetch-jobs/utils/url-builder";
+import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
 const main = async () => {
   const browser: Browser = await firefox.launch();
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  // Block unwanted resources and ad network requests to limit bandwidth
+  await blockResourcesAndAds(page);
 
   const indeedSearchUrl = buildSearchUrl(
-    "CH",
-    countryUrls.CH.searches.react.query,
-    100,
+    "FR",
+    countryUrls.FR.searches["next-js"].query,
+    7,
   );
-  console.log(`Indeed search URL: ${indeedSearchUrl}`);
 
   const initialSearchHTML = await fetchPageZenrows(indeedSearchUrl);
   const jobResults = await getJobResults(indeedSearchUrl);
@@ -24,10 +29,6 @@ const main = async () => {
   const transformedJobResults = transformJobResults(jobResults, searchCountry);
 
   await registerTransformedJobResultsInDB(transformedJobResults);
-
-  console.log(
-    `Registered ${transformedJobResults.length} jobs in the database.`,
-  );
 
   await browser.close();
 };

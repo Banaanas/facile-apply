@@ -1,4 +1,4 @@
-import { CountryUrls } from "@/scripts/scripts.types";
+import { CountryUrls } from "@/scripts/fetch-jobs/fetch-jobs.types";
 
 export const usUrls: CountryUrls["US"] = {
   domain: "www.indeed.com",
@@ -22,11 +22,6 @@ export const usUrls: CountryUrls["US"] = {
       query: "UX Developer",
       dateFilter: 1,
       remoteFilter: true,
-    },
-    "css-in-js": {
-      query: "css-in-js",
-      dateFilter: 14, // Assuming 14 days filter as mentioned in the provided URL
-      remoteFilter: false,
     },
   },
 };

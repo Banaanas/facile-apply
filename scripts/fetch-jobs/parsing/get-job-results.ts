@@ -16,6 +16,7 @@ export const getJobResults = async (
 
     const currentPageHtml = await fetchPageZenrows(currentPageUrl);
     const jobResults = extractJobResults(currentPageHtml);
+
     const nextJobResults = [...allJobLinks, ...jobResults];
 
     const nextPageUrl = getNextPageUrl(currentPageHtml, domain);

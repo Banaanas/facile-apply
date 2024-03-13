@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 export const registerTransformedJobResultsInDB = async (
   transformedJobResults: Array<TransformedScrapedIndeedJob>,
+  indeedSearchUrl: string,
 ) => {
   // Use createMany with skipDuplicates
   const response = await prisma.indeedJob.createMany({
@@ -14,7 +15,11 @@ export const registerTransformedJobResultsInDB = async (
   });
 
   const newlyRegisteredCount = response.count;
-  console.log(`Registered ${newlyRegisteredCount} jobs in the database.`);
+
+  console.log(indeedSearchUrl);
+  console.log(
+    `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "jobs" : "job"} in the database.`,
+  );
 
   return response;
 };

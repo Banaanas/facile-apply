@@ -1,6 +1,5 @@
 import * as cheerio from "cheerio";
-
-import { ScrapedIndeedJob } from "@/scripts/scripts.types";
+import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
 
 export const extractJobResults = (
   htmlPage: string,
@@ -16,11 +15,17 @@ export const extractJobResults = (
     );
     if (jsonDataString && jsonDataString.length > 1) {
       const jsonData: JobData = JSON.parse(jsonDataString[1]);
-      jobResults = jsonData.publicMetadata.mosaicProviderJobCardsModel.results;
+      jobResults =
+        jsonData.publicMetadata?.mosaicProviderJobCardsModel?.results;
     }
   }
 
-  return jobResults;
+  if (!jobResults) {
+    console.log("This search gave no result");
+  }
+
+  // If jobResults json is undefined, return an empty array
+  return jobResults || [];
 };
 
 export interface JobData {

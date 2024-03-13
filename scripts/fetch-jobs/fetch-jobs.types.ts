@@ -10,7 +10,6 @@ export type TransformedScrapedIndeedJob = Omit<IndeedJob, "id">;
 // URL Builder
 interface Search {
   query: string;
-  dateFilter: number;
   remoteFilter: boolean;
 }
 
@@ -23,6 +22,7 @@ type CASearchKeys =
   | "ux-developer"
   | "react"
   | "web-developer";
+
 type CHSearchKeys = "integrateur-web" | "react" | "next-js";
 
 type FRSearchKeys =

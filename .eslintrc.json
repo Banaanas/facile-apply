@@ -42,6 +42,8 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
     "no-use-before-define": "off",
     "react/function-component-definition": [
       "error",

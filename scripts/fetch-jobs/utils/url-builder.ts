@@ -4,7 +4,7 @@ import { Country } from "@/scripts/fetch-jobs/fetch-jobs.types";
 export const buildSearchUrl = (
   country: Country,
   query: string,
-  overrideDateFilter?: number,
+  dateFilter: number,
 ): string => {
   const countryConfig = countryUrls[country];
 
@@ -24,9 +24,7 @@ export const buildSearchUrl = (
 
   const { domain } = countryConfig;
   const encodedQuery = encodeURIComponent(query);
-  // Use overrideDateFilter if provided, otherwise fall back to the search's dateFilter
-  const dateFilter =
-    overrideDateFilter !== undefined ? overrideDateFilter : search.dateFilter;
+
   let url = `https://${domain}/jobs?q=${encodedQuery}&fromage=${dateFilter}`;
   if (search.remoteFilter) {
     const remoteQuery = "remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11";

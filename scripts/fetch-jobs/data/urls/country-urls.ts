@@ -6,7 +6,7 @@ import { CountryUrls } from "@/scripts/fetch-jobs/fetch-jobs.types";
 
 export const countryUrls: CountryUrls = {
   CA: canadaUrls,
-  CH: switzerlandUrls,
+ /*  CH: switzerlandUrls,
   FR: franceUrls,
-  US: usUrls,
+  US: usUrls, */
 };

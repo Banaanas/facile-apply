@@ -1,6 +1,6 @@
 "use client";
 
-import DataTableRowActions  from "@components/table/data-table-row-actions";
+import DataTableRowActions from "@components/table/data-table-row-actions";
 import SortingButton from "@components/table/SortingButton";
 import {
   flagComponents,
@@ -77,12 +77,20 @@ export const columns: ColumnDef<IndeedJob>[] = [
     },
   },
   {
+    // Necessary to Data Table Faced Filter
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
     accessorKey: "indeedApplyEnabled",
     header: ({ column }) => {
       return <SortingButton column={column}>Indeed Apply</SortingButton>;
     },
   },
   {
+    // Necessary to Data Table Faced Filter
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
     accessorKey: "country",
     header: ({ column }) => {
       return <SortingButton column={column}>Country</SortingButton>;
@@ -98,6 +106,10 @@ export const columns: ColumnDef<IndeedJob>[] = [
     },
   },
   {
+    // Necessary to Data Table Faced Filter
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
     accessorKey: "status",
     header: ({ column }) => {
       return <SortingButton column={column}>Status</SortingButton>;
@@ -111,11 +123,6 @@ export const columns: ColumnDef<IndeedJob>[] = [
           {getReadableStatus(status)}
         </div>
       );
-    },
-
-    // Necessary to Faced Filter
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
     },
   },
   {

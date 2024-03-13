@@ -32,3 +32,33 @@ export const statuses = [
     icon: BanIcon,
   },
 ];
+
+export const countries = [
+  {
+    value: "CA",
+    label: "CA",
+  },
+  {
+    value: "CH",
+    label: "CH",
+  },
+  {
+    value: "FR",
+    label: "FR",
+  },
+  {
+    value: "US",
+    label: "US",
+  },
+];
+
+export const indeedApplyEnableOptions = [
+  {
+    value: true,
+    label: "Enabled",
+  },
+  {
+    value: false,
+    label: "Not Enabled",
+  },
+];

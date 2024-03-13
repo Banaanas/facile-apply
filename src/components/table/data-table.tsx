@@ -1,6 +1,10 @@
 "use client";
 
-import { statuses } from "@components/table/data/data";
+import {
+  countries,
+  indeedApplyEnableOptions,
+  statuses,
+} from "@components/table/data/data";
 import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 import DataTablePagination from "@components/table/DataTablePagination";
 import { Button } from "@components/ui/button";
@@ -87,14 +91,30 @@ export const DataTable = <TData, TValue>({
           }
           className="max-w-sm"
         />
-        {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )}
 
+        <div className="flex flex-wrap px-2">
+          {table.getColumn("status") && (
+            <DataTableFacetedFilter
+              column={table.getColumn("status")}
+              title="Status"
+              options={statuses}
+            />
+          )}{" "}
+          {table.getColumn("country") && (
+            <DataTableFacetedFilter
+              column={table.getColumn("country")}
+              title="Country"
+              options={countries}
+            />
+          )}{" "}
+          {table.getColumn("indeedApplyEnabled") && (
+            <DataTableFacetedFilter
+              column={table.getColumn("indeedApplyEnabled")}
+              title="Indeed Apply"
+              options={indeedApplyEnableOptions}
+            />
+          )}
+        </div>
         {isFiltered && (
           <Button
             variant="ghost"
@@ -105,7 +125,6 @@ export const DataTable = <TData, TValue>({
             <CrossIcon className="ml-2 size-4" />
           </Button>
         )}
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

@@ -2,6 +2,7 @@ import path from "node:path";
 
 import axios from "axios";
 import dotenv from "dotenv";
+import colors from "colors";
 
 dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
 
@@ -11,6 +12,15 @@ const rapidApiHost = process.env.RAPIDAPI_HOST;
 export const fetchPageDripCrawler = async (
   targetUrl: string,
 ): Promise<string> => {
+  console.log(colors.italic("Fetching with DripCrawler Provider"));
+  if (!rapidApiKey || !rapidApiHost ) {
+    throw new Error(
+      "One or more required environment variables are not defined.",
+
+    );
+  }
+
+
   const options = {
     method: "POST",
     url: "https://dripcrawler.p.rapidapi.com/",
@@ -28,9 +38,9 @@ export const fetchPageDripCrawler = async (
   try {
     const response = await axios.request(options);
 
-    return response.data;
+    return response.data.extracted_html;
   } catch (error) {
-    console.error(`Error fetching page with DripCrawler: ${error}`);
+    console.error(colors.red(`Error fetching page with DripCrawler: ${error})`);
     throw error;
   }
 };

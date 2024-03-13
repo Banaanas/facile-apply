@@ -1,19 +1,18 @@
 import * as console from "node:console";
 
+import colors from "colors";
 import { firefox } from "playwright";
 
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database";
+import { SEARCH_DATE_RANGE_DAYS } from "@/scripts/fetch-jobs/data/search-params";
 import { countryUrls } from "@/scripts/fetch-jobs/data/urls/country-urls";
 import { Country } from "@/scripts/fetch-jobs/fetch-jobs.types";
 import { getJobResults } from "@/scripts/fetch-jobs/parsing/get-job-results";
 import { getSearchCountry } from "@/scripts/fetch-jobs/parsing/get-search-country";
 import { transformJobResults } from "@/scripts/fetch-jobs/parsing/transform-job-results";
-import { fetchPageScrapFly } from "@/scripts/fetch-jobs/requests/scrapFly";
+import { fetchPageWithProvider } from "@/scripts/fetch-jobs/requests/provider-fetch-functions";
 import { buildSearchUrl } from "@/scripts/fetch-jobs/utils/url-builder";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
-
-// Number of days back from the current date to search
-const SEARCH_DATE_RANGE_DAYS = 100;
 
 const main = async () => {
   const browser = await firefox.launch();
@@ -22,9 +21,10 @@ const main = async () => {
   for (const [country, details] of Object.entries(countryUrls)) {
     // Now iterate over each search query within the country
     for (const [searchKey, searchQuery] of Object.entries(details.searches)) {
-      // console log with search key, country and number of day
       console.log(
-        `Searching ${searchKey} in ${country} for the past ${SEARCH_DATE_RANGE_DAYS} days...`,
+        colors.cyan(
+          `Searching ${searchKey} in ${country} for the past ${SEARCH_DATE_RANGE_DAYS} days...`,
+        ),
       );
 
       const context = await browser.newContext();
@@ -38,7 +38,7 @@ const main = async () => {
         SEARCH_DATE_RANGE_DAYS,
       );
 
-      const initialSearchHTML = await fetchPageScrapFly(indeedSearchUrl);
+      const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
       const jobResults = await getJobResults(indeedSearchUrl);
       const searchCountry = getSearchCountry(initialSearchHTML);
       const transformedJobResults = transformJobResults(
@@ -55,7 +55,7 @@ const main = async () => {
     }
   }
 
-  console.log("ALL SEARCHES HAVE BEEN COMPLETED");
+  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
   await browser.close();
 };
 

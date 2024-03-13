@@ -1,6 +1,6 @@
 import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
 import { extractJobResults } from "@/scripts/fetch-jobs/parsing/extract-job-results";
-import { fetchPageZenrows } from "@/scripts/fetch-jobs/requests/zenrows";
+import { fetchPageWithProvider } from "@/scripts/fetch-jobs/requests/provider-fetch-functions";
 
 import { getNextPageUrl } from "./get-next-page-url";
 
@@ -14,7 +14,7 @@ export const getJobResults = async (
     const urlObject = new URL(currentPageUrl);
     const domain = urlObject.origin;
 
-    const currentPageHtml = await fetchPageZenrows(currentPageUrl);
+    const currentPageHtml = await fetchPageWithProvider(currentPageUrl);
     const jobResults = extractJobResults(currentPageHtml);
 
     const nextJobResults = [...allJobLinks, ...jobResults];

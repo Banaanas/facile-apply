@@ -1,5 +1,6 @@
 import path from "node:path";
 
+import colors from "colors";
 import dotenv from "dotenv";
 import { ScrapeConfig, ScrapflyClient } from "scrapfly-sdk";
 
@@ -10,6 +11,14 @@ const scrapFlyIpKey = process.env.SCRAPFLY_API_KEY;
 const client = new ScrapflyClient({ key: scrapFlyIpKey });
 
 export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
+  console.log(colors.italic("Fetching with ScrapFly Provider"));
+
+  if (!scrapFlyIpKey) {
+    throw new Error(
+      "One or more required environment variables are not defined.",
+    );
+  }
+
   try {
     const apiResponse = await client.scrape(
       new ScrapeConfig({

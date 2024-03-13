@@ -1,4 +1,8 @@
+import * as fs from "node:fs";
+import path from "node:path";
+
 import * as cheerio from "cheerio";
+import colors from "colors";
 
 import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
 import { JobData } from "@/scripts/fetch-jobs/parsing/extract-job-results";
@@ -26,6 +30,24 @@ export const getSearchCountry = (
   }
 
   // Handle the case where country cannot be extracted
+
+  // Get current date and time
+  const now = new Date();
+  const timestamp = now
+    .toISOString()
+    .replace(/:/g, "-")
+    .replace(/\..+/, "")
+    .replace("T", "_");
+
+  // Define file path with timestamp
+  const debugFilePath = path.join(__dirname, `debugHtmlPage_${timestamp}.html`);
+
+  // Write file
+  fs.writeFileSync(debugFilePath, htmlPage);
+
+  console.log(
+    colors.red(`Current page HTML saved for debugging: ${debugFilePath}`),
+  );
   throw new Error(
     "Country information could not be extracted from the HTML page.",
   );

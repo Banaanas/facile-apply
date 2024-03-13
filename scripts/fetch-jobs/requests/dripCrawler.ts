@@ -1,8 +1,8 @@
 import path from "node:path";
 
 import axios from "axios";
-import dotenv from "dotenv";
 import colors from "colors";
+import dotenv from "dotenv";
 
 dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
 
@@ -13,13 +13,11 @@ export const fetchPageDripCrawler = async (
   targetUrl: string,
 ): Promise<string> => {
   console.log(colors.italic("Fetching with DripCrawler Provider"));
-  if (!rapidApiKey || !rapidApiHost ) {
+  if (!rapidApiKey || !rapidApiHost) {
     throw new Error(
       "One or more required environment variables are not defined.",
-
     );
   }
-
 
   const options = {
     method: "POST",
@@ -40,7 +38,7 @@ export const fetchPageDripCrawler = async (
 
     return response.data.extracted_html;
   } catch (error) {
-    console.error(colors.red(`Error fetching page with DripCrawler: ${error})`);
+    console.error(colors.red(`Error fetching page with DripCrawler: ${error}`));
     throw error;
   }
 };

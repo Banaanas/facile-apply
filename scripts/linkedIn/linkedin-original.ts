@@ -4,12 +4,12 @@ import * as fs from "fs";
 
 import { linkedInConfig } from "@/scripts/config";
 
-const { jsessionId, liat } = linkedInConfig;
+const { jsessionId, liAt } = linkedInConfig;
 const jobsSearchLink =
   "https://www.linkedin.com/voyager/api/voyagerJobsDashJobCards?decorationId=com.linkedin.voyager.dash.deco.jobs.search.JobSearchCardsCollection-195&count=25&q=jobSearch&query=(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:React.js,locationUnion:(geoId:105282085),selectedFilters:(distance:List(0)),spellCorrectionEnabled:true)&start=25";
 
 async function getDataLinkedInVoyager() {
-  if (!jsessionId || !liat) {
+  if (!jsessionId || !liAt) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -18,7 +18,7 @@ async function getDataLinkedInVoyager() {
   const headers = {
     "user-agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
-    Cookie: `JSESSIONID=${jsessionId}; li_at=${liat};`,
+    Cookie: `JSESSIONID=${jsessionId}; li_at=${liAt};`,
     "csrf-token": `${jsessionId}`,
   };
 

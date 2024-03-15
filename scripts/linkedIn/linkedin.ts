@@ -1,43 +1,54 @@
-import { HttpsProxyAgent } from "https-proxy-agent";
-import fetch from "node-fetch";
+import axios from "axios";
+import colors from "colors";
 
-import { oxylabsConfig } from "@/scripts/config";
-import { fetchPageScrapingFish } from "@/scripts/indeed/fetch-jobs/requests/scrapingFish";
+import { linkedInConfig, scrapingFishConfig } from "@/scripts/config";
 
-const fetchViaProxy = async () => {
+export const fetchLinkedInScrapingFish = async (
+  targetUrl: string,
+): Promise<string> => {
+  console.log(colors.italic("Fetching LinkedIn with ScrapingFish Provider"));
 
-  fetchPageScrapingFish()
+  const { apiKey, apiUrl } = scrapingFishConfig;
+  const { jsessionId, liAt } = linkedInConfig;
 
-  const { username, password, endpoint } = oxylabsConfig;
-
-  const agent = new HttpsProxyAgent(
-    `http://${username}:${password}@unblock.oxylabs.io:60000`,
-  );
-
-  // Adjusting the environment variable setting for development purposes
-  // Note: It's better to handle certificates properly rather than disabling TLS checks
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  if (!apiKey) {
+    throw new Error(
+      "One or more required environment variables are not defined.",
+    );
+  }
 
   const headers = {
-    "x-oxylabs-force-headers": "1",
-    "Your-Custom-Header": "interesting header content",
-    "User-Agent":
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/73.0.3683.86 Chrome/73.0.3683.86 Safari/537.36",
-    "Accept-Language": "en-US",
+    "user-agent":
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+    "csrf-token": `${jsessionId}`,
+  };
+
+  const cookies = [
+    {
+      name: "JSESSIONID",
+      value: jsessionId,
+    },
+    {
+      name: "li_at",
+      value: liAt,
+    },
+  ];
+
+  const payload = {
+    api_key: apiKey,
+    url: targetUrl,
+    headers: JSON.stringify(headers),
+    cookies: JSON.stringify(cookies),
   };
 
   try {
-    const response = await fetch("https://lemonde.fr", {
-      method: "get",
-      headers,
-      agent,
+    const response = await axios.get(apiUrl, {
+      params: payload,
     });
 
-    console.log("HOLA");
-    console.log(await response.text());
+    console.log(response.data);
   } catch (error) {
-    console.error(`Error fetching data through proxy: ${error}`);
+    console.error(`Error fetching page with ScrapingFish: ${error}`);
+    throw error;
   }
 };
-
-fetchViaProxy();

@@ -1,11 +1,11 @@
 import { Browser, BrowserContext, Page } from "playwright";
 
-import { executeFastApply } from "@/scripts/auto-apply-job/execute-fast-apply";
-import { launchLocalBrowser } from "@/scripts/auto-apply-job/launch-browser/launch-local-browser";
+import { executeFastApply } from "@/scripts/indeed/auto-apply-job/execute-fast-apply";
+import { launchLocalBrowser } from "@/scripts/indeed/auto-apply-job/launch-browser/launch-local-browser";
 import {
   launchProviderBrowser,
   openBrightDataDevTools,
-} from "@/scripts/auto-apply-job/launch-browser/launch-provider-browser";
+} from "@/scripts/indeed/auto-apply-job/launch-browser/launch-provider-browser";
 
 export const runPlaywrightSession = async (
   connectionMode: ConnectionMode,

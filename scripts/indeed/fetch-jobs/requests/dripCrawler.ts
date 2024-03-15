@@ -35,7 +35,7 @@ export const fetchPageDripCrawler = async (
 
     return response.data.extracted_html;
   } catch (error) {
-    console.error(colors.red(`Error fetching page with DripCrawler: ${error}`));
+    console.error(colors.red(`Error fetching page: ${error}`));
     throw error;
   }
 };

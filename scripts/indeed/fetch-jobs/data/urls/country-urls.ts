@@ -6,7 +6,5 @@ import { CountryUrls } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 
 export const countryUrls: CountryUrls = {
   CA: canadaUrls,
-  CH: switzerlandUrls,
-  FR: franceUrls,
-  US: usUrls,
+
 };

@@ -29,7 +29,7 @@ export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
 
     return response.data;
   } catch (error) {
-    console.error(`Error fetching page through IPRoyal proxy: ${error}`);
+    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

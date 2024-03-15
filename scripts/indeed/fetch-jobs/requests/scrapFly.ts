@@ -27,7 +27,7 @@ export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
 
     return apiResponse?.result.content;
   } catch (error) {
-    console.error(`Error fetching page with ScrapFly: ${error}`);
+    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

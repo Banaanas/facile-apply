@@ -30,7 +30,7 @@ export const fetchPageOxylabs = async (url: string): Promise<string> => {
 
     return response.data.results[0].content;
   } catch (error) {
-    console.error(`Error fetching page with Oxylabs: ${error}`);
+    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

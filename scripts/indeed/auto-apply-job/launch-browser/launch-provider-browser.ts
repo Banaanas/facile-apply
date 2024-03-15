@@ -1,24 +1,20 @@
-import path from "node:path";
-
-import dotenv from "dotenv";
 import { Browser, chromium, Page } from "playwright";
 
-dotenv.config();
-dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
-
-const SCRAPING_BROWSER_CDP = process.env.BRIGHT_DATA_SCRAPING_BROWSER_CDP;
+import { brightDataConfig } from "@/scripts/config";
 
 // Connect with Provider's proxy
 export const launchProviderBrowser = async (): Promise<Browser> => {
   console.log("Connecting to Scraping Browser via Provider Proxy.");
 
-  if (!SCRAPING_BROWSER_CDP) {
+  const { scrapingBrowserCDP } = brightDataConfig;
+
+  if (!scrapingBrowserCDP) {
     // Handle the missing environment variables case
     throw new Error("SCRAPING_BROWSER_CDP variable is not defined.");
   }
 
   try {
-    const browser = await chromium.connectOverCDP(SCRAPING_BROWSER_CDP);
+    const browser = await chromium.connectOverCDP(scrapingBrowserCDP);
     return browser;
   } catch (error) {
     console.error("Error connecting with Provider Proxy:", error);

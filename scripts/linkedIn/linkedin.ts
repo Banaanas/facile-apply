@@ -1,45 +1,43 @@
-import axios from "axios";
-import colors from "colors";
-import * as fs from "fs";
+import { HttpsProxyAgent } from "https-proxy-agent";
+import fetch from "node-fetch";
 
-import { linkedInConfig } from "@/scripts/config";
+import { oxylabsConfig } from "@/scripts/config";
+import { fetchPageScrapingFish } from "@/scripts/indeed/fetch-jobs/requests/scrapingFish";
 
-const jobsSearchLink =
-  "https://www.linkedin.com/voyager/api/voyagerJobsDashJobCards?decorationId=com.linkedin.voyager.dash.deco.jobs.search.JobSearchCardsCollection-195&count=25&q=jobSearch&query=(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:React.js,locationUnion:(geoId:105282085),selectedFilters:(distance:List(0)),spellCorrectionEnabled:true)&start=25";
+const fetchViaProxy = async () => {
 
-async function getDataLinkedInVoyager() {
-  if (!linkedInConfig.jsessionId || !linkedInConfig.liat) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
-  }
+  fetchPageScrapingFish()
+
+  const { username, password, endpoint } = oxylabsConfig;
+
+  const agent = new HttpsProxyAgent(
+    `http://${username}:${password}@unblock.oxylabs.io:60000`,
+  );
+
+  // Adjusting the environment variable setting for development purposes
+  // Note: It's better to handle certificates properly rather than disabling TLS checks
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
   const headers = {
-    "user-agent":
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
-    Cookie: `JSESSIONID=${linkedInConfig.jsessionId}; li_at=${linkedInConfig.liat};`,
-    "csrf-token": `${linkedInConfig.jsessionId}`,
+    "x-oxylabs-force-headers": "1",
+    "Your-Custom-Header": "interesting header content",
+    "User-Agent":
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/73.0.3683.86 Chrome/73.0.3683.86 Safari/537.36",
+    "Accept-Language": "en-US",
   };
 
   try {
-    const { data } = await axios.get(jobsSearchLink, { headers });
-    fs.writeFileSync("response.json", JSON.stringify(data), "utf8");
-    console.log(data);
-  } catch (error) {
-    if (error.response && error.response.status === 302) {
-      console.warn(
-        "Detected a redirect. This may indicate that the JSESSIONID or li_at token is expired or invalid.",
-      );
-    } else if (error.code === "ERR_FR_TOO_MANY_REDIRECTS") {
-      console.log(
-        colors.red(
-          "Maximum number of redirects exceeded. This is likely due to expired or invalid JSESSIONID or li_at tokens. Please, verify.",
-        ),
-      );
-    } else {
-      console.error("An unexpected error occurred:", error.message);
-    }
-  }
-}
+    const response = await fetch("https://lemonde.fr", {
+      method: "get",
+      headers,
+      agent,
+    });
 
-getDataLinkedInVoyager().catch(console.error);
+    console.log("HOLA");
+    console.log(await response.text());
+  } catch (error) {
+    console.error(`Error fetching data through proxy: ${error}`);
+  }
+};
+
+fetchViaProxy();

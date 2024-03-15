@@ -7,6 +7,7 @@ import { fetchPageIPRoyal } from "@/scripts/indeed/fetch-jobs/requests/ipRoyal";
 import { fetchPageOxylabs } from "@/scripts/indeed/fetch-jobs/requests/oxylabs";
 import { fetchPageScrapFly } from "@/scripts/indeed/fetch-jobs/requests/scrapFly";
 import { fetchPageZenrows } from "@/scripts/indeed/fetch-jobs/requests/zenrows";
+import { fetchPageScrapingFish } from "@/scripts/indeed/fetch-jobs/requests/scrapingFish";
 
 export const providerFunctions: ProviderFetchFunctions = {
   brightData: fetchPageBrightData,
@@ -14,6 +15,7 @@ export const providerFunctions: ProviderFetchFunctions = {
   ipRoyal: fetchPageIPRoyal,
   oxylabs: fetchPageOxylabs,
   scrapFly: fetchPageScrapFly,
+  scrapingFish: fetchPageScrapingFish,
   zenrows: fetchPageZenrows,
 };
 
@@ -34,6 +36,7 @@ interface ProviderFetchFunctions {
   ipRoyal: FetchFunction;
   oxylabs: FetchFunction;
   scrapFly: FetchFunction;
+  scrapingFish: FetchFunction;
   zenrows: FetchFunction;
 }
 

@@ -35,8 +35,13 @@ export const rapidApiConfig = {
   host: process.env.RAPIDAPI_HOST,
 };
 
+export const scrapingFishConfig = {
+  apiKey: process.env.SCRAPING_FISH_API_KEY,
+  apiUrl: process.env.SCRAPING_FISH_URL,
+};
+
 export const scrapflyConfig = {
-  apiKey: process.env.SCRAPFLY_API_KEY,
+  apiKey: process.env.SCRAPING_FISH_API_KEY,
 };
 
 export const zenrowsConfig = {

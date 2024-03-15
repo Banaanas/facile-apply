@@ -6,21 +6,21 @@ import { zenrowsConfig } from "@/scripts/config";
 export const fetchPageZenrows = async (targetUrl: string): Promise<string> => {
   console.log(colors.italic("Fetching with Zenrows Provider"));
 
-  if (!zenrowsConfig.apiKey) {
+  const { apiKey, apiUrl } = zenrowsConfig;
+
+  if (!apiKey) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
   }
 
-  const zenrowsApiUrl = "https://api.zenrows.com/v1/";
-
   try {
     const response = await axios({
-      url: zenrowsApiUrl,
+      url: apiUrl,
       method: "GET",
       params: {
         url: targetUrl,
-        apikey: zenrowsConfig.apiKey,
+        apikey: apiKey,
         js_render: "false",
       },
     });

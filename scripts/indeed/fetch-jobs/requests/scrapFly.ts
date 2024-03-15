@@ -8,7 +8,9 @@ const client = new ScrapflyClient({ key: scrapflyConfig.apiKey });
 export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
   console.log(colors.italic("Fetching with ScrapFly Provider"));
 
-  if (!scrapflyConfig.apiKey) {
+  const { apiKey } = scrapflyConfig;
+
+  if (!apiKey) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );

@@ -30,7 +30,7 @@ export const oxylabsConfig = {
   password: process.env.OXYLABS_PASSWORD,
 };
 
-export const rapidapiConfig = {
+export const rapidApiConfig = {
   key: process.env.RAPIDAPI_KEY,
   host: process.env.RAPIDAPI_HOST,
 };
@@ -41,6 +41,7 @@ export const scrapflyConfig = {
 
 export const zenrowsConfig = {
   apiKey: process.env.ZENROWS_API_KEY,
+  apiUrl: process.env.ZENROWS_URL,
 };
 
 // LINKEDIN

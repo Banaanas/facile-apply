@@ -19,6 +19,7 @@ export const providerFunctions: ProviderFetchFunctions = {
 
 export const fetchPageWithProvider = async (searchUrl: string) => {
   const fetchFunction = providerFunctions[CURRENT_PROVIDER];
+
   if (!fetchFunction) {
     throw new Error(
       colors.red(`Fetch provider ${CURRENT_PROVIDER} is not defined.`),

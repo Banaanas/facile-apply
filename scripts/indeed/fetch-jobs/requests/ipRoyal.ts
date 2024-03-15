@@ -6,12 +6,9 @@ import { iproyalConfig } from "@/scripts/config";
 export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
   console.log(colors.italic("Fetching with IP Royal Provider"));
 
-  if (
-    !iproyalConfig.host ||
-    !iproyalConfig.port ||
-    !iproyalConfig.username ||
-    !iproyalConfig.password
-  ) {
+  const { host, port, username, password } = iproyalConfig;
+
+  if (!host || !port || !username || !password) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -21,11 +18,11 @@ export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
     const response = await axios.get(targetUrl, {
       proxy: {
         protocol: "http",
-        host: iproyalConfig.host,
-        port: iproyalConfig.port,
+        host,
+        port,
         auth: {
-          username: iproyalConfig.username,
-          password: iproyalConfig.password,
+          username,
+          password,
         },
       },
     });

@@ -5,11 +5,9 @@ import { oxylabsConfig } from "@/scripts/config";
 export const fetchPageOxylabs = async (url: string): Promise<string> => {
   console.log("Fetching with Oxylabs Provider");
 
-  if (
-    !oxylabsConfig.endpoint ||
-    !oxylabsConfig.username ||
-    !oxylabsConfig.password
-  ) {
+  const { endpoint, username, password } = oxylabsConfig;
+
+  if (!endpoint || !username || !password) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -23,10 +21,10 @@ export const fetchPageOxylabs = async (url: string): Promise<string> => {
   };
 
   try {
-    const response = await axios.post(oxylabsConfig.endpoint, body, {
+    const response = await axios.post(endpoint, body, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${Buffer.from(`${oxylabsConfig.username}:${oxylabsConfig.password}`).toString("base64")}`,
+        Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`,
       },
     });
 

@@ -7,13 +7,10 @@ import { brightDataConfig } from "@/scripts/config";
 export const fetchPageBrightData = async (url: string): Promise<string> => {
   console.log(colors.italic("Fetching with Bright Data Provider"));
 
+  const { host, port, user, pass } = brightDataConfig;
+
   // Check if all required environment variables are defined
-  if (
-    !brightDataConfig.host ||
-    !brightDataConfig.port ||
-    !brightDataConfig.user ||
-    !brightDataConfig.pass
-  ) {
+  if (!host || !port || !user || !pass) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -22,11 +19,11 @@ export const fetchPageBrightData = async (url: string): Promise<string> => {
   try {
     const response = await axios.get(url, {
       proxy: {
-        host: brightDataConfig.host,
-        port: parseInt(brightDataConfig.port, 10),
+        host,
+        port: parseInt(port, 10),
         auth: {
-          username: brightDataConfig.user,
-          password: brightDataConfig.pass,
+          username: user,
+          password: pass,
         },
       },
       httpsAgent: new https.Agent({

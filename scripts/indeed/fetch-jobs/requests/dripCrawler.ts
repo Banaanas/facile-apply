@@ -1,13 +1,16 @@
 import axios from "axios";
 import colors from "colors";
 
-import { rapidapiConfig } from "@/scripts/config";
+import { rapidApiConfig } from "@/scripts/config";
 
 export const fetchPageDripCrawler = async (
   targetUrl: string,
 ): Promise<string> => {
   console.log(colors.italic("Fetching with DripCrawler Provider"));
-  if (!rapidapiConfig.key || !rapidapiConfig.host) {
+
+  const { key, host } = rapidApiConfig;
+
+  if (!key || !host) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -18,8 +21,8 @@ export const fetchPageDripCrawler = async (
     url: "https://dripcrawler.p.rapidapi.com/",
     headers: {
       "content-type": "application/json",
-      "X-RapidAPI-Key": rapidapiConfig.key,
-      "X-RapidAPI-Host": rapidapiConfig.host,
+      "X-RapidAPI-Key": key,
+      "X-RapidAPI-Host": host,
     },
     data: {
       url: targetUrl,

@@ -1,20 +1,17 @@
-import path from "node:path";
-
 import axios from "axios";
 import colors from "colors";
-import dotenv from "dotenv";
 
-dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
+import { iproyalConfig } from "@/scripts/config";
 
 export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
   console.log(colors.italic("Fetching with IP Royal Provider"));
 
-  const proxyHost = process.env.IPROYAL_HOST;
-  const proxyPort = process.env.IPROYAL_PORT;
-  const proxyUsername = process.env.IPROYAL_USERNAME;
-  const proxyPassword = process.env.IPROYAL_PASSWORD;
-
-  if (!proxyHost || !proxyPort || !proxyUsername || !proxyPassword) {
+  if (
+    !iproyalConfig.host ||
+    !iproyalConfig.port ||
+    !iproyalConfig.username ||
+    !iproyalConfig.password
+  ) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -24,11 +21,11 @@ export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
     const response = await axios.get(targetUrl, {
       proxy: {
         protocol: "http",
-        host: proxyHost,
-        port: proxyPort,
+        host: iproyalConfig.host,
+        port: iproyalConfig.port,
         auth: {
-          username: proxyUsername,
-          password: proxyPassword,
+          username: iproyalConfig.username,
+          password: iproyalConfig.password,
         },
       },
     });

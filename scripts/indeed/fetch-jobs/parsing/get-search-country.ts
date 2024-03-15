@@ -4,8 +4,8 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 import colors from "colors";
 
-import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
-import { JobData } from "@/scripts/fetch-jobs/parsing/extract-job-results";
+import { ScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
+import { JobData } from "@/scripts/indeed/fetch-jobs/parsing/extract-job-results";
 
 export const getSearchCountry = (
   htmlPage: string,

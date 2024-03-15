@@ -3,7 +3,7 @@ import console from "node:console";
 import { PrismaClient } from "@prisma/client";
 import colors from "colors";
 
-import { TransformedScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
+import { TransformedScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 
 const prisma = new PrismaClient();
 

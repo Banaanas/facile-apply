@@ -1,22 +1,19 @@
-import path from "node:path";
-
 import axios from "axios";
 import colors from "colors";
-import dotenv from "dotenv";
 import https from "https";
 
-dotenv.config({ path: path.join(__dirname, "../../../.env.local") });
-
-const proxyHost = process.env.BRIGHT_DATA_PROXY_HOST;
-const proxyPort = process.env.BRIGHT_DATA_PROXY_PORT;
-const proxyUser = process.env.BRIGHT_DATA_PROXY_USER;
-const proxyPass = process.env.BRIGHT_DATA_PROXY_PASS;
+import { brightDataConfig } from "@/scripts/config";
 
 export const fetchPageBrightData = async (url: string): Promise<string> => {
   console.log(colors.italic("Fetching with Bright Data Provider"));
 
   // Check if all required environment variables are defined
-  if (!proxyHost || !proxyPort || !proxyUser || !proxyPass) {
+  if (
+    !brightDataConfig.host ||
+    !brightDataConfig.port ||
+    !brightDataConfig.user ||
+    !brightDataConfig.pass
+  ) {
     throw new Error(
       "One or more required environment variables are not defined.",
     );
@@ -25,11 +22,11 @@ export const fetchPageBrightData = async (url: string): Promise<string> => {
   try {
     const response = await axios.get(url, {
       proxy: {
-        host: proxyHost,
-        port: parseInt(proxyPort, 10),
+        host: brightDataConfig.host,
+        port: parseInt(brightDataConfig.port, 10),
         auth: {
-          username: proxyUser,
-          password: proxyPass,
+          username: brightDataConfig.user,
+          password: brightDataConfig.pass,
         },
       },
       httpsAgent: new https.Agent({

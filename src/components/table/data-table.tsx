@@ -50,7 +50,7 @@ export const DataTable = <TData, TValue>({
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "createDate", // Must be equal to the accessorKey of the coulmn you want sorted by default
+      id: "createDate", // Must be equal to the accessorKey of the column you want sorted by default
       desc: true,
     },
   ]);

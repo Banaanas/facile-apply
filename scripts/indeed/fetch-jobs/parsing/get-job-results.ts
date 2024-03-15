@@ -1,6 +1,6 @@
-import { ScrapedIndeedJob } from "@/scripts/fetch-jobs/fetch-jobs.types";
-import { extractJobResults } from "@/scripts/fetch-jobs/parsing/extract-job-results";
-import { fetchPageWithProvider } from "@/scripts/fetch-jobs/requests/provider-fetch-functions";
+import { ScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
+import { extractJobResults } from "@/scripts/indeed/fetch-jobs/parsing/extract-job-results";
+import { fetchPageWithProvider } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 
 import { getNextPageUrl } from "./get-next-page-url";
 

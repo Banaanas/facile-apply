@@ -1,4 +1,4 @@
-import { CountryUrls } from "@/scripts/fetch-jobs/fetch-jobs.types";
+import { CountryUrls } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 
 export const usUrls: CountryUrls["US"] = {
   domain: "www.indeed.com",

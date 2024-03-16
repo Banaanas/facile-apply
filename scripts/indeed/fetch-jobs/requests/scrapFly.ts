@@ -1,19 +1,20 @@
-import colors from "colors";
 import { ScrapeConfig, ScrapflyClient } from "scrapfly-sdk";
 
 import { scrapflyConfig } from "@/scripts/config";
+import {
+  fetchingWithMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
 const client = new ScrapflyClient({ key: scrapflyConfig.apiKey });
 
 export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
-  console.log(colors.italic("Fetching with ScrapFly Provider"));
+  fetchingWithMessage("Scrapfly");
 
   const { apiKey } = scrapflyConfig;
 
   if (!apiKey) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
+    throw new Error(missingVarMessage);
   }
 
   try {
@@ -27,7 +28,6 @@ export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
 
     return apiResponse?.result.content;
   } catch (error) {
-    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

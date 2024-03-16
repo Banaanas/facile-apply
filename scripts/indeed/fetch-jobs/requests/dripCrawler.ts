@@ -1,19 +1,20 @@
 import axios from "axios";
-import colors from "colors";
 
 import { rapidApiConfig } from "@/scripts/config";
+import {
+  fetchingWithMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
 export const fetchPageDripCrawler = async (
   targetUrl: string,
 ): Promise<string> => {
-  console.log(colors.italic("Fetching with DripCrawler Provider"));
+  fetchingWithMessage("Drip Crawler");
 
   const { key, host } = rapidApiConfig;
 
   if (!key || !host) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
+    throw new Error(missingVarMessage);
   }
 
   const options = {
@@ -35,7 +36,6 @@ export const fetchPageDripCrawler = async (
 
     return response.data.extracted_html;
   } catch (error) {
-    console.error(colors.red(`Error fetching page: ${error}`));
     throw error;
   }
 };

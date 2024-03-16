@@ -1,16 +1,18 @@
 import axios from "axios";
 
 import { oxylabsConfig } from "@/scripts/config";
+import {
+  fetchingWithMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
 export const fetchPageOxylabs = async (url: string): Promise<string> => {
-  console.log("Fetching with Oxylabs Provider");
+  fetchingWithMessage("Oxylabs");
 
   const { endpoint, username, password } = oxylabsConfig;
 
   if (!endpoint || !username || !password) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
+    throw new Error(missingVarMessage);
   }
 
   const body = {
@@ -30,7 +32,6 @@ export const fetchPageOxylabs = async (url: string): Promise<string> => {
 
     return response.data.results[0].content;
   } catch (error) {
-    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

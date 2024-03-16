@@ -31,9 +31,9 @@ const main = async () => {
         ),
       );
 
+      // Used in case of using Playwright session after (for auto-apply bot purpose)
       const context = await browser.newContext();
       const page = await context.newPage();
-
       await blockResourcesAndAds(page);
 
       const indeedSearchUrl = buildSearchUrl(

@@ -1,35 +1,56 @@
 import axios from "axios";
 import colors from "colors";
 
-import { scrapingFishConfig } from "@/scripts/config";
+import { linkedInConfig, scrapingFishConfig } from "@/scripts/config";
+import {
+  linkedInRequestErrorMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
-export const fetchPageScrapingFish = async (
+export const fetchLinkedInScrapingFish = async (
   targetUrl: string,
 ): Promise<string> => {
-  console.log(colors.italic("Fetching with ScrapingFish Provider"));
+  console.log(colors.italic("Fetching LinkedIn with ScrapingFish Provider"));
 
   const { apiKey, apiUrl } = scrapingFishConfig;
+  const { jsessionId, liAt } = linkedInConfig;
+
+  if (!apiKey) {
+    throw new Error(missingVarMessage);
+  }
+
+  const headers = {
+    "user-agent":
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+    "csrf-token": `${jsessionId}`,
+  };
+
+  const cookies = [
+    {
+      name: "JSESSIONID",
+      value: jsessionId,
+    },
+    {
+      name: "li_at",
+      value: liAt,
+    },
+  ];
 
   const payload = {
     api_key: apiKey,
     url: targetUrl,
-    render_js: "false", // NO JAVASCRIPT
+    headers: JSON.stringify(headers),
+    cookies: JSON.stringify(cookies),
   };
-
-  if (!apiKey) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
-  }
 
   try {
     const response = await axios.get(apiUrl, {
       params: payload,
     });
 
-    return response.data;
+    console.log(response.data);
   } catch (error) {
-    console.error(`Error fetching page with ScrapingFish: ${error}`);
+    console.log(colors.red(linkedInRequestErrorMessage));
     throw error;
   }
 };

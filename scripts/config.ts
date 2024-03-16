@@ -51,6 +51,6 @@ export const zenrowsConfig = {
 
 // LINKEDIN
 export const linkedInConfig = {
-  jsessionId: "ajax:5549443845052618283",
-  liAt: "AQEDAUyQqUMEdli3AAABjkIxcp8AAAGOZj32n00AoFqNpcUDuj4vFiprxY3ABxohVF-gluYiVALUdFih1blowBl9a4WiMMgixASFX66_FuLHfBuDckuDLg4oC5Ut4ZpRw0vsakG9W1PBMQdtuOsg_YKU",
+  jsessionId: process.env.LINKEDIN_JSESSIONID,
+  liAt: process.env.LINKEDIN_LIAT,
 };

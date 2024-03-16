@@ -1,12 +1,15 @@
 import axios from "axios";
-import colors from "colors";
 
 import { scrapingFishConfig } from "@/scripts/config";
+import {
+  fetchingWithMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
 export const fetchPageScrapingFish = async (
   targetUrl: string,
 ): Promise<string> => {
-  console.log(colors.italic("Fetching with ScrapingFish Provider"));
+  fetchingWithMessage("Scraping Fish");
 
   const { apiKey, apiUrl } = scrapingFishConfig;
 
@@ -16,9 +19,7 @@ export const fetchPageScrapingFish = async (
   };
 
   if (!apiKey) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
+    throw new Error(missingVarMessage);
   }
 
   try {
@@ -28,7 +29,6 @@ export const fetchPageScrapingFish = async (
 
     return response.data;
   } catch (error) {
-    console.error(`Error fetching page with ScrapingFish: ${error}`);
     throw error;
   }
 };

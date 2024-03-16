@@ -1,17 +1,18 @@
 import axios from "axios";
-import colors from "colors";
 
 import { iproyalConfig } from "@/scripts/config";
+import {
+  fetchingWithMessage,
+  missingVarMessage,
+} from "@/scripts/utils/console-messages";
 
 export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
-  console.log(colors.italic("Fetching with IP Royal Provider"));
+  fetchingWithMessage("Ip Royal");
 
   const { host, port, username, password } = iproyalConfig;
 
   if (!host || !port || !username || !password) {
-    throw new Error(
-      "One or more required environment variables are not defined.",
-    );
+    throw new Error(missingVarMessage);
   }
 
   try {
@@ -29,7 +30,6 @@ export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
 
     return response.data;
   } catch (error) {
-    console.error(`Error fetching page: ${error}`);
     throw error;
   }
 };

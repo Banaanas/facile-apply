@@ -6,8 +6,8 @@ import { fetchPageDripCrawler } from "@/scripts/indeed/fetch-jobs/requests/dripC
 import { fetchPageIPRoyal } from "@/scripts/indeed/fetch-jobs/requests/ipRoyal";
 import { fetchPageOxylabs } from "@/scripts/indeed/fetch-jobs/requests/oxylabs";
 import { fetchPageScrapFly } from "@/scripts/indeed/fetch-jobs/requests/scrapFly";
-import { fetchPageZenrows } from "@/scripts/indeed/fetch-jobs/requests/zenrows";
 import { fetchPageScrapingFish } from "@/scripts/indeed/fetch-jobs/requests/scrapingFish";
+import { fetchPageZenrows } from "@/scripts/indeed/fetch-jobs/requests/zenrows";
 
 export const providerFunctions: ProviderFetchFunctions = {
   brightData: fetchPageBrightData,
@@ -40,6 +40,6 @@ interface ProviderFetchFunctions {
   zenrows: FetchFunction;
 }
 
-type FetchFunction = (url: string) => Promise<string>;
+type FetchFunction = (searchUrl: string) => Promise<string>;
 
 export type ProviderName = keyof ProviderFetchFunctions;

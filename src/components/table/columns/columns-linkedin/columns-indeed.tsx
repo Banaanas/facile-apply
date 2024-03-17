@@ -11,7 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const columns: ColumnDef<IndeedJob>[] = [
+export const columnsIndeed: ColumnDef<IndeedJob>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -127,6 +127,6 @@ export const columns: ColumnDef<IndeedJob>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions row={row} jobPlatform="indeed" />,
   },
 ];

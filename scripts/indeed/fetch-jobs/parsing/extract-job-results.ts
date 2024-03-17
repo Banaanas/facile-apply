@@ -15,7 +15,7 @@ export const extractJobResults = (
       /window\.mosaic\.initialData = (\{.+?\});/s,
     );
     if (jsonDataString && jsonDataString.length > 1) {
-      const jsonData: JobData = JSON.parse(jsonDataString[1]);
+      const jsonData: RawIndeedData = JSON.parse(jsonDataString[1]);
       jobResults =
         jsonData.publicMetadata?.mosaicProviderJobCardsModel?.results;
     }
@@ -29,7 +29,7 @@ export const extractJobResults = (
   return jobResults || [];
 };
 
-export interface JobData {
+export interface RawIndeedData {
   publicMetadata: PublicMetadata;
   country: string;
 }

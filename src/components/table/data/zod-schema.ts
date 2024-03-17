@@ -15,4 +15,14 @@ export const indeedJobSchema = z.object({
   status: JobStatusEnum,
 });
 
-export type Task = z.infer<typeof indeedJobSchema>;
+export const linkedinJobSchema = z.object({
+  id: z.number(),
+  company: z.string(),
+  createDate: z.date(),
+  easyApply: z.boolean(),
+  jobUrn: z.string(),
+  link: z.string(),
+  location: z.string(),
+  status: JobStatusEnum,
+  title: z.string(),
+});

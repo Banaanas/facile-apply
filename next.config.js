@@ -1,4 +1,7 @@
 module.exports = {
+  experimental: {
+    typedRoutes: true,
+  },
   async redirects() {
     return [
       {

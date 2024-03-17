@@ -3,6 +3,7 @@
 import {
   countries,
   indeedApplyEnableOptions,
+  linkedinEasyApplyOptions,
   statuses,
 } from "@components/table/data/data";
 import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
@@ -42,11 +43,32 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  jobPlatform: JobPlatform;
 }
 
-export const DataTable = <TData, TValue>({
+const indeedFilters = [
+  { columnId: "status", title: "Status", options: statuses },
+  { columnId: "country", title: "Country", options: countries },
+  {
+    columnId: "indeedApplyEnabled",
+    title: "Indeed Apply",
+    options: indeedApplyEnableOptions,
+  },
+];
+
+const linkedinFilters = [
+  { columnId: "status", title: "Status", options: statuses },
+  {
+    columnId: "easyApply",
+    title: "Easy Apply",
+    options: linkedinEasyApplyOptions,
+  },
+];
+
+export const DataTableIndeed = <TData, TValue>({
   columns,
   data,
+  jobPlatform,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -74,11 +96,11 @@ export const DataTable = <TData, TValue>({
       sorting,
     },
   });
-  console.log(table.getFilteredSelectedRowModel());
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  console.log(table.getState().columnFilters);
+  const facetFilters =
+    jobPlatform === "indeed" ? indeedFilters : linkedinFilters;
 
   return (
     <div className="rounded-md border">
@@ -93,26 +115,15 @@ export const DataTable = <TData, TValue>({
         />
 
         <div className="flex flex-wrap px-2">
-          {table.getColumn("status") && (
-            <DataTableFacetedFilter
-              column={table.getColumn("status")}
-              title="Status"
-              options={statuses}
-            />
-          )}{" "}
-          {table.getColumn("country") && (
-            <DataTableFacetedFilter
-              column={table.getColumn("country")}
-              title="Country"
-              options={countries}
-            />
-          )}{" "}
-          {table.getColumn("indeedApplyEnabled") && (
-            <DataTableFacetedFilter
-              column={table.getColumn("indeedApplyEnabled")}
-              title="Indeed Apply"
-              options={indeedApplyEnableOptions}
-            />
+          {facetFilters.map(({ columnId, title, options }) =>
+            table.getColumn(columnId) ? (
+              <DataTableFacetedFilter
+                key={columnId}
+                column={table.getColumn(columnId)}
+                title={title}
+                options={options}
+              />
+            ) : null,
           )}
         </div>
         {isFiltered && (
@@ -199,3 +210,5 @@ export const DataTable = <TData, TValue>({
     </div>
   );
 };
+
+export type JobPlatform = "indeed" | "linkedin";

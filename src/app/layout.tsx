@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Indeed Apply",
+  title: "Facile Apply",
 };
 
 const RootLayout = ({

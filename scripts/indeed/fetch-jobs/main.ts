@@ -4,7 +4,7 @@ import colors from "colors";
 import { firefox } from "playwright";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
-import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database";
+import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-indeed";
 import { SEARCH_DATE_RANGE_DAYS } from "@/scripts/indeed/fetch-jobs/data/search-params";
 import { countryUrls } from "@/scripts/indeed/fetch-jobs/data/urls/country-urls";
 import { Country } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";

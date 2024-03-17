@@ -5,7 +5,7 @@ import * as cheerio from "cheerio";
 import colors from "colors";
 
 import { ScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
-import { JobData } from "@/scripts/indeed/fetch-jobs/parsing/extract-job-results";
+import { RawIndeedData } from "@/scripts/indeed/fetch-jobs/parsing/extract-job-results";
 
 export const getSearchCountry = (
   htmlPage: string,
@@ -21,15 +21,15 @@ export const getSearchCountry = (
 
     if (jsonDataString && jsonDataString.length > 1) {
       // Ensure jsonData is treated as JobData, not as any
-      const jsonData: JobData = JSON.parse(jsonDataString[1]) as JobData;
+      const jsonData: RawIndeedData = JSON.parse(
+        jsonDataString[1],
+      ) as RawIndeedData;
 
       const country = jsonData.country as ScrapedIndeedJob["country"];
 
       return country;
     }
   }
-
-  // Handle the case where country cannot be extracted
 
   // Get current date and time
   const now = new Date();

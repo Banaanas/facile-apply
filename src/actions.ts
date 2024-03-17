@@ -3,6 +3,7 @@
 import { IndeedJob, LinkedInJob } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
 import { revalidatePath } from "next/cache";
+import { appRoutes } from "@/data/app-routes";
 
 export const updateIndeedJobStatus = async (
   indeedJobId: IndeedJob["id"],
@@ -13,7 +14,7 @@ export const updateIndeedJobStatus = async (
     data: { status: newStatus },
   });
 
-  revalidatePath("/indeed");
+  revalidatePath(appRoutes.indeed.href);
 };
 
 export const updateLinkedInJobStatus = async (
@@ -25,5 +26,5 @@ export const updateLinkedInJobStatus = async (
     data: { status: newStatus },
   });
 
-  revalidatePath("/linkedin");
+  revalidatePath(appRoutes.linkedin.href);
 };

@@ -1,5 +1,5 @@
 import { Button } from "@components/ui/button";
-import { IndeedJob } from "@prisma/client";
+import { IndeedJob, LinkedInJob } from "@prisma/client";
 import { Column } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { ReactNode } from "react";
@@ -8,7 +8,7 @@ const SortingButton = ({
   column,
   children,
 }: {
-  column: Column<IndeedJob>;
+  column: Column<IndeedJob> | Column<LinkedInJob>;
   children: ReactNode;
 }) => {
   return (

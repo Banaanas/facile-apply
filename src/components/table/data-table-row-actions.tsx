@@ -5,7 +5,7 @@ import {
   indeedJobSchema,
   linkedinJobSchema,
 } from "@components/table/data/zod-schema";
-import { JobPlatform } from "@components/table/data-table/data-table-indeed";
+import { JobPlatform } from "@components/table/data-table/data-table";
 import { Button } from "@components/ui/button";
 import { $Enums } from "@prisma/client";
 import { Row } from "@tanstack/react-table";

@@ -17,10 +17,8 @@ import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressource
 
 const main = async () => {
   const browser = await firefox.launch();
-
   // If Database is not already running, STOP the process - Avoiding costs of fetching pages that won't be registered in the database after
   await checkDatabaseConnection();
-
   // Iterate over each country URL
   for (const [country, details] of Object.entries(countryUrls)) {
     // Now iterate over each search query within the country
@@ -30,18 +28,15 @@ const main = async () => {
           `Searching ${searchKey} in ${country} for the past ${SEARCH_DATE_RANGE_DAYS} days...`,
         ),
       );
-
       // Used in case of using Playwright session after (for auto-apply bot purpose)
       const context = await browser.newContext();
       const page = await context.newPage();
       await blockResourcesAndAds(page);
-
       const indeedSearchUrl = buildSearchUrl(
         country as Country,
         searchQuery.query,
         SEARCH_DATE_RANGE_DAYS,
       );
-
       const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
       const jobResults = await getJobResults(indeedSearchUrl);
       const searchCountry = getSearchCountry(initialSearchHTML);
@@ -49,16 +44,13 @@ const main = async () => {
         jobResults,
         searchCountry,
       );
-
       await registerTransformedJobResultsInDB(
         transformedJobResults,
         indeedSearchUrl,
       );
-
       await context.close();
     }
   }
-
   console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
   await browser.close();
 };

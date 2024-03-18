@@ -8,6 +8,7 @@ import {
 } from "@components/table/data/data";
 import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 import DataTablePagination from "@components/table/DataTablePagination";
+import SelectedRowsButton from "@components/table/SelectedRowsButton";
 import { Button } from "@components/ui/button";
 import {
   ColumnDef,
@@ -65,7 +66,7 @@ const linkedinFilters = [
   },
 ];
 
-export const DataTableIndeed = <TData, TValue>({
+export const DataTable = <TData, TValue>({
   columns,
   data,
   jobPlatform,
@@ -104,6 +105,10 @@ export const DataTableIndeed = <TData, TValue>({
 
   return (
     <div className="rounded-md border">
+      <SelectedRowsButton
+        jobPlatform={jobPlatform}
+        selectedRows={table.getFilteredSelectedRowModel().rows}
+      />
       <div className="flex items-center p-4">
         <Input
           placeholder="Filter title..."

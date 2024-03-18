@@ -29,14 +29,13 @@ interface NavItemProps<T extends string> {
   href: Route<T> | URL;
 }
 
-// Assuming usePathname can be derived from useRouter().pathname
 const NavItem = <T extends string>({ name, href }: NavItemProps<T>) => {
   if (href === usePathname()) return null;
 
   return (
     <li>
-      <Link href={href} passHref>
-        <a className="underline">{name}</a>
+      <Link href={href} className="underline">
+        {name}
       </Link>
     </li>
   );

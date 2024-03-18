@@ -2,22 +2,28 @@ import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin";
+import { searchConfigs } from "@/scripts/linkedIn/fetch-jobs/data/linkedin-search-configs";
 import {
   DelayOption,
   LINKEDIN_SEARCH,
-} from "@/scripts/linkedin/fetch-jobs/data/search-params";
-import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
+} from "@/scripts/linkedIn/fetch-jobs/data/search-params";
+import { getJobResults } from "@/scripts/linkedIn/fetch-jobs/parsing/get-job-results";
+import { buildSearchRequest } from "@/scripts/linkedIn/fetch-jobs/requests/linkedin-request-builder";
 
 const main = async () => {
-  // If Database is not already running, STOP the process - Avoiding costs of fetching pages that won't be registered in the database after
   await checkDatabaseConnection();
-  console.log(colors.cyan(`Searching ${LINKEDIN_SEARCH}...`));
-
-  const jobResults = await getJobResults(LINKEDIN_SEARCH, DelayOption.ENABLED);
-
-  await registerTransformedJobResultsInDB(jobResults);
-  console.log(`Total jobs fetched: ${jobResults.length}`);
+  for (const configKey in searchConfigs) {
+    await processSearchConfig(configKey);
+  }
   console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
+};
+
+const processSearchConfig = async (configKey: string) => {
+  const config = searchConfigs[configKey];
+  const searchUrl = buildSearchRequest(config);
+  const jobResults = await getJobResults(searchUrl, DelayOption.ENABLED);
+  await registerTransformedJobResultsInDB(jobResults);
+  console.log(`Total ${configKey} jobs fetched: ${jobResults.length}`);
 };
 
 main().catch(console.error);

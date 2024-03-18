@@ -1,5 +1,5 @@
 import { columnsLinkedin } from "@components/table/columns/columns-linkedin/columns-linkedin";
-import { DataTableIndeed } from "@components/table/data-table/data-table-indeed";
+import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
 
 const LinkedinPage = async () => {
@@ -10,7 +10,7 @@ const LinkedinPage = async () => {
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
       <h1 className="text-4xl font-bold text-blue-700">Linkedin Results</h1>
       <div className="container mx-auto py-10">
-        <DataTableIndeed
+        <DataTable
           jobPlatform="linkedin"
           columns={columnsLinkedin}
           data={jobs}

@@ -89,6 +89,17 @@ export const columnsLinkedin: ColumnDef<LinkedinJob>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
     },
+    accessorKey: "location",
+    header: ({ column }) => {
+      return <SortingButton column={column}>Location</SortingButton>;
+    },
+  },
+
+  {
+    // Necessary to Data Table Faced Filter
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
     accessorKey: "status",
     header: ({ column }) => {
       return <SortingButton column={column}>Status</SortingButton>;
@@ -102,17 +113,6 @@ export const columnsLinkedin: ColumnDef<LinkedinJob>[] = [
           {getReadableStatus(status)}
         </div>
       );
-    },
-  },
-
-  {
-    // Necessary to Data Table Faced Filter
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
-    accessorKey: "location",
-    header: ({ column }) => {
-      return <SortingButton column={column}>Location</SortingButton>;
     },
   },
 

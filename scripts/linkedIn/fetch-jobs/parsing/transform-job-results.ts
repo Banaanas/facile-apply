@@ -1,9 +1,9 @@
-import { LinkedInJob } from "@prisma/client";
-import { TransformedScrapedLinkedInJob } from "@/scripts/linkedIn/fetch-jobs/fetch-jobs.types";
+import { LinkedinJob } from "@prisma/client";
+import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
-export const extractLinkedInJobDetails = (
-  jobCardUnion: RawLinkedInJobCardUnion,
-): TransformedScrapedLinkedInJob => {
+export const extractLinkedinJobDetails = (
+  jobCardUnion: RawLinkedinJobCardUnion,
+): TransformedScrapedLinkedinJob => {
   const { jobPostingCard } = jobCardUnion;
   const {
     footerItems,
@@ -30,7 +30,7 @@ export const extractLinkedInJobDetails = (
   const createDate = new Date(listedDateItem!.timeAt);
 
   // Create defaults status
-  const status: LinkedInJob["status"] = "NotReviewed";
+  const status: LinkedinJob["status"] = "NotReviewed";
 
   return {
     company,
@@ -44,40 +44,40 @@ export const extractLinkedInJobDetails = (
   };
 };
 
-export const transformLinkedInJobResults = (
-  rawLinkedInData: RawLinkedInData,
-): Array<TransformedScrapedLinkedInJob> => {
-  const { elements } = rawLinkedInData;
+export const transformLinkedinJobResults = (
+  rawLinkedinData: RawLinkedinData,
+): Array<TransformedScrapedLinkedinJob> => {
+  const { elements } = rawLinkedinData;
 
   return elements.map(({ jobCardUnion }) =>
-    extractLinkedInJobDetails(jobCardUnion),
+    extractLinkedinJobDetails(jobCardUnion),
   );
 };
 
-export interface RawLinkedInData {
-  metadata: RawLinkedInMetadata;
-  elements: Array<RawLinkedInElement>;
-  paging: RawLinkedInPaging;
+export interface RawLinkedinData {
+  metadata: RawLinkedinMetadata;
+  elements: Array<RawLinkedinElement>;
+  paging: RawLinkedinPaging;
 }
 
-interface RawLinkedInMetadata {
+interface RawLinkedinMetadata {
   keywords: string;
   geo: {
     fullLocalizedName: string;
   };
 }
 
-interface RawLinkedInPaging {
+interface RawLinkedinPaging {
   total: number;
   start: number;
   count: number;
 }
 
-interface RawLinkedInElement {
-  jobCardUnion: RawLinkedInJobCardUnion;
+interface RawLinkedinElement {
+  jobCardUnion: RawLinkedinJobCardUnion;
 }
 
-export interface RawLinkedInJobCardUnion {
+export interface RawLinkedinJobCardUnion {
   jobPostingCard: {
     entityUrn: string;
     preDashNormalizedJobPostingUrn: string;

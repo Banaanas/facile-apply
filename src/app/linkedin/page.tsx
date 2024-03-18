@@ -2,13 +2,13 @@ import { columnsLinkedin } from "@components/table/columns/columns-linkedin/colu
 import { DataTableIndeed } from "@components/table/data-table/data-table-indeed";
 import { prisma } from "@prisma/db.server";
 
-const LinkedInPage = async () => {
-  const jobs = await prisma.linkedInJob.findMany();
+const LinkedinPage = async () => {
+  const jobs = await prisma.linkedinJob.findMany();
   console.log(jobs);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <h1 className="text-4xl font-bold text-blue-700">LinkedIn Results</h1>
+      <h1 className="text-4xl font-bold text-blue-700">Linkedin Results</h1>
       <div className="container mx-auto py-10">
         <DataTableIndeed
           jobPlatform="linkedin"
@@ -20,4 +20,4 @@ const LinkedInPage = async () => {
   );
 };
 
-export default LinkedInPage;
+export default LinkedinPage;

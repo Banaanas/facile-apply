@@ -5,8 +5,8 @@ import { registerTransformedJobResultsInDB } from "@/scripts/database/register-d
 import {
   DelayOption,
   LINKEDIN_SEARCH,
-} from "@/scripts/linkedIn/fetch-jobs/data/search-params";
-import { getJobResults } from "@/scripts/linkedIn/fetch-jobs/parsing/get-job-results";
+} from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 
 const main = async () => {
   // If Database is not already running, STOP the process - Avoiding costs of fetching pages that won't be registered in the database after

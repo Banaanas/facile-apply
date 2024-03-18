@@ -1,3 +1,5 @@
+import { Route } from "next";
+
 export const appRoutes: AppRoutes = {
   indeed: {
     name: "Indeed",
@@ -5,7 +7,7 @@ export const appRoutes: AppRoutes = {
   },
 
   linkedin: {
-    name: "LinkedIn",
+    name: "Linkedin",
     href: "/linkedin",
   },
 };
@@ -14,7 +16,7 @@ interface AppRoutes {
   [key: string]: AppRoute;
 }
 
-interface AppRoute {
+interface AppRoute<T extends string = string> {
   name: string;
-  href: string;
+  href: Route<T> | URL;
 }

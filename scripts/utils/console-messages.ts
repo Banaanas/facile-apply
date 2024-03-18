@@ -1,6 +1,6 @@
 import colors from "colors";
 
-import { RawLinkedInData } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
+import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 
 // Page Requests
 
@@ -13,12 +13,12 @@ export const fetchingWithMessage = (providerName: string) => {
 export const missingVarMessage =
   "One or more required environment variables are not defined.";
 
-// LinkedIn
-export const linkedInRequestErrorMessage =
+// Linkedin
+export const linkedinRequestErrorMessage =
   "An error occurred. This might be due to incorrect or expired session tokens. Please verify your session tokens (JSESSIONID, li_at) are correct by using them in a logged-in browser session.";
 
-export const linkedInSearchMessage = (
-  metadata: RawLinkedInData["metadata"],
+export const linkedinSearchMessage = (
+  metadata: RawLinkedinData["metadata"],
 ) => {
   const { keywords } = metadata;
   const localization = metadata.geo.fullLocalizedName;

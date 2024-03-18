@@ -1,4 +1,4 @@
-import { ProviderName } from "@/scripts/linkedIn/fetch-jobs/requests/provider-fetch-functions";
+import { ProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 
 export const CURRENT_PROVIDER: ProviderName = "withoutProxy";
 

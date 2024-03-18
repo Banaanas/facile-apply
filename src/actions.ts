@@ -1,6 +1,6 @@
 "use server";
 
-import { IndeedJob, LinkedInJob } from "@prisma/client";
+import { IndeedJob, LinkedinJob } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
 import { revalidatePath } from "next/cache";
 import { appRoutes } from "@/data/app-routes";
@@ -17,12 +17,12 @@ export const updateIndeedJobStatus = async (
   revalidatePath(appRoutes.indeed.href);
 };
 
-export const updateLinkedInJobStatus = async (
-  linkedInJobId: LinkedInJob["id"],
-  newStatus: LinkedInJob["status"],
+export const updateLinkedinJobStatus = async (
+  linkedinJobId: LinkedinJob["id"],
+  newStatus: LinkedinJob["status"],
 ) => {
-  await prisma.linkedInJob.update({
-    where: { id: linkedInJobId },
+  await prisma.linkedinJob.update({
+    where: { id: linkedinJobId },
     data: { status: newStatus },
   });
 

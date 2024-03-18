@@ -3,15 +3,15 @@ import console from "node:console";
 import { PrismaClient } from "@prisma/client";
 import colors from "colors";
 
-import { TransformedScrapedLinkedInJob } from "@/scripts/linkedIn/fetch-jobs/fetch-jobs.types";
+import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 const prisma = new PrismaClient();
 
 export const registerTransformedJobResultsInDB = async (
-  transformedJobResults: Array<TransformedScrapedLinkedInJob>,
+  transformedJobResults: Array<TransformedScrapedLinkedinJob>,
 ) => {
   // Use createMany with skipDuplicates
-  const response = await prisma.linkedInJob.createMany({
+  const response = await prisma.linkedinJob.createMany({
     data: transformedJobResults,
     skipDuplicates: true, // Automatically skip any duplicates
   });

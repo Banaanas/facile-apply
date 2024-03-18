@@ -1,20 +1,20 @@
-import { TransformedScrapedLinkedInJob } from "@/scripts/linkedIn/fetch-jobs/fetch-jobs.types";
-import { transformLinkedInJobResults } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
-import { fetchResultsWithProvider } from "@/scripts/linkedIn/fetch-jobs/requests/provider-fetch-functions";
-import { linkedInSearchMessage } from "@/scripts/utils/console-messages";
+import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
+import { transformLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
+import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
+import { linkedinSearchMessage } from "@/scripts/utils/console-messages";
 import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
 
 export const getJobResults = async (
-  linkedInSearch: string,
+  linkedinSearch: string,
   withRandomDelay: boolean,
-): Promise<Array<TransformedScrapedLinkedInJob>> => {
+): Promise<Array<TransformedScrapedLinkedinJob>> => {
   let start = 0;
   let totalJobsCount = 0;
   const allJobs = []; // Array to accumulate all jobs
   let isFirstRequest = true; // Flag to indicate if it's the first request
 
   while (isFirstRequest || allJobs.length < totalJobsCount) {
-    const urlWithPagination = linkedInSearch.replace(
+    const urlWithPagination = linkedinSearch.replace(
       /&start=\d+/,
       `&start=${start}`,
     );
@@ -32,12 +32,12 @@ export const getJobResults = async (
     }
 
     if (rawData && rawData.elements && rawData.elements.length > 0) {
-      const jobs = transformLinkedInJobResults(rawData);
+      const jobs = transformLinkedinJobResults(rawData);
       allJobs.push(...jobs); // Accumulate jobs
 
       // Log search details on the first page
       if (start === 0 && rawData.metadata) {
-        linkedInSearchMessage(rawData.metadata);
+        linkedinSearchMessage(rawData.metadata);
       }
 
       console.log(`Fetched ${jobs.length} jobs on this page.`);

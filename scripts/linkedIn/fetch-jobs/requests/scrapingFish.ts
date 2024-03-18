@@ -1,21 +1,21 @@
 import axios from "axios";
 import colors from "colors";
 
-import { linkedInConfig, scrapingFishConfig } from "@/scripts/config";
-import { RawLinkedInData } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
+import { linkedinConfig, scrapingFishConfig } from "@/scripts/config";
+import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import {
   fetchingWithMessage,
-  linkedInRequestErrorMessage,
+  linkedinRequestErrorMessage,
   missingVarMessage,
 } from "@/scripts/utils/console-messages";
 
-export const fetchLinkedInScrapingFish = async (
+export const fetchLinkedinScrapingFish = async (
   targetUrl: string,
-): Promise<RawLinkedInData> => {
+): Promise<RawLinkedinData> => {
   fetchingWithMessage("Scraping Fish");
 
   const { apiKey, apiUrl } = scrapingFishConfig;
-  const { jsessionId, liAt } = linkedInConfig;
+  const { jsessionId, liAt } = linkedinConfig;
 
   if (!apiKey) {
     throw new Error(missingVarMessage);
@@ -54,7 +54,7 @@ export const fetchLinkedInScrapingFish = async (
 
     return response.data;
   } catch (error) {
-    console.log(colors.red(linkedInRequestErrorMessage));
+    console.log(colors.red(linkedinRequestErrorMessage));
     throw error;
   }
 };

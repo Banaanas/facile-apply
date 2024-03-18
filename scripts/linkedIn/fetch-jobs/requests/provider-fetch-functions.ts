@@ -1,13 +1,13 @@
 import colors from "colors";
 
-import { CURRENT_PROVIDER } from "@/scripts/linkedIn/fetch-jobs/data/search-params";
-import { RawLinkedInData } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
-import { fetchLinkedInScrapingFish } from "@/scripts/linkedIn/fetch-jobs/requests/scrapingFish";
-import { fetchLinkedInWithoutProxy } from "@/scripts/linkedIn/fetch-jobs/requests/without-proxy";
+import { CURRENT_PROVIDER } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
+import { fetchLinkedinScrapingFish } from "@/scripts/linkedin/fetch-jobs/requests/scrapingFish";
+import { fetchLinkedinWithoutProxy } from "@/scripts/linkedin/fetch-jobs/requests/without-proxy";
 
 export const providerFunctions: ProviderFetchFunctions = {
-  scrapingFish: fetchLinkedInScrapingFish,
-  withoutProxy: fetchLinkedInWithoutProxy,
+  scrapingFish: fetchLinkedinScrapingFish,
+  withoutProxy: fetchLinkedinWithoutProxy,
 };
 
 export const fetchResultsWithProvider = async (searchUrl: string) => {
@@ -26,6 +26,6 @@ interface ProviderFetchFunctions {
   withoutProxy: FetchFunction;
 }
 
-type FetchFunction = (searchUrl: string) => Promise<RawLinkedInData>;
+type FetchFunction = (searchUrl: string) => Promise<RawLinkedinData>;
 
 export type ProviderName = keyof ProviderFetchFunctions;

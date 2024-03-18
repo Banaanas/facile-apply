@@ -3,12 +3,12 @@
 import DataTableRowActions from "@components/table/data-table-row-actions";
 import SortingButton from "@components/table/SortingButton";
 import { getReadableStatus } from "@components/table/table.helpers";
-import { IndeedJob, LinkedInJob } from "@prisma/client";
+import { IndeedJob, LinkedinJob } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const columnsLinkedin: ColumnDef<LinkedInJob>[] = [
+export const columnsLinkedin: ColumnDef<LinkedinJob>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,16 +36,16 @@ export const columnsLinkedin: ColumnDef<LinkedInJob>[] = [
     header: "Title",
     accessorKey: "title",
     cell: ({ row }) => {
-      const linkedInJob = row.original;
+      const linkedinJob = row.original;
 
       return (
         <a
-          href={linkedInJob.link}
+          href={linkedinJob.link}
           className="hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {linkedInJob.title}
+          {linkedinJob.title}
         </a>
       );
     },

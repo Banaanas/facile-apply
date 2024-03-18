@@ -1,3 +1,3 @@
-import { LinkedInJob } from "@prisma/client";
+import { LinkedinJob } from "@prisma/client";
 
-export type TransformedScrapedLinkedInJob = Omit<LinkedInJob, "id">;
+export type TransformedScrapedLinkedinJob = Omit<LinkedinJob, "id">;

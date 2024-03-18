@@ -2,20 +2,20 @@ import axios from "axios";
 import colors from "colors";
 import * as fs from "fs";
 
-import { linkedInConfig } from "@/scripts/config";
-import { RawLinkedInData } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
+import { linkedinConfig } from "@/scripts/config";
+import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import {
   fetchingWithMessage,
-  linkedInRequestErrorMessage,
+  linkedinRequestErrorMessage,
   missingVarMessage,
 } from "@/scripts/utils/console-messages";
 
-export const fetchLinkedInWithoutProxy = async (
+export const fetchLinkedinWithoutProxy = async (
   targetUrl: string,
-): Promise<RawLinkedInData> => {
+): Promise<RawLinkedinData> => {
   fetchingWithMessage("NO PROXY");
 
-  const { jsessionId, liAt } = linkedInConfig;
+  const { jsessionId, liAt } = linkedinConfig;
 
   if (!jsessionId || !liAt) {
     throw new Error(missingVarMessage);
@@ -34,7 +34,7 @@ export const fetchLinkedInWithoutProxy = async (
 
     return data;
   } catch (error) {
-    console.log(colors.red(linkedInRequestErrorMessage));
+    console.log(colors.red(linkedinRequestErrorMessage));
     throw error;
   }
 };

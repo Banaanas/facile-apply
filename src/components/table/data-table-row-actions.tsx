@@ -12,7 +12,7 @@ import { Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 
-import { updateIndeedJobStatus, updateLinkedInJobStatus } from "@/actions";
+import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,7 +44,7 @@ const DataTableRowActions = <TData,>({
     }
 
     if (jobPlatform === "linkedin") {
-      await updateLinkedInJobStatus(job.id, newStatus as JobStatus);
+      await updateLinkedinJobStatus(job.id, newStatus as JobStatus);
     }
 
     setStatus(newStatus);

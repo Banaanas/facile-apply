@@ -50,7 +50,7 @@ export const zenrowsConfig = {
 };
 
 // LINKEDIN
-export const linkedInConfig = {
+export const linkedinConfig = {
   jsessionId: process.env.LINKEDIN_JSESSIONID,
   liAt: process.env.LINKEDIN_LIAT,
 };

@@ -21,7 +21,7 @@ export const getJobResults = async (
 
     // Each time we fetch, we wait for a delay - AVOIDING SERVER DETECTION
     if (withRandomDelay) {
-      await waitForRandomDelay(1000, 3000);
+      await waitForRandomDelay(3000, 5000);
     }
 
     const rawData = await fetchResultsWithProvider(urlWithPagination);

@@ -21,4 +21,3 @@ export const checkDatabaseConnection = async () => {
     process.exit(1);
   }
 };
-

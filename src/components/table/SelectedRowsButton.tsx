@@ -22,9 +22,6 @@ const SelectedRowsButton = <TData,>({
   selectedRows: Row<TData>[];
 }) => {
   const handleEditRows = async (newStatus: JobStatus) => {
-
-
-    console.log(jobPlatform);
     // Use map to create an array of promises for each update operation
     const updatePromises = selectedRows.map(async (row) => {
       const job = row.original; // Assuming row.original contains the job data
@@ -49,20 +46,26 @@ const SelectedRowsButton = <TData,>({
     }
   };
 
+  const isButtonDisable = selectedRows.length === 0;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
-          className="flex size-8 p-0 data-[state=open]:bg-muted"
+          variant="default"
+          className="flex !cursor-copy items-center justify-center gap-x-2"
+          disabled={isButtonDisable}
         >
           <Edit className="size-4" />
           <span>Log selected rows</span>
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
+      <div className="flex-1 text-sm text-muted-foreground">
+        {selectedRows.length} row(s) selected.
+      </div>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuRadioGroup value={status} onValueChange={handleEditRows}>
+        <DropdownMenuRadioGroup onValueChange={handleEditRows}>
           {statuses.map(({ value, label }) => {
             return (
               <DropdownMenuRadioItem key={value} value={value}>

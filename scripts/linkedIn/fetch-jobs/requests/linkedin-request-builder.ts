@@ -1,31 +1,25 @@
+import { COMMON_PARAMS } from "@/scripts/linkedIn/fetch-jobs/data/search-params";
 import { SearchConfig } from "@/scripts/linkedIn/fetch-jobs/fetch-jobs.types";
 
-export const buildSearchRequest = (config: SearchConfig): string => {
-  const { keywords, geoId, selectedFilters } = config;
+// Function to build the query string
+const buildQuery = (config: SearchConfig) => {
+  const { keywords, geoId } = config;
   const {
     sortBy,
     experience,
     timePostedRange,
     workplaceType,
     applyWithLinkedin,
-  } = selectedFilters;
+  } = COMMON_PARAMS;
 
-  // Correctly constructing and encoding the query
-  const queryParts = [
-    `origin:JOB_SEARCH_PAGE_JOB_FILTER`,
-    `keywords:${encodeURIComponent(keywords)}`,
-    `locationUnion:(geoId:${geoId})`,
-    `selectedFilters:(sortBy:List(${sortBy})`,
-    `applyWithLinkedin:List(${applyWithLinkedin})`,
-    `experience:List(${experience.join(",")})`,
-    `timePostedRange:List(${timePostedRange})`,
-    `workplaceType:List(${workplaceType.join(",")}))`,
-    `spellCorrectionEnabled:true`,
-  ];
+  const experienceList = experience.map((level) => level).join(",");
+  const workplaceTypeList = [workplaceType].join(",");
 
-  // Joining the parts of the query ensures that only necessary parts are encoded
-  const query = `(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:${keywords},locationUnion:(geoId:${geoId}),selectedFilters:(sortBy:List(${sortBy}),applyWithLinkedin:List(${applyWithLinkedin ? "true" : "false"}),experience:List(${experience.join(",")}),timePostedRange:List(${timePostedRange}),workplaceType:List(${workplaceType.join(",")})),spellCorrectionEnabled:true)`;
+  return `(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:${keywords},locationUnion:(geoId:${geoId}),selectedFilters:(sortBy:List(${sortBy}),applyWithLinkedin:List(${applyWithLinkedin}),experience:List(${experienceList}),timePostedRange:List(${timePostedRange}),workplaceType:List(${workplaceTypeList})),spellCorrectionEnabled:true)`;
+};
 
+// Function to build the final URL
+const buildUrl = (query: string) => {
   const baseUrl =
     "https://www.linkedin.com/voyager/api/voyagerJobsDashJobCards";
   const decorationId =
@@ -33,10 +27,12 @@ export const buildSearchRequest = (config: SearchConfig): string => {
   const count = 25; // Number of results to return
   const start = 0; // Pagination start
 
-  // Assemble the final URL with proper encoding of the query part
-  const url = `${baseUrl}?decorationId=${decorationId}&count=${count}&q=jobSearch&query=${query}&start=${start}`;
+  return `${baseUrl}?decorationId=${decorationId}&count=${count}&q=jobSearch&query=${query}&start=${start}`;
+};
 
-  console.log(url); // For debugging
+export const buildSearchRequest = (config: SearchConfig): string => {
+  const query = buildQuery(config);
+  const url = buildUrl(query);
 
   return url;
 };

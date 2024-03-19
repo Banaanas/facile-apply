@@ -1,4 +1,5 @@
 import { LinkedinJob } from "@prisma/client";
+
 import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 export const extractLinkedinJobDetails = (
@@ -23,11 +24,16 @@ export const extractLinkedinJobDetails = (
   // Extract the location from secondaryDescription.text
   const location = secondaryDescription.text;
 
-  // Find the "LISTED_DATE" item for the createDate
+  // Default createDate to the current date
+  let createDate = new Date();
+  // Attempt to find a "LISTED_DATE" item for the createDate
   const listedDateItem = footerItems.find(
     (item) => item.type === "LISTED_DATE",
   );
-  const createDate = new Date(listedDateItem!.timeAt);
+  if (listedDateItem && listedDateItem.timeAt) {
+    // If found and "timeAt" is available, use that for the createDate
+    createDate = new Date(listedDateItem.timeAt);
+  }
 
   // Create defaults status
   const status: LinkedinJob["status"] = "NotReviewed";
@@ -92,7 +98,7 @@ export interface RawLinkedinJobCardUnion {
     };
     footerItems: Array<{
       type: string;
-      timeAt: number;
+      timeAt?: number; // Not present for PROMOTED type jobs
       // Used if ever needed, for example, for "EASY_APPLY_TEXT" or other descriptive texts
       text?: {
         text: string;

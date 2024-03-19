@@ -25,9 +25,14 @@ const main = async () => {
     for (const [searchKey, searchQuery] of Object.entries(details.searches)) {
       console.log(
         colors.cyan(
-          `Searching ${searchKey} in ${country} for the past ${SEARCH_DATE_RANGE_DAYS} days...`,
+          `Searching ${searchKey} in ${country} for the past ${
+            SEARCH_DATE_RANGE_DAYS === 1
+              ? "day"
+              : `${SEARCH_DATE_RANGE_DAYS} days`
+          }...`,
         ),
       );
+
       // Used in case of using Playwright session after (for auto-apply bot purpose)
       const context = await browser.newContext();
       const page = await context.newPage();

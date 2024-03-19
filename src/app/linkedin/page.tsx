@@ -4,7 +4,6 @@ import { prisma } from "@prisma/db.server";
 
 const LinkedinPage = async () => {
   const jobs = await prisma.linkedinJob.findMany();
-  console.log(jobs);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">

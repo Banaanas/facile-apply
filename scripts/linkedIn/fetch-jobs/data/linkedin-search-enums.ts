@@ -13,7 +13,7 @@ export enum WorkplaceType {
   Hybrid = "3",
 }
 
-export enum TimePosted {
+export enum TimePostedRange {
   Last24Hours = "r86400",
   LastWeek = "r604800",
   LastMonth = "r2592000",

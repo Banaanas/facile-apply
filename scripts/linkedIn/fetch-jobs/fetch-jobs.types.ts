@@ -5,31 +5,9 @@ import {
   SortBy,
   TimePosted,
   WorkplaceType,
-} from "@/scripts/linkedIn/fetch-jobs/utils/constants";
+} from "@/scripts/linkedIn/fetch-jobs/utils/linkedin-search-enums.ts";
 
 export type TransformedScrapedLinkedinJob = Omit<LinkedinJob, "id">;
-
-// SEARCH QUERY PARAMETERS
-
-interface LinkedInSearchQueryParams {
-  origin: string;
-  keywords: string;
-  locationUnion: LocationUnion;
-  selectedFilters: SelectedFilters;
-  spellCorrectionEnabled: boolean;
-}
-
-interface LocationUnion {
-  geoId: string;
-}
-
-interface SelectedFilters {
-  sortBy: SortBy;
-  applyWithLinkedin?: boolean;
-  experience: Array<ExperienceLevel>;
-  timePostedRange: TimePosted;
-  workplaceType: Array<WorkplaceType>;
-}
 
 export interface SearchConfig {
   keywords: string;
@@ -41,8 +19,4 @@ export interface SearchConfig {
     workplaceType: Array<WorkplaceType>;
     applyWithLinkedin: boolean;
   };
-}
-
-export interface SearchConfigs {
-  [configKey: string]: SearchConfig;
 }

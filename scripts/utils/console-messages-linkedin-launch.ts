@@ -5,8 +5,8 @@ import {
   SortBy,
   TimePostedRange,
   WorkplaceType,
-} from "@/scripts/linkedIn/fetch-jobs/data/linkedin-search-enums";
-import { COMMON_PARAMS } from "@/scripts/linkedIn/fetch-jobs/data/search-params";
+} from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
+import { COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 
 const mapSortBy = (sortBy: SortBy) => {
   switch (sortBy) {

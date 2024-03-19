@@ -3,10 +3,10 @@ import {
   SortBy,
   TimePostedRange,
   WorkplaceType,
-} from "@/scripts/linkedIn/fetch-jobs/data/linkedin-search-enums";
+} from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
 import { ProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 
-export const CURRENT_PROVIDER: ProviderName = "withoutProxy";
+export const LINKEDIN_CURRENT_PROVIDER: ProviderName = "withoutProxy";
 
 export const DelayOption = {
   ENABLED: true,

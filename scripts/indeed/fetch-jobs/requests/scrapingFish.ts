@@ -1,16 +1,11 @@
 import axios from "axios";
 
 import { scrapingFishConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 export const fetchPageScrapingFish = async (
   targetUrl: string,
 ): Promise<string> => {
-  fetchingWithMessage("Scraping Fish");
-
   const { apiKey, apiUrl } = scrapingFishConfig;
 
   const payload = {

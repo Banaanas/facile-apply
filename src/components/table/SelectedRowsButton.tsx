@@ -53,7 +53,7 @@ const SelectedRowsButton = <TData,>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="default"
-          className="flex !cursor-copy items-center justify-center gap-x-2"
+          className="flex items-center justify-center gap-x-2"
           disabled={isButtonDisable}
         >
           <Edit className="size-4" />

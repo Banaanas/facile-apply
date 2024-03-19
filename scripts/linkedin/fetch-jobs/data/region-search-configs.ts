@@ -1,4 +1,4 @@
-import { SearchConfigurations } from "@/scripts/linkedIn/fetch-jobs/data/linkedin-search-types";
+import { SearchConfigurations } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-types";
 
 export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
   France: {

@@ -2,14 +2,9 @@ import axios from "axios";
 import https from "https";
 
 import { brightDataConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 export const fetchPageBrightData = async (url: string): Promise<string> => {
-  fetchingWithMessage("Bright Data");
-
   const { host, port, user, pass } = brightDataConfig;
 
   // Check if all required environment variables are defined

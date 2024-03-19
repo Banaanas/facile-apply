@@ -1,12 +1,19 @@
 import colors from "colors";
 
+import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
+import { ProviderName as LinkedinProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 
 // Page Requests
+export const fetchingWithMessage = (
+  providerName: IndeedProviderName | LinkedinProviderName,
+) => {
+  if (providerName === "withoutProxy") {
+    console.log(colors.magenta.italic(`Fetching with WITHOUT PROXY Provider`));
+  }
 
-export const fetchingWithMessage = (providerName: string) => {
   console.log(
-    colors.green.italic(`Fetching with ${providerName} Data Provider`),
+    colors.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
   );
 };
 

@@ -40,8 +40,6 @@ export const getJobResults = async (
         linkedinSearchMessage(rawData.metadata);
       }
 
-      console.log(`Fetched ${jobs.length} jobs on this page.`);
-
       start += jobs.length; // Prepare for fetching the next page
       if (allJobs.length >= totalJobsCount) {
         break; // Exit the loop if we have fetched all jobs

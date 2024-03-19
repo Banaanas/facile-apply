@@ -1,16 +1,11 @@
 import { ScrapeConfig, ScrapflyClient } from "scrapfly-sdk";
 
 import { scrapflyConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 const client = new ScrapflyClient({ key: scrapflyConfig.apiKey });
 
 export const fetchPageScrapFly = async (targetUrl: string): Promise<string> => {
-  fetchingWithMessage("Scrapfly");
-
   const { apiKey } = scrapflyConfig;
 
   if (!apiKey) {

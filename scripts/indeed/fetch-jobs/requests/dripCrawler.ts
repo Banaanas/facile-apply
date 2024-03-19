@@ -1,16 +1,11 @@
 import axios from "axios";
 
 import { rapidApiConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 export const fetchPageDripCrawler = async (
   targetUrl: string,
 ): Promise<string> => {
-  fetchingWithMessage("Drip Crawler");
-
   const { key, host } = rapidApiConfig;
 
   if (!key || !host) {

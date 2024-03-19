@@ -1,14 +1,9 @@
 import axios from "axios";
 
 import { oxylabsConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 export const fetchPageOxylabs = async (url: string): Promise<string> => {
-  fetchingWithMessage("Oxylabs");
-
   const { endpoint, username, password } = oxylabsConfig;
 
   if (!endpoint || !username || !password) {

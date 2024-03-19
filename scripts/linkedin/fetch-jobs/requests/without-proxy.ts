@@ -1,58 +1,35 @@
 import axios from "axios";
 import colors from "colors";
+import * as fs from "fs";
 
-import { linkedinConfig, scrapingFishConfig } from "@/scripts/config";
+import { linkedinConfig } from "@/scripts/config";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import {
-  fetchingWithMessage,
   linkedinRequestErrorMessage,
   missingVarMessage,
 } from "@/scripts/utils/console-messages";
 
-export const fetchLinkedinScrapingFish = async (
+export const fetchLinkedinWithoutProxy = async (
   targetUrl: string,
 ): Promise<RawLinkedinData> => {
-  fetchingWithMessage("Scraping Fish");
-
-  const { apiKey, apiUrl } = scrapingFishConfig;
   const { jsessionId, liAt } = linkedinConfig;
 
-  if (!apiKey) {
+  if (!jsessionId || !liAt) {
     throw new Error(missingVarMessage);
   }
 
   const headers = {
     "user-agent":
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+    Cookie: `JSESSIONID=${jsessionId}; li_at=${liAt};`,
     "csrf-token": `${jsessionId}`,
   };
 
-  const cookies = [
-    {
-      name: "JSESSIONID",
-      value: jsessionId,
-    },
-    {
-      name: "li_at",
-      value: liAt,
-    },
-  ];
-
-  const payload = {
-    api_key: apiKey,
-    url: targetUrl,
-    headers: JSON.stringify(headers),
-    cookies: JSON.stringify(cookies),
-  };
-
   try {
-    const response = await axios.get(apiUrl as string, {
-      params: payload,
-    });
+    const { data } = await axios.get(targetUrl, { headers });
+    fs.writeFileSync("response.json", JSON.stringify(data), "utf8");
 
-    console.log(response.data);
-
-    return response.data;
+    return data;
   } catch (error) {
     console.log(colors.red(linkedinRequestErrorMessage));
     throw error;

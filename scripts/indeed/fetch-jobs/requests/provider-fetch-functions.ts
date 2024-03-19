@@ -1,6 +1,6 @@
 import colors from "colors";
 
-import { CURRENT_PROVIDER } from "@/scripts/indeed/fetch-jobs/data/search-params";
+import { INDEED_CURRENT_PROVIDER } from "@/scripts/indeed/fetch-jobs/data/search-params";
 import { fetchPageBrightData } from "@/scripts/indeed/fetch-jobs/requests/brightData";
 import { fetchPageDripCrawler } from "@/scripts/indeed/fetch-jobs/requests/dripCrawler";
 import { fetchPageIPRoyal } from "@/scripts/indeed/fetch-jobs/requests/ipRoyal";
@@ -20,11 +20,11 @@ export const providerFunctions: ProviderFetchFunctions = {
 };
 
 export const fetchPageWithProvider = async (searchUrl: string) => {
-  const fetchFunction = providerFunctions[CURRENT_PROVIDER];
+  const fetchFunction = providerFunctions[INDEED_CURRENT_PROVIDER];
 
   if (!fetchFunction) {
     throw new Error(
-      colors.red(`Fetch provider ${CURRENT_PROVIDER} is not defined.`),
+      colors.red(`Fetch provider ${INDEED_CURRENT_PROVIDER} is not defined.`),
     );
   }
   return fetchFunction(searchUrl);

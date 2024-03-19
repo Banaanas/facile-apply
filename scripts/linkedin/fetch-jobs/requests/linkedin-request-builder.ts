@@ -1,5 +1,5 @@
-import { COMMON_PARAMS } from "@/scripts/linkedIn/fetch-jobs/data/search-params";
-import { SearchConfig } from "@/scripts/linkedIn/fetch-jobs/fetch-jobs.types";
+import { COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { SearchConfig } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 // Function to build the query string
 const buildQuery = (config: SearchConfig) => {

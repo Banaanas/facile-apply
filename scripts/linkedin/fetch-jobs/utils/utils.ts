@@ -1,4 +1,4 @@
-import { RawLinkedinJobCardUnion } from "@/scripts/linkedIn/fetch-jobs/parsing/transform-job-results";
+import { RawLinkedinJobCardUnion } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 
 export const extractDateFromDaysAgoText = (
   footerItems: RawLinkedinJobCardUnion["jobPostingCard"]["footerItems"],

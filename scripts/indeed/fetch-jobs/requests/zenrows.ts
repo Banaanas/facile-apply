@@ -1,14 +1,9 @@
 import axios from "axios";
 
 import { zenrowsConfig } from "@/scripts/config";
-import {
-  fetchingWithMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console-messages";
 
 export const fetchPageZenrows = async (targetUrl: string): Promise<string> => {
-  fetchingWithMessage("Zenrows");
-
   const { apiKey, apiUrl } = zenrowsConfig;
 
   if (!apiKey) {

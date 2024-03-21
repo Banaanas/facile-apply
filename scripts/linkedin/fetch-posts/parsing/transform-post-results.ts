@@ -1,4 +1,4 @@
-import { fetchAuthorCountryFromPostItem } from "@/scripts/linkedin/fetch-posts/parsing/get-post-country";
+import { fetchAuthorCountryFromPostItem } from "@/scripts/linkedin/fetch-posts/parsing/get-author-post-country";
 import {
   PostItem,
   SearchClusterViewModel,

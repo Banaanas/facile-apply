@@ -1,4 +1,4 @@
-import { COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { SearchConfig } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 // Function to build the query string
@@ -10,7 +10,7 @@ const buildQuery = (config: SearchConfig) => {
     timePostedRange,
     workplaceType,
     applyWithLinkedin,
-  } = COMMON_PARAMS;
+  } = LINKEDIN_JOB_SEARCH_COMMON_PARAMS;
 
   const experienceList = experience.map((level) => level).join(",");
   const workplaceTypeList = [workplaceType].join(",");

@@ -6,7 +6,7 @@ export interface TransformedScrapedLinkedinPost {
   profilePhotoUrl?: string;
   summary: string;
   title: string;
-  trackingUrn?: string;
+  trackingUrn: string;
 }
 
 export interface RawLinkedinPostData {

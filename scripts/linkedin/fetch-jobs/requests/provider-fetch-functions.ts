@@ -1,10 +1,10 @@
 import colors from "colors";
 
-import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchLinkedinScrapingFish } from "@/scripts/linkedin/fetch-jobs/requests/scrapingFish";
 import { fetchLinkedinWithoutProxy } from "@/scripts/linkedin/fetch-jobs/requests/without-proxy";
-import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/transform-post-results";
+import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";
 
 export const providerFunctions: ProviderFetchFunctions = {
   scrapingFish: fetchLinkedinScrapingFish,

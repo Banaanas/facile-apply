@@ -1,5 +1,3 @@
-import { SearchConfigurations } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-types";
-
 export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
   France: {
     geoId: "105015875",
@@ -26,3 +24,12 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
     keywords: ["React Developer", "UI developer", "UX developer"],
   },
 };
+
+interface SearchRegionConfiguration {
+  geoId: string;
+  keywords: Array<string>;
+}
+
+export interface SearchConfigurations {
+  [key: string]: SearchRegionConfiguration;
+}

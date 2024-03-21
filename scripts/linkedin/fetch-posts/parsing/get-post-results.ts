@@ -23,7 +23,7 @@ export const getPostResults = async (
 
     // Optionally wait for a random delay to avoid server detection
     if (withRandomDelay) {
-      await waitForRandomDelay(3000, 5000);
+      await waitForRandomDelay(1000, 1500);
     }
 
     const rawData: RawLinkedinPostData = (await fetchResultsWithProvider(
@@ -40,11 +40,6 @@ export const getPostResults = async (
     const transformedPosts = await transformLinkedinPostResults(
       rawData.data.searchDashClustersByAll.elements,
     );
-
-   /*  // Filter posts based on the author's country before accumulating
-    const postsFromAuthorizedCountries = transformedPosts.filter(
-      (post) => post.country && authorizedCountries.includes(post.country),
-    ); */
 
     allPosts.push(...transformedPosts);
 

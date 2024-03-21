@@ -4,16 +4,13 @@ import {
   TimePostedRange,
   WorkplaceType,
 } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
-import { ProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
-
-export const LINKEDIN_CURRENT_PROVIDER: ProviderName = "withoutProxy";
 
 export const DelayOption = {
   ENABLED: true,
   DISABLED: false,
 };
 
-export const COMMON_PARAMS: CommonParams = {
+export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
   applyWithLinkedin: true,
   experience: [
     ExperienceLevel.Entry,

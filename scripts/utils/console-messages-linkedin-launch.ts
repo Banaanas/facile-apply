@@ -6,7 +6,9 @@ import {
   TimePostedRange,
   WorkplaceType,
 } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
-import { COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { SearchConfiguration } from "@/scripts/linkedin/fetch-posts/data/post-search-configs";
+import { LINKEDIN_POST_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-posts/data/search-params";
 
 const mapSortBy = (sortBy: SortBy) => {
   switch (sortBy) {
@@ -60,29 +62,57 @@ const mapWorkplaceType = (workplaceType: WorkplaceType) => {
   }
 };
 
-export const logCommonSearchParams = () => {
+export const logCommonLinkedinJobSearchParams = () => {
   console.log(
     colors.cyan("Initializing search with the following common parameters:"),
   );
   console.log(
     colors.yellow(
-      `- Apply With LinkedIn: ${COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
+      `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
     ),
   );
   console.log(
     colors.yellow(
-      `- Experience Levels: ${mapExperienceLevel(COMMON_PARAMS.experience)}`,
+      `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
     ),
   );
   console.log(
     colors.yellow(
-      `- Time Posted Range: ${mapTimePostedRange(COMMON_PARAMS.timePostedRange)}`,
+      `- Time Posted Range: ${mapTimePostedRange(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.timePostedRange)}`,
     ),
   );
-  console.log(colors.yellow(`- Sort By: ${mapSortBy(COMMON_PARAMS.sortBy)}`));
   console.log(
     colors.yellow(
-      `- Workplace Type: ${mapWorkplaceType(COMMON_PARAMS.workplaceType)}`,
+      `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`,
     ),
   );
+  console.log(
+    colors.yellow(
+      `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
+    ),
+  );
+};
+export const logCommonLinkedinPostSearchParams = (
+  keywordsArray: SearchConfiguration["keywords"],
+) => {
+  // Destructure datePosted and sortBy from LINKEDIN_POST_SEARCH_COMMON_PARAMS.queryParameters
+  const { datePosted, sortBy } =
+    LINKEDIN_POST_SEARCH_COMMON_PARAMS.queryParameters;
+
+  console.log(
+    colors.cyan("Initializing search with the following common parameters:"),
+  );
+
+  // Assuming each parameter array contains only a single value for logging purposes
+  const datePostedStr = datePosted.join(", ").toString();
+  const sortByStr = sortBy.join(", ").toString();
+
+  // Logging Keywords Array
+  console.log(colors.yellow(`- Keywords: ${keywordsArray.join(", ")}`));
+
+  // Logging Date Posted
+  console.log(colors.yellow(`- Date Posted: ${datePostedStr}`));
+
+  // Logging Sort By
+  console.log(colors.yellow(`- Sort By: ${sortByStr}`));
 };

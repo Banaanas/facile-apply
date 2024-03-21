@@ -1,6 +1,5 @@
 import axios from "axios";
 import colors from "colors";
-import * as fs from "fs";
 
 import { linkedinConfig } from "@/scripts/config";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
@@ -27,7 +26,6 @@ export const fetchLinkedinWithoutProxy = async (
 
   try {
     const { data } = await axios.get(targetUrl, { headers });
-    fs.writeFileSync("response.json", JSON.stringify(data), "utf8");
 
     return data;
   } catch (error) {

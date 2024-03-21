@@ -1,6 +1,3 @@
-import * as fs from "node:fs";
-import path from "node:path";
-
 import * as cheerio from "cheerio";
 import colors from "colors";
 
@@ -38,12 +35,6 @@ export const getSearchCountry = (
     .replace(/:/g, "-")
     .replace(/\..+/, "")
     .replace("T", "_");
-
-  // Define file path with timestamp
-  const debugFilePath = path.join(__dirname, `debugHtmlPage_${timestamp}.html`);
-
-  // Write file
-  fs.writeFileSync(debugFilePath, htmlPage);
 
   console.log(
     colors.red(`Current page HTML saved for debugging: ${debugFilePath}`),

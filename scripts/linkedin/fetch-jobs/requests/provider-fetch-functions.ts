@@ -4,6 +4,7 @@ import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/fetch-jobs/data/se
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchLinkedinScrapingFish } from "@/scripts/linkedin/fetch-jobs/requests/scrapingFish";
 import { fetchLinkedinWithoutProxy } from "@/scripts/linkedin/fetch-jobs/requests/without-proxy";
+import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/transform-post-results";
 
 export const providerFunctions: ProviderFetchFunctions = {
   scrapingFish: fetchLinkedinScrapingFish,
@@ -26,6 +27,8 @@ interface ProviderFetchFunctions {
   withoutProxy: FetchFunction;
 }
 
-type FetchFunction = (searchUrl: string) => Promise<RawLinkedinData>;
+type FetchFunction = (
+  searchUrl: string,
+) => Promise<RawLinkedinData | RawLinkedinPostData>;
 
 export type ProviderName = keyof ProviderFetchFunctions;

@@ -21,17 +21,6 @@ const mapSortBy = (sortBy: SortBy) => {
   }
 };
 
-const mapTimePostedRange = (timePostedRange: TimePostedRange) => {
-  switch (timePostedRange) {
-    case TimePostedRange.Last24Hours:
-      return "Last 24 hours";
-    case TimePostedRange.LastWeek:
-      return "Last week";
-    default:
-      return "Unknown";
-  }
-};
-
 const mapExperienceLevel = (levels: Array<ExperienceLevel>) => {
   return levels
     .map((level) => {

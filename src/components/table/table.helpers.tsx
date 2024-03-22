@@ -1,8 +1,8 @@
 import FlagCA from "@components/table/country-flags/FlagCA";
 import FlagCH from "@components/table/country-flags/FlagCH";
 import FlagFR from "@components/table/country-flags/FlagFR";
-import { IndeedJob } from "@prisma/client";
 import FlagUS from "@components/table/country-flags/FlagUS";
+import { IndeedJob } from "@prisma/client";
 
 export const getReadableStatus = (status: IndeedJob["status"]) => {
   if (status === "Applied") return "Applied";

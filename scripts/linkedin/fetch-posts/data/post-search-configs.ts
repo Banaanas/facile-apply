@@ -5,6 +5,12 @@ export const POST_SEARCH_CONFIGURATIONS: SearchConfigurations = {
   ReactRemote: {
     keywords: ["react", "remote"],
   },
+  FrontEndRemote: {
+    keywords: ["front-end", "remote"],
+  },
+  WebDeveloperRemote: {
+    keywords: ["web developer", "remote"],
+  },
   UIDeveloper: {
     keywords: ["UI developer"],
   },

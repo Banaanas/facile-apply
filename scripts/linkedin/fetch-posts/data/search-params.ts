@@ -10,7 +10,7 @@ export const LINKEDIN_POST_SEARCH_COMMON_PARAMS: CommonParams = {
     contentType: ["jobs"],
     datePosted: [DatePosted.LastMonth],
     resultType: ["CONTENT"],
-    sortBy: [SortBy.Relevance],
+    sortBy: [SortBy.DatePosted],
   },
 };
 

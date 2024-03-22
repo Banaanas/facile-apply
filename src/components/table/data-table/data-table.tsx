@@ -136,7 +136,7 @@ export const DataTable = <TData, TValue>({
                 title={title}
                 options={options}
               />
-            ) : null,    )}*/}
+            ) : null,    )} */}
         </div>
         {isFiltered && (
           <Button

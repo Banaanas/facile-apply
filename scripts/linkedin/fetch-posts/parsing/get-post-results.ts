@@ -23,7 +23,7 @@ export const getPostResults = async (
 
     // Optionally wait for a random delay to avoid server detection
     if (withRandomDelay) {
-      await waitForRandomDelay(1000, 1500);
+      await waitForRandomDelay(3000, 5000);
     }
 
     const rawData: RawLinkedinPostData = (await fetchResultsWithProvider(

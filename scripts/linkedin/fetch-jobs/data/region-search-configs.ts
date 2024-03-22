@@ -19,10 +19,10 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
     geoId: "101174742",
     keywords: ["next.js", "react"],
   },
-  World: {
+  /*   World: {
     geoId: "92000000",
     keywords: ["React Developer", "UI developer", "UX developer"],
-  },
+  }, */
 };
 
 interface SearchRegionConfiguration {

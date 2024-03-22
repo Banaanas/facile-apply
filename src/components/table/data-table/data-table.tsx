@@ -39,6 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -128,7 +129,7 @@ export const DataTable = <TData, TValue>({
         />
 
         <div className="flex flex-wrap px-2">
-          {/*       {facetFilters.map(({ columnId, title, options }) =>
+          {facetFilters.map(({ columnId, title, options }) =>
             table.getColumn(columnId) ? (
               <DataTableFacetedFilter
                 key={columnId}
@@ -136,7 +137,8 @@ export const DataTable = <TData, TValue>({
                 title={title}
                 options={options}
               />
-            ) : null,    )} */}
+            ) : null,
+          )}
         </div>
         {isFiltered && (
           <Button

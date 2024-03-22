@@ -66,32 +66,42 @@ export const logCommonLinkedinJobSearchParams = () => {
   console.log(
     colors.cyan("Initializing search with the following common parameters:"),
   );
-  console.log(
-    colors.yellow(
-      `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
-    ),
-  );
-  console.log(
-    colors.yellow(
-      `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
-    ),
-  );
+
   console.log(
     colors.yellow(
       `- Time Posted Range: ${mapTimePostedRange(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.timePostedRange)}`,
     ),
   );
-  console.log(
-    colors.yellow(
-      `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`,
-    ),
-  );
+
+  // Log workplace type preference
   console.log(
     colors.yellow(
       `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
     ),
   );
+
+  // Log whether applying with LinkedIn is enabled
+  console.log(
+    colors.yellow(
+      `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
+    ),
+  );
+
+  // Log experience levels
+  console.log(
+    colors.yellow(
+      `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
+    ),
+  );
+
+  // Log sorting preference
+  console.log(
+    colors.yellow(
+      `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`,
+    ),
+  );
 };
+
 export const logCommonLinkedinPostSearchParams = (
   keywordsArray: SearchConfiguration["keywords"],
 ) => {
@@ -116,3 +126,22 @@ export const logCommonLinkedinPostSearchParams = (
   // Logging Sort By
   console.log(colors.yellow(`- Sort By: ${sortByStr}`));
 };
+
+function mapTimePostedRange(range: TimePostedRange): string {
+  switch (range) {
+    case TimePostedRange.Last24Hours:
+      return "Last 24 Hours";
+    case TimePostedRange.LastWeek:
+      return "Last Week";
+    case TimePostedRange.LastMonth:
+      return "Last Month";
+    case TimePostedRange.Last3Months:
+      return "Last 3 Months";
+    case TimePostedRange.Last6Months:
+      return "Last 6 Months";
+    case TimePostedRange.LastYear:
+      return "Last Year";
+    default:
+      return "Unknown Time Range";
+  }
+}

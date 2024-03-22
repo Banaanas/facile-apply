@@ -21,7 +21,7 @@ const main = async () => {
 
     const searchUrl = buildLinkedInQueryUrl(keywords);
     try {
-      const postResults = await getPostResults(searchUrl, DelayOption.DISABLED);
+      const postResults = await getPostResults(searchUrl, DelayOption.ENABLED);
       const filteredResults = postResults.filter(
         (post) => normalizeAndMatchCountry(post?.authorCountry) !== null,
       );

@@ -9,11 +9,7 @@ const IndeedPage = async () => {
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
       <h1 className="text-4xl font-bold text-blue-700">Indeed Results</h1>
       <div className="container mx-auto  py-10">
-        <DataTable
-          jobPlatform="indeed"
-          columns={columnsIndeed}
-          data={jobs}
-        />
+        <DataTable jobPlatform="indeed" columns={columnsIndeed} data={jobs} />
       </div>
     </main>
   );

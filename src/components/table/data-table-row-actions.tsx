@@ -4,15 +4,20 @@ import { statuses } from "@components/table/data/data";
 import {
   indeedJobSchema,
   linkedinJobSchema,
+  linkedinPostSchema,
 } from "@components/table/data/zod-schema";
 import { JobPlatform } from "@components/table/data-table/data-table";
 import { Button } from "@components/ui/button";
-import { $Enums } from "@prisma/client";
+import { $Enums, PostStatus } from "@prisma/client";
 import { Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 
-import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
+import {
+  updateIndeedJobStatus,
+  updateLinkedinJobStatus,
+  updateLinkedinPostStatus,
+} from "@/actions";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,25 +36,43 @@ const DataTableRowActions = <TData,>({
   row,
   jobPlatform,
 }: DataTableRowActionsProps<TData>) => {
-  const isIndeedType = jobPlatform === "indeed";
-  const job = isIndeedType
-    ? indeedJobSchema.parse(row.original)
-    : linkedinJobSchema.parse(row.original);
+  // Determine the type of the row and parse it accordingly
+  let jobOrPost;
+  let status;
+  if (jobPlatform === "indeed") {
+    jobOrPost = indeedJobSchema.parse(row.original);
+    status = jobOrPost.status;
+  } else if (jobPlatform === "linkedinJob") {
+    jobOrPost = linkedinJobSchema.parse(row.original);
+    status = jobOrPost.status;
+  } else if (jobPlatform === "linkedinPost") {
+    jobOrPost = linkedinPostSchema.parse(row.original);
+    status = jobOrPost.status; // Assuming PostStatus is compatible or handled accordingly
+  } else {
+    throw new Error(`Unsupported job platform: ${jobPlatform}`);
+  }
 
-  const [status, setStatus] = useState<JobStatus>(job.status);
+  const [currentStatus, setCurrentStatus] = useState<JobStatus | PostStatus>(
+    status,
+  );
 
-  const handleOnValueChange = async (newStatus: JobStatus) => {
-    if (jobPlatform === "indeed") {
-      await updateIndeedJobStatus(job.id, newStatus as JobStatus);
+  const handleOnValueChange = async (newStatus: JobStatus | PostStatus) => {
+    switch (jobPlatform) {
+      case "indeed":
+        await updateIndeedJobStatus(jobOrPost.id, newStatus as JobStatus);
+        break;
+      case "linkedinJob":
+        await updateLinkedinJobStatus(jobOrPost.id, newStatus as JobStatus);
+        break;
+      case "linkedinPost":
+        await updateLinkedinPostStatus(jobOrPost.id, newStatus as PostStatus);
+        break;
+      default:
+        // Handle unsupported job platform or throw an error
+        break;
     }
-
-    if (jobPlatform === "linkedin") {
-      await updateLinkedinJobStatus(job.id, newStatus as JobStatus);
-    }
-
-    setStatus(newStatus);
+    setCurrentStatus(newStatus);
   };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

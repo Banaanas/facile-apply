@@ -2,6 +2,18 @@ export const POST_SEARCH_CONFIGURATIONS: SearchConfigurations = {
   NextJsRemote: {
     keywords: ["next.js", "remote"],
   },
+  ReactRemote: {
+    keywords: ["react", "remote"],
+  },
+  UIDeveloper: {
+    keywords: ["UI developer"],
+  },
+  ReactTeletravail: {
+    keywords: ["react", "télétravail"],
+  },
+  IntegrateurWebRemote: {
+    keywords: ["intégrateur web", "remote"],
+  },
 };
 
 export interface SearchConfiguration {

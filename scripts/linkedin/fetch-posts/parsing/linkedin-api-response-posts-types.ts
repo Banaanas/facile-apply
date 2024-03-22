@@ -1,13 +1,6 @@
-export interface TransformedScrapedLinkedinPost {
-  authorProfileUrl: string;
-  authorCountry: string | undefined;
-  postDate: Date;
-  postUrl: string;
-  profilePhotoUrl?: string;
-  summary: string;
-  title: string;
-  trackingUrn: string;
-}
+import { LinkedinPost } from "@prisma/client";
+
+export type TransformedScrapedLinkedinPost = Omit<LinkedinPost, "id">;
 
 export interface RawLinkedinPostData {
   data: {

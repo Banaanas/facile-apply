@@ -6,9 +6,14 @@ export const appRoutes: AppRoutes = {
     href: "/indeed",
   },
 
-  linkedin: {
-    name: "Linkedin",
-    href: "/linkedin",
+  linkedinJobs: {
+    name: "Linkedin Jobs",
+    href: "/linkedin/jobs",
+  },
+
+  linkedinPosts: {
+    name: "Linkedin Posts",
+    href: "/linkedin/posts",
   },
 };
 

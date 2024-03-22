@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const CountryCodeEnum = z.enum(["CA", "CH", "FR", "US"]); // Example values
 const JobStatusEnum = z.enum(["Applied", "Ignored", "NotReviewed"]); // Example values
+const PostStatusEnum = z.enum(["Applied", "Ignored", "NotReviewed"]); // Example values
 
 export const indeedJobSchema = z.object({
   id: z.number(),
@@ -25,4 +26,17 @@ export const linkedinJobSchema = z.object({
   location: z.string(),
   status: JobStatusEnum,
   title: z.string(),
+});
+
+export const linkedinPostSchema = z.object({
+  id: z.number(),
+  authorProfileUrl: z.string().optional().nullable(),
+  authorCountry: z.string().optional().nullable(),
+  authorName: z.string(),
+  postDate: z.date(),
+  postUrl: z.string(),
+  profilePhotoUrl: z.string().optional().nullable(),
+  summary: z.string(),
+  status: PostStatusEnum,
+  trackingUrn: z.string(),
 });

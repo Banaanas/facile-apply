@@ -1,3 +1,5 @@
+import { LinkedinPost } from "@prisma/client";
+
 import { fetchAuthorCountryFromPostItem } from "@/scripts/linkedin/fetch-posts/parsing/get-author-post-country";
 import {
   PostItem,
@@ -35,7 +37,7 @@ export const extractLinkedinPostDetails = async (
     return undefined; // Or `return;` which is equivalent to `return undefined;`
   }
 
-  const title = entityResult?.title.text;
+  const authorName = entityResult?.title.text;
   const summary = entityResult?.summary.text;
   const authorProfileUrl = entityResult?.actorNavigationUrl;
   const postUrl = entityResult?.navigationUrl;
@@ -44,7 +46,7 @@ export const extractLinkedinPostDetails = async (
   // Some profiles don't have photo
   const profilePhotoUrl =
     entityResult?.image?.attributes[0]?.detailData?.nonEntityProfilePicture
-      ?.vectorImage?.artifacts[0]?.fileIdentifyingUrlPathSegment;
+      ?.vectorImage?.artifacts[0]?.fileIdentifyingUrlPathSegment ?? null;
 
   // Extract post's relative timestamp
   const relativeTimeString = entityResult?.secondarySubtitle?.text || "";
@@ -52,14 +54,18 @@ export const extractLinkedinPostDetails = async (
 
   const authorCountry = await fetchAuthorCountryFromPostItem(postItem);
 
+  // Create defaults status
+  const status: LinkedinPost["status"] = "NotReviewed";
+
   return {
+    authorName,
     authorProfileUrl,
     authorCountry,
     postUrl,
     postDate,
     profilePhotoUrl,
+    status,
     summary,
-    title,
     trackingUrn,
   };
 };

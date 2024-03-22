@@ -8,11 +8,11 @@ import { PostItem } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-re
 
 export const fetchAuthorCountryFromPostItem = async (
   postItem: PostItem,
-): Promise<string | undefined> => {
+): Promise<string | null> => {
   const identifier = getIdentifier(postItem);
   if (!identifier) {
     console.error("Failed to extract identifier from the post item.");
-    return undefined;
+    return null;
   }
 
   // Determine whether to use vanityName or universalName based on identifier type
@@ -32,13 +32,13 @@ export const fetchAuthorCountryFromPostItem = async (
 
     // Handle the case where country couldn't be extracted
     if (!country) {
-      return undefined;
+      return null;
     }
 
     return country;
   } catch (error) {
     console.error("Error fetching author's country:", error);
-    return undefined;
+    return null;
   }
 };
 

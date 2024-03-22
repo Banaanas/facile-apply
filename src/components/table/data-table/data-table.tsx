@@ -6,7 +6,6 @@ import {
   linkedinEasyApplyOptions,
   statuses,
 } from "@components/table/data/data";
-import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 import DataTablePagination from "@components/table/DataTablePagination";
 import SelectedRowsButton from "@components/table/SelectedRowsButton";
 import { Button } from "@components/ui/button";
@@ -57,7 +56,7 @@ const indeedFilters = [
   },
 ];
 
-const linkedinFilters = [
+const linkedinJobFilters = [
   { columnId: "status", title: "Status", options: statuses },
   {
     columnId: "easyApply",
@@ -65,6 +64,16 @@ const linkedinFilters = [
     options: linkedinEasyApplyOptions,
   },
 ];
+
+const linkedinPostFilters = [
+  { columnId: "status", title: "Status", options: statuses },
+];
+
+const jobPlatformFilters = {
+  indeed: indeedFilters,
+  linkedinJob: linkedinJobFilters,
+  linkedinPost: linkedinPostFilters,
+};
 
 export const DataTable = <TData, TValue>({
   columns,
@@ -100,8 +109,7 @@ export const DataTable = <TData, TValue>({
 
   const isFiltered = table.getState().columnFilters.length > 0;
 
-  const facetFilters =
-    jobPlatform === "indeed" ? indeedFilters : linkedinFilters;
+  const facetFilters = jobPlatformFilters[jobPlatform];
 
   return (
     <div className="rounded-md border">
@@ -120,7 +128,7 @@ export const DataTable = <TData, TValue>({
         />
 
         <div className="flex flex-wrap px-2">
-          {facetFilters.map(({ columnId, title, options }) =>
+          {/*       {facetFilters.map(({ columnId, title, options }) =>
             table.getColumn(columnId) ? (
               <DataTableFacetedFilter
                 key={columnId}
@@ -128,8 +136,7 @@ export const DataTable = <TData, TValue>({
                 title={title}
                 options={options}
               />
-            ) : null,
-          )}
+            ) : null,    )}*/}
         </div>
         {isFiltered && (
           <Button
@@ -216,4 +223,4 @@ export const DataTable = <TData, TValue>({
   );
 };
 
-export type JobPlatform = "indeed" | "linkedin";
+export type JobPlatform = "indeed" | "linkedinJob" | "linkedinPost";

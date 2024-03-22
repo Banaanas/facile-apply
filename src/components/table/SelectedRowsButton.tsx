@@ -30,7 +30,7 @@ const SelectedRowsButton = <TData,>({
       if (jobPlatform === "indeed") {
         return updateIndeedJobStatus(job.id, newStatus);
       }
-      if (jobPlatform === "linkedin") {
+      if (jobPlatform === "linkedinJob") {
         return updateLinkedinJobStatus(job.id, newStatus);
       }
     });

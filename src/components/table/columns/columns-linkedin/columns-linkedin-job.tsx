@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const columnsLinkedin: ColumnDef<LinkedinJob>[] = [
+export const columnsLinkedinJob: ColumnDef<LinkedinJob>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -118,6 +118,8 @@ export const columnsLinkedin: ColumnDef<LinkedinJob>[] = [
 
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} jobPlatform="linkedin" />,
+    cell: ({ row }) => (
+      <DataTableRowActions row={row} jobPlatform="linkedinJob" />
+    ),
   },
 ];

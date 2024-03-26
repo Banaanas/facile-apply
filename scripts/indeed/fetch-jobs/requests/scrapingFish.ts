@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { scrapingFishConfig } from "@/scripts/config";
-import { missingVarMessage } from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 export const fetchPageScrapingFish = async (
   targetUrl: string,

@@ -5,7 +5,7 @@ import {
 } from "@/scripts/indeed/auto-apply-job/launch-browser/playwright-connection";
 
 const INITIAL_URL =
-  "https://ch.indeed.com/viewjob?jk=a11b316a8edf9fcb&from=serp&vjs=3";
+  "https://ch.indeed.com/viewjob?jk=5a908a036bc84061&from=serp&vjs=3";
 
 async function main() {
   const connectionMode: ConnectionMode = "local";

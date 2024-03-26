@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { rapidApiConfig } from "@/scripts/config";
-import { missingVarMessage } from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 export const fetchPageDripCrawler = async (
   targetUrl: string,

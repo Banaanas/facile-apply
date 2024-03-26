@@ -1,5 +1,4 @@
 import * as cheerio from "cheerio";
-import colors from "colors";
 
 import { ScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 import { RawIndeedData } from "@/scripts/indeed/fetch-jobs/parsing/extract-job-results";
@@ -28,17 +27,6 @@ export const getSearchCountry = (
     }
   }
 
-  // Get current date and time
-  const now = new Date();
-  const timestamp = now
-    .toISOString()
-    .replace(/:/g, "-")
-    .replace(/\..+/, "")
-    .replace("T", "_");
-
-  console.log(
-    colors.red(`Current page HTML saved for debugging: ${debugFilePath}`),
-  );
   throw new Error(
     "Country information could not be extracted from the HTML page.",
   );

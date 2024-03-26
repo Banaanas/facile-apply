@@ -3,7 +3,12 @@ import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
 
 const IndeedPage = async () => {
-  const jobs = await prisma.indeedJob.findMany();
+  const jobs = await prisma.indeedJob.findMany({
+    where: {
+      status: "NotReviewed",
+      indeedApplyEnabled: true,
+    },
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">

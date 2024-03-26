@@ -6,7 +6,7 @@ import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform
 import {
   linkedinRequestErrorMessage,
   missingVarMessage,
-} from "@/scripts/utils/console-messages";
+} from "@/scripts/utils/console/console-messages";
 
 export const fetchLinkedinWithoutProxy = async (
   targetUrl: string,

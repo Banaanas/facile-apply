@@ -15,6 +15,11 @@ export const appRoutes: AppRoutes = {
     name: "Linkedin Posts",
     href: "/linkedin/posts",
   },
+
+  statistics: {
+    name: "Statistics",
+    href: "/statistics",
+  },
 };
 
 interface AppRoutes {

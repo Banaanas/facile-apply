@@ -1,0 +1,16 @@
+export const filterLanguages = [
+  "C#",
+  "c+",
+  "elixir",
+  "flutter",
+  "go",
+  "kotlin",
+  "linux",
+  "php",
+  "python",
+  "ruby",
+  "rust",
+  "rust",
+  "sql",
+  "swift",
+];

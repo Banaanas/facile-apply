@@ -1,7 +1,10 @@
 import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
-import { transformLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
+import {
+  RawLinkedinData,
+  transformLinkedinJobResults,
+} from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
-import { linkedinSearchMessage } from "@/scripts/utils/console-messages";
+import { linkedinSearchMessage } from "@/scripts/utils/console/console-messages";
 import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
 
 export const getJobResults = async (
@@ -24,7 +27,9 @@ export const getJobResults = async (
       await waitForRandomDelay(3000, 5000);
     }
 
-    const rawData = await fetchResultsWithProvider(urlWithPagination);
+    const rawData = (await fetchResultsWithProvider(
+      urlWithPagination,
+    )) as RawLinkedinData;
 
     if (isFirstRequest && rawData.paging) {
       totalJobsCount = rawData.paging.total; // Get the total count from the first request

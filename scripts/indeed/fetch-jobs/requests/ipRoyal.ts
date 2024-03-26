@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { iproyalConfig } from "@/scripts/config";
-import { missingVarMessage } from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 export const fetchPageIPRoyal = async (targetUrl: string): Promise<string> => {
   const { host, port, username, password } = iproyalConfig;

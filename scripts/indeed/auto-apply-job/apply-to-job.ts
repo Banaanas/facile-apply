@@ -55,7 +55,9 @@ const urlHandlers: UrlHandlers = {
     page,
   ) => {
     console.log("Handling Review Page");
-    await page.click('button:has-text("Déposer ma candidature")');
+    await page.click(
+      "text=/^(Déposer ma candidature|Submit your application)$/i",
+    );
     console.log("Review handled successfully.");
 
     await handlePageBasedOnUrl(page);

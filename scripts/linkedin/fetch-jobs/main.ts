@@ -10,8 +10,9 @@ import {
 } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
-import { fetchingWithMessage } from "@/scripts/utils/console-messages";
-import { logCommonLinkedinJobSearchParams } from "@/scripts/utils/console-messages-linkedin-launch";
+import { fetchingWithMessage } from "@/scripts/utils/console/console-messages";
+import { logCommonLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
+import { filterLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/filter-linkedin-job";
 
 const main = async () => {
   await checkDatabaseConnection();
@@ -45,7 +46,9 @@ const processSearchConfig = async (geoId: string, keyword: string) => {
 
   const searchUrl = buildSearchRequest(searchConfig);
   const jobResults = await getJobResults(searchUrl, DelayOption.ENABLED);
-  await registerTransformedJobResultsInDB(jobResults);
+  const filteredJobResults = filterLinkedinJobResults(jobResults);
+
+  await registerTransformedJobResultsInDB(filteredJobResults);
 };
 
 main().catch(console.error);

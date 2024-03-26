@@ -6,6 +6,7 @@ import {
   linkedinEasyApplyOptions,
   statuses,
 } from "@components/table/data/data";
+import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 import DataTablePagination from "@components/table/DataTablePagination";
 import SelectedRowsButton from "@components/table/SelectedRowsButton";
 import { Button } from "@components/ui/button";
@@ -39,7 +40,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTableFacetedFilter } from "@components/table/data-table-faced-filter";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -82,9 +82,13 @@ export const DataTable = <TData, TValue>({
   jobPlatform,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([
-    {
+    /*   {
       id: "createDate", // Must be equal to the accessorKey of the column you want sorted by default
       desc: true,
+    }, */
+    {
+      id: "location", // Must be equal to the accessorKey of the column you want sorted by default
+      desc: false,
     },
   ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

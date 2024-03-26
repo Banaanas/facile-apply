@@ -1,7 +1,7 @@
 import { ScrapeConfig, ScrapflyClient } from "scrapfly-sdk";
 
 import { scrapflyConfig } from "@/scripts/config";
-import { missingVarMessage } from "@/scripts/utils/console-messages";
+import { missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 const client = new ScrapflyClient({ key: scrapflyConfig.apiKey });
 

@@ -1,19 +1,22 @@
 import axios from "axios";
 import colors from "colors";
+import { SocksProxyAgent } from "socks-proxy-agent";
 
-import { linkedinConfig } from "@/scripts/config";
+import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
+import { verifyProxyUsage } from "@/scripts/linkedin/fetch-jobs/requests/verify-proxy-usage";
 import {
   linkedinRequestErrorMessage,
   missingVarMessage,
 } from "@/scripts/utils/console/console-messages";
 
-export const fetchLinkedinWithoutProxy = async (
+export const fetchLinkedinIpRoyal = async (
   targetUrl: string,
 ): Promise<RawLinkedinData> => {
   const { jsessionId, liAt } = linkedinConfig;
+  const { host, port, username, password } = ipRoyalConfig;
 
-  if (!jsessionId || !liAt) {
+  if (!jsessionId || !liAt || !host || !port || !username || !password) {
     throw new Error(missingVarMessage);
   }
 
@@ -24,8 +27,19 @@ export const fetchLinkedinWithoutProxy = async (
     "csrf-token": `${jsessionId}`,
   };
 
+  const socks5ProxyUrl = `socks5://${username}:${password}@${host}:${port}`;
+  const agent = new SocksProxyAgent(socks5ProxyUrl);
+  const axiosConfig = {
+    httpAgent: agent,
+    httpsAgent: agent,
+    headers,
+  };
+
+  // Check that we are NOT using local IP
+  await verifyProxyUsage(axiosConfig);
+
   try {
-    const { data } = await axios.get(targetUrl, { headers });
+    const { data } = await axios.get(targetUrl, axiosConfig);
 
     return data;
   } catch (error) {

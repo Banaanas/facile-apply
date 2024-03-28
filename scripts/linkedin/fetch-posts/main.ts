@@ -2,7 +2,6 @@ import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedPostResultsInDB } from "@/scripts/database/register-database-linkedin-post";
-import { DelayOption } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { POST_SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-posts/data/post-search-configs";
 import { getPostResults } from "@/scripts/linkedin/fetch-posts/parsing/get-post-results";
 import { buildLinkedInQueryUrl } from "@/scripts/linkedin/fetch-posts/requests/linkedin-posts-request-builder";
@@ -21,7 +20,7 @@ const main = async () => {
 
     const searchUrl = buildLinkedInQueryUrl(keywords);
     try {
-      const postResults = await getPostResults(searchUrl, DelayOption.ENABLED);
+      const postResults = await getPostResults(searchUrl);
       const filteredResults = postResults.filter(
         (post) => normalizeAndMatchCountry(post?.authorCountry) !== null,
       );

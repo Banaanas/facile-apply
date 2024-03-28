@@ -4,11 +4,9 @@ import {
   TransformedScrapedLinkedinPost,
 } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";
 import { transformLinkedinPostResults } from "@/scripts/linkedin/fetch-posts/parsing/transform-post-results";
-import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
 
 export const getPostResults = async (
   linkedinSearch: string,
-  withRandomDelay: boolean,
 ): Promise<Array<TransformedScrapedLinkedinPost>> => {
   let start = 0;
   let totalPostsCount = 0;
@@ -20,11 +18,6 @@ export const getPostResults = async (
       /&start=\d+/,
       `&start=${start}`,
     );
-
-    // Optionally wait for a random delay to avoid server detection
-    if (withRandomDelay) {
-      await waitForRandomDelay(3000, 5000);
-    }
 
     const rawData: RawLinkedinPostData = (await fetchResultsWithProvider(
       urlWithPagination,

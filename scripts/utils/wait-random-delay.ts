@@ -1,4 +1,4 @@
-export const waitForRandomDelay = (minMs: number, maxMs: number) => {
+export const waitForRandomDelay = ([minMs, maxMs]: [number, number]) => {
   // maxMs should be > minMs or error
   if (maxMs <= minMs) {
     throw new Error("maxMs should be greater than minMs");

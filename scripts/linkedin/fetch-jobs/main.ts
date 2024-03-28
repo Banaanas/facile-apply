@@ -5,7 +5,6 @@ import { registerTransformedJobResultsInDB } from "@/scripts/database/register-d
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
 import { SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-jobs/data/region-search-configs";
 import {
-  DelayOption,
   LINKEDIN_JOB_SEARCH_COMMON_PARAMS,
 } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
@@ -45,7 +44,8 @@ const processSearchConfig = async (geoId: string, keyword: string) => {
   };
 
   const searchUrl = buildSearchRequest(searchConfig);
-  const jobResults = await getJobResults(searchUrl, DelayOption.ENABLED);
+
+  const jobResults = await getJobResults(searchUrl);
   const filteredJobResults = filterLinkedinJobResults(jobResults);
 
   await registerTransformedJobResultsInDB(filteredJobResults);

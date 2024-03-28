@@ -4,7 +4,6 @@ import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { getLinkedinJobState } from "@/scripts/linkedin/fetch-job/parsing/get-linkedin-job-state";
-import { DelayOption } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 
 const main = async () => {
   await checkDatabaseConnection();
@@ -18,10 +17,7 @@ const main = async () => {
   let jobsConverted = 0; // Initialize the counter
 
   for (const job of jobs) {
-    const linkedinJobState = await getLinkedinJobState(
-      job.jobUrn,
-      DelayOption.ENABLED,
-    );
+    const linkedinJobState = await getLinkedinJobState(job.jobUrn);
 
     if (linkedinJobState === "CLOSED" || linkedinJobState === "SUSPENDED") {
       console.log(linkedinJobState);

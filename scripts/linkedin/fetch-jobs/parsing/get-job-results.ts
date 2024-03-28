@@ -5,11 +5,9 @@ import {
 } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 import { linkedinSearchMessage } from "@/scripts/utils/console/console-messages";
-import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
 
 export const getJobResults = async (
   linkedinSearch: string,
-  withRandomDelay: boolean,
 ): Promise<Array<TransformedScrapedLinkedinJob>> => {
   let start = 0;
   let totalJobsCount = 0;
@@ -21,11 +19,6 @@ export const getJobResults = async (
       /&start=\d+/,
       `&start=${start}`,
     );
-
-    // Each time we fetch, we wait for a delay - AVOIDING SERVER DETECTION
-    if (withRandomDelay) {
-      await waitForRandomDelay(3000, 5000);
-    }
 
     const rawData = (await fetchResultsWithProvider(
       urlWithPagination,

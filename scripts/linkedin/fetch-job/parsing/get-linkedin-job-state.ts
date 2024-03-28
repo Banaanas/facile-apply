@@ -1,17 +1,10 @@
 import { linkedinJobRequestBuilder } from "@/scripts/linkedin/fetch-job/requests/linkedin-job-request-builder";
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
-import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
 
 export const getLinkedinJobState = async (
   fullJobUrn: string,
-  withRandomDelay: boolean,
 ): Promise<string | null> => {
   const url = linkedinJobRequestBuilder(fullJobUrn);
-
-  // Each time we fetch, we wait for a delay - AVOIDING SERVER DETECTION
-  if (withRandomDelay) {
-    await waitForRandomDelay(3000, 5000);
-  }
 
   const rawResponse = await fetchResultsWithProvider(url);
   const jobState = parseRawResponse(rawResponse as RawLinkedinJobData);

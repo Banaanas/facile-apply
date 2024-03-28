@@ -6,5 +6,6 @@ export const filtersLocation = [
   "India",
   "Italia",
   "Mexico",
+  "Spain",
   "Sri Lanka",
 ];

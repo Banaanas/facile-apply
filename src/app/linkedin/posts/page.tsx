@@ -3,7 +3,11 @@ import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
 
 const LinkedinPostsPage = async () => {
-  const posts = await prisma.linkedinPost.findMany();
+  const posts = await prisma.linkedinPost.findMany({
+    where: {
+      status: "NotReviewed",
+    },
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">

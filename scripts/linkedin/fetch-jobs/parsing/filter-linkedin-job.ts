@@ -1,7 +1,8 @@
 import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
+import { filtersCompanies } from "@/scripts/utils/filters/filter-companies";
 import { filterKeywords } from "@/scripts/utils/filters/filter-keywords";
 import { filterLanguages } from "@/scripts/utils/filters/filter-languages";
-import { filtersLocation } from "@/scripts/utils/filters/filter-location";
+import { filtersLocation } from "@/scripts/utils/filters/filter-locations";
 
 export const filterLinkedinJobResults = (
   jobResults: Array<TransformedScrapedLinkedinJob>,
@@ -9,6 +10,7 @@ export const filterLinkedinJobResults = (
   return jobResults.filter((jobResult) => {
     const titleLowercase = jobResult.title.toLowerCase();
     const locationLowercase = jobResult.location.toLowerCase();
+    const companyLowercase = jobResult.company.toLowerCase();
 
     const hasLanguageInTitle = filterLanguages.some((language) =>
       titleLowercase.includes(language.toLowerCase()),
@@ -18,13 +20,21 @@ export const filterLinkedinJobResults = (
       titleLowercase.includes(keyword.toLowerCase()),
     );
 
-    const hasLocationInJobLocation =
-      filtersLocation.includes(locationLowercase);
+    // Convert filtersLocation to lowercase for comparison
+    const hasLocationInJobLocation = filtersLocation
+      .map((location) => location.toLowerCase())
+      .includes(locationLowercase);
+
+    // Convert filtersCompanies to lowercase for comparison
+    const hasCompanyInJobCompany = filtersCompanies
+      .map((company) => company.toLowerCase())
+      .includes(companyLowercase);
 
     return !(
       hasLanguageInTitle ||
       hasKeywordInTitle ||
-      hasLocationInJobLocation
+      hasLocationInJobLocation ||
+      hasCompanyInJobCompany
     );
   });
 };

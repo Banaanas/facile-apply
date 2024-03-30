@@ -5,6 +5,8 @@ import { prisma } from "@prisma/db.server";
 import { revalidatePath } from "next/cache";
 
 import { appRoutes } from "@/data/app-routes";
+import { IS_BROWSER_HEADLESS } from "@/scripts/indeed/auto-apply-job/data/params";
+import { runPlaywrightSession } from "@/scripts/indeed/auto-apply-job/launch-browser/playwright-connection";
 
 export const updateIndeedJobStatus = async (
   indeedJobId: IndeedJob["id"],
@@ -40,4 +42,12 @@ export const updateLinkedinPostStatus = async (
   });
 
   revalidatePath(appRoutes.linkedinPosts.href);
+};
+
+export const autoApplyIndeedJob = async (indeedJobLink: IndeedJob["link"]) => {
+  try {
+    await runPlaywrightSession(IS_BROWSER_HEADLESS, indeedJobLink);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 };

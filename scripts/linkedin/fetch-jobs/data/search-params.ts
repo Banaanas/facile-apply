@@ -17,7 +17,7 @@ export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
     ExperienceLevel.Mid,
     ExperienceLevel.Senior,
   ],
-  timePostedRange: TimePostedRange.LastWeek,
+  timePostedRange: TimePostedRange.Last24Hours,
   sortBy: SortBy.Relevance,
   workplaceType: WorkplaceType.Remote,
 };

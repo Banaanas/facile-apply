@@ -6,9 +6,11 @@ import {
   flagComponents,
   getReadableStatus,
 } from "@components/table/table.helpers";
+import { Button } from "@components/ui/button";
 import { CountryCode, IndeedJob } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { autoApplyIndeedJob } from "@/actions";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export const columnsIndeed: ColumnDef<IndeedJob>[] = [
@@ -128,5 +130,17 @@ export const columnsIndeed: ColumnDef<IndeedJob>[] = [
   {
     id: "actions",
     cell: ({ row }) => <DataTableRowActions row={row} jobPlatform="indeed" />,
+  },
+  {
+    id: "applyButton",
+    cell: ({ row }) => {
+      const indeedJob = row.original;
+
+      return (
+        <Button onClick={() => autoApplyIndeedJob(indeedJob.link)}>
+          Apply{" "}
+        </Button>
+      );
+    },
   },
 ];

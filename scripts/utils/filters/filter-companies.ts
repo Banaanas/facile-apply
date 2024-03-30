@@ -1,5 +1,1 @@
-export const filtersCompanies = [
-  "Crossover",
-  "Jobot",
-  "Noir",
-];
+export const filtersCompanies = ["Crossover", "Jobot", "Noir"];

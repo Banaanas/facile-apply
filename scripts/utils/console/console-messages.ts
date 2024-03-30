@@ -8,10 +8,6 @@ import { ProviderName as LinkedinProviderName } from "@/scripts/linkedin/fetch-j
 export const fetchingWithMessage = (
   providerName: IndeedProviderName | LinkedinProviderName,
 ) => {
-  if (providerName === "ipRoyal") {
-    console.log(colors.magenta.italic(`Fetching with WITHOUT PROXY Provider`));
-  }
-
   console.log(
     colors.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
   );

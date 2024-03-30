@@ -15,7 +15,6 @@ export const launchLocalBrowser = async (
     const context = await firefox.launchPersistentContext(userDataDirPath, {
       headless,
       devtools: !headless,
-      // Additional context options can be defined here if needed
     });
 
     console.log("Browser with Persistent Context launched.");

@@ -44,9 +44,12 @@ export const updateLinkedinPostStatus = async (
   revalidatePath(appRoutes.linkedinPosts.href);
 };
 
-export const autoApplyIndeedJob = async (indeedJobLink: IndeedJob["link"]) => {
+export const autoApplyIndeedJob = async (
+  indeedJobLink: IndeedJob["link"],
+  indeedJobId: IndeedJob["id"],
+) => {
   try {
-    await runPlaywrightSession(IS_BROWSER_HEADLESS, indeedJobLink);
+    await runPlaywrightSession(IS_BROWSER_HEADLESS, indeedJobLink, indeedJobId);
   } catch (error) {
     console.error("An error occurred:", error);
   }

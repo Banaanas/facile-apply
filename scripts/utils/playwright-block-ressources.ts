@@ -25,7 +25,17 @@ export const blockResourcesAndAds = async (page: Page): Promise<void> => {
         route.continue();
       }
     });
-  } catch (error) {
-    console.error(`Failed to block resources and ads: ${error.message}`);
+  } catch (error: unknown) {
+    // Explicitly marking the error as unknown is optional but clarifies the intent
+    // Check if the error is an instance of Error and has a message
+    if (error instanceof Error) {
+      console.error(`Failed to block resources and ads: ${error.message}`);
+    } else {
+      // If it's not an Error instance, handle or log it appropriately
+      console.error(
+        "Failed to block resources and ads due to an unexpected error:",
+        error,
+      );
+    }
   }
 };

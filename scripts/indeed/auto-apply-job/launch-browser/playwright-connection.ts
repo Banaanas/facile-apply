@@ -1,19 +1,39 @@
+import { IndeedJob } from "@prisma/client";
+
+import {
+  checkAndUpdateIfJobIsObsolete,
+  checkIfAlreadyApplied,
+} from "@/scripts/indeed/auto-apply-job/announce-check";
 import { executeFastApply } from "@/scripts/indeed/auto-apply-job/execute-fast-apply";
 import { launchLocalBrowser } from "@/scripts/indeed/auto-apply-job/launch-browser/launch-local-browser";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
-export const runPlaywrightSession = async (headless: Headless, url: string) => {
+export const runPlaywrightSession = async (
+  headless: Headless,
+  url: string,
+  indeedJobId: IndeedJob["id"],
+): Promise<void> => {
   const context = await launchLocalBrowser(headless);
   const page = await context.newPage();
 
   await blockResourcesAndAds(page);
   await page.goto(url);
+  await page.waitForTimeout(3000);
 
   console.log("Current page URL:", page.url());
 
+  // First, check if the job posting is obsolete
+  const hasAlreadyApplied = await checkIfAlreadyApplied(page, indeedJobId);
+  const isObsolete = await checkAndUpdateIfJobIsObsolete(page, indeedJobId);
+
+  // If the job is found to be obsolete, stop the process and return false
+  if (isObsolete || hasAlreadyApplied) {
+    return;
+  }
+
   if (context) {
-    await executeFastApply(page);
-    // await connection.context.close();
+    await executeFastApply(page, indeedJobId);
+    await context.close();
   }
 };
 

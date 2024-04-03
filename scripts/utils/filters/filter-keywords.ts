@@ -29,6 +29,7 @@ export const filterKeywords = [
   "mulesoft",
   "native",
   "oracle",
+  "prestashop",
   "product",
   "quality",
   "rails",

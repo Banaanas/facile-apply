@@ -137,7 +137,7 @@ export const columnsIndeed: ColumnDef<IndeedJob>[] = [
       const indeedJob = row.original;
 
       return (
-        <Button onClick={() => autoApplyIndeedJob(indeedJob.link)}>
+        <Button onClick={() => autoApplyIndeedJob(indeedJob.link, indeedJob.id)}>
           Apply{" "}
         </Button>
       );

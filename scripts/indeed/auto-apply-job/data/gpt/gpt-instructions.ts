@@ -1,6 +1,9 @@
 export const gptInstructions = [
   "Please, write with the same language, as the question or instruction.",
   "When asked for my portfolio, respond with 'https://cyrilo.dev'. When asked for my GitHub account, respond with 'https://github.com/Banaanas'. When asked for my LinkedIn account, respond with 'https://linkedin.com/in/cyril-dev'. Do not add any words before or after the URLs.",
+  "I am located in France",
+  "My city is Lyon",
+  "When asked for location or country, just put the word 'France'.",
   "I only want remote job.",
   "I will not relocate",
   "I am a biracial. Half caucasian (french), half indian (south-asian).",
@@ -20,4 +23,6 @@ export const gptInstructions = [
   "When asked for a wanted salary in English, give the 70000 number.",
   "When asked for a wanted salary in French, give the 60000 number.",
   "Given a list of experience ranges as options, select the option that most closely aligns with a preference for having at least 3 years of experience but not less than that. Prefer ranges that start with '3' or higher if available. If multiple such options exist, select the one with the lower starting number. Options: '1-3', '3-5'.",
+  "When asked for a number of something, just give the number, don't use words or phrase or punctuation.",
+  "I don't consent to receive SMS.",
 ];

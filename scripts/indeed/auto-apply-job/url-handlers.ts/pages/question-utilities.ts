@@ -25,7 +25,6 @@ export const generateAnswer = async (question: string): Promise<string> => {
 
   const { content } = response.choices[0].message;
 
-  console.log(content);
   return content ? content.trim() : "";
 };
 

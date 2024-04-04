@@ -12,12 +12,12 @@ export const extractJobResults = (
 
   if (scriptContent) {
     const jsonDataString = scriptContent.match(
-      /window\.mosaic\.initialData = (\{.+?\});/s,
+      /window\.mosaic\.providerData\["mosaic-provider-jobcards"]=(\{.*?});/s,
     );
+
     if (jsonDataString && jsonDataString.length > 1) {
       const jsonData: RawIndeedData = JSON.parse(jsonDataString[1]);
-      jobResults =
-        jsonData.publicMetadata?.mosaicProviderJobCardsModel?.results;
+      jobResults = jsonData.metaData.mosaicProviderJobCardsModel.results;
     }
   }
 
@@ -30,7 +30,7 @@ export const extractJobResults = (
 };
 
 export interface RawIndeedData {
-  publicMetadata: PublicMetadata;
+  metaData: PublicMetadata;
   country: string;
 }
 

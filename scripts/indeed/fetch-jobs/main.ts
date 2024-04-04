@@ -51,8 +51,11 @@ const main = async () => {
         searchQuery.query,
         SEARCH_DATE_RANGE_DAYS,
       );
+
       const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
+
       const jobResults = await getJobResults(indeedSearchUrl);
+
       const searchCountry = getSearchCountry(initialSearchHTML);
 
       const transformedJobResults = transformJobResults(

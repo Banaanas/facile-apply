@@ -15,6 +15,7 @@ export const getJobResults = async (
     const domain = urlObject.origin;
 
     const currentPageHtml = await fetchPageWithProvider(currentPageUrl);
+
     const jobResults = extractJobResults(currentPageHtml);
 
     const nextJobResults = [...allJobLinks, ...jobResults];

@@ -2,28 +2,31 @@ import { IndeedJob } from "@prisma/client";
 import colors from "colors";
 import { Page } from "playwright";
 
+import { updateIndeedJobStatus } from "@/actions";
 import { questionsHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/questions-handler";
 import {
   BASE_URL,
   HandlerFunction,
   urlHandlers,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/url-handlers";
-import { updateIndeedJobStatus } from "@/actions";
 
 export const handlePageBasedOnUrl = async (
   page: Page,
   indeedJobId: IndeedJob["id"],
 ) => {
   try {
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(1000);
     const finalUrl = page.url();
     console.log(colors.blue(finalUrl));
 
-    console.log("ID is : ", indeedJobId);
     // Directly handle the post-apply scenario
     if (finalUrl.includes("post-apply")) {
       await updateIndeedJobStatus(indeedJobId, "Applied");
-      console.log(colors.green("Job as been updated as Applied."));
+      console.log(
+        colors.green(
+          "Process has ben achieved and Job as been updated as Applied.",
+        ),
+      );
       return;
     }
 

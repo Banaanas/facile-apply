@@ -3,7 +3,7 @@ export const cyrilPersonalInfo = {
   firstName: "Cyril",
   gender: "Male",
   email: "cyrilo.dev@gmail.com",
-  telephone: "07-87-02-13-30",
+  phone: "33787021330",
   websites: {
     linkedin: "linkedin.com/in/cyril-dev",
     portfolio: "https://cyrilo.dev/",

@@ -1,7 +1,8 @@
 import console from "node:console";
 
-import { ElementHandle } from "playwright";
+import { ElementHandle, Page } from "playwright";
 
+import { consentRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
 import { generateAnswer } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 
 export const clickRadioButtonBasedOnDecision = async (
@@ -34,25 +35,6 @@ export const clickRadioButtonBasedOnDecision = async (
   }
 };
 
-// Add this new function to generate a prompt for dropdown selects
-export const formulateDropdownPrompt = async (
-  container: ElementHandle<SVGElement | HTMLElement>,
-) => {
-  const questionText = await container.$eval(
-    "label",
-    (el) => el.textContent?.trim() ?? "",
-  );
-
-  console.log(questionText);
-  const optionsText = await container.$$eval("select option", (options) =>
-    options.map((option) => option.textContent?.trim() ?? ""),
-  );
-
-  const prompt = `Question: ${questionText} Options: ${optionsText.join(", ")}. Based on the options, which should be selected?`;
-
-  return prompt;
-};
-
 // Function to select the option in the dropdown that matches the GPT-3 decision
 export const selectDropdownFromDecision = async (
   selectDropdown: ElementHandle,
@@ -61,11 +43,15 @@ export const selectDropdownFromDecision = async (
   const options = await selectDropdown.$$("option");
   for (const option of options) {
     const optionText = await option.textContent();
-    if (optionText?.trim().toLowerCase() === decision.trim().toLowerCase()) {
+
+    // Adjust the condition to check if the option text includes the decision
+    if (
+      optionText?.trim().toLowerCase().includes(decision.trim().toLowerCase())
+    ) {
       const value = await option.getAttribute("value");
       if (value !== null) {
         await selectDropdown.selectOption({ value });
-        break;
+        break; // Break after finding and selecting the correct option
       }
     }
   }
@@ -132,15 +118,11 @@ export const handleCheckboxInput = async (
   // console.log(`Handling Checkbox for question: "${questionLabel}"`);
 
   // Handle specific cases first, such as agreeing to a privacy policy
-  if (
-    questionLabel.includes("Politique de confidentialité") ||
-    questionLabel.includes("Privacy")
-  ) {
-    // The selector targets checkboxes specifically; adjust if necessary.
-    const privacyCheckbox = await container.$('input[type="checkbox"]');
-    if (privacyCheckbox) {
-      await privacyCheckbox.check();
-      console.log("Privacy policy checkbox checked.");
+  if (consentRegex.test(questionLabel)) {
+    const consentCheckbox = await container.$('input[type="checkbox"]');
+    if (consentCheckbox) {
+      await consentCheckbox.check(); // Ensure the checkbox is checked
+      console.log("Consent checkbox checked.");
     }
   } else {
     // For other cases, use GPT-3 to decide which checkboxes should be checked
@@ -166,5 +148,23 @@ export const handleCheckboxInput = async (
         await checkbox.uncheck();
       }
     }
+  }
+};
+
+export const handleCoverLetterInput = async (page: Page) => {
+  // Identify the textarea for the cover letter using its 'data-testid'
+  const coverLetterTextarea = await page.$(
+    'textarea[data-testid="CoverLetter-textarea"]',
+  );
+
+  if (coverLetterTextarea) {
+    console.log("Found the Cover Letter Textarea.");
+
+    const coverLetterContent = "Your cover letter content goes here.";
+
+    await coverLetterTextarea.fill(coverLetterContent);
+    console.log("Cover Letter filled.");
+  } else {
+    console.log("Cover Letter Textarea not found.");
   }
 };

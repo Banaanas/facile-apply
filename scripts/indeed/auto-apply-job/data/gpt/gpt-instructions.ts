@@ -14,6 +14,7 @@ export const gptInstructions = [
   "No, I do not have a disability.",
   "No, I do not have a disability and have not had one in the past.",
   "I have a 3 years experience as Software Developer.",
+  "I have never been a team lear neither a mentor.",
   "When a questions includes 'How many years', just answer with the number.",
   "When asked for an interview, just say that I'm free each afternoon, during the week.",
   "When asked when I could start, give a date one week from now.",
@@ -23,6 +24,7 @@ export const gptInstructions = [
   "When asked for a wanted salary in English, give the 70000 number.",
   "When asked for a wanted salary in French, give the 60000 number.",
   "Given a list of experience ranges as options, select the option that most closely aligns with a preference for having at least 3 years of experience but not less than that. Prefer ranges that start with '3' or higher if available. If multiple such options exist, select the one with the lower starting number. Options: '1-3', '3-5'.",
-  "When asked for a number of something, just give the number, don't use words or phrase or punctuation.",
+  "When asked for a number/amount of something, just give the number, don't use words or phrase or punctuation.",
   "I don't consent to receive SMS.",
+  "Im a french citizen",
 ];

@@ -4,7 +4,7 @@ import { IndeedJob } from "@prisma/client";
 import { ElementHandle, Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
-import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/continue-button";
+import { cyrilPersonalInfo } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/personal-info";
 import {
   clickRadioButtonBasedOnDecision,
   handleCheckboxInput,
@@ -12,6 +12,7 @@ import {
   handleNumberInput,
   selectDropdownFromDecision,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
+import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
 import {
   formulatePrompt,
   generateAnswer,
@@ -23,6 +24,8 @@ export const questionsHandler = async (
   indeedJobId: IndeedJob["id"],
 ) => {
   console.log("Handling Questions Page");
+
+  await page.waitForTimeout(4000);
   const questionContainers = await page.$$(".ia-Questions-item");
 
   for (const container of questionContainers) {
@@ -30,6 +33,7 @@ export const questionsHandler = async (
     const textarea = await container.$("textarea");
     const radioInputs = await container.$$(`input[type="radio"]`);
     const numberInputs = await container.$$(`input[type="number"]`);
+    const telInput = await container.$('input[type="tel"]');
 
     const dateInput = await container.$(
       `input[type="date"],input[placeholder*="/"]`,
@@ -41,6 +45,12 @@ export const questionsHandler = async (
     // Unified method to get question label or legend
     const questionLabel = await getQuestionLabelOrLegend(container);
 
+    // Check if the label includes "optional" (case-insensitive)
+    if (questionLabel.toLowerCase().includes("optional")) {
+      console.log("Skipping optional question:", questionLabel);
+      continue; // Skip to the next container
+    }
+
     try {
       // Handle checkbox inputs
       if (checkboxContainers.length > 0) {
@@ -51,6 +61,7 @@ export const questionsHandler = async (
       if (radioInputs.length > 0) {
         const prompt = await formulatePrompt(container);
         const decision = await generateDecision(prompt);
+
         await clickRadioButtonBasedOnDecision(container, decision);
       }
 
@@ -69,15 +80,23 @@ export const questionsHandler = async (
       // Handle select dropdowns
       if (selectDropdown) {
         const optionsTexts = await selectDropdown.$$eval("option", (options) =>
-          options.map((option) => option.textContent.trim()),
+          options.map((option) => option.textContent?.trim() || ""),
         );
-        const prompt = `Based on what you know, which of the following options is most appropriate? Options: ${optionsTexts.join(", ")}.`;
+        const prompt = `Given these options: ${optionsTexts.join(", ")}, which should be selected for the shortest answer possible? Please provide only the name.`;
+
         const decision = await generateDecision(prompt);
+
+        console.log(decision);
         await selectDropdownFromDecision(selectDropdown, decision);
+      }
+
+      if (telInput) {
+        await telInput.fill(cyrilPersonalInfo.phone);
       }
 
       // Handle text inputs and textareas
       if (textInput || textarea) {
+        console.log(questionLabel);
         const answer = await generateAnswer(questionLabel);
         if (textInput) {
           await textInput.fill(answer);

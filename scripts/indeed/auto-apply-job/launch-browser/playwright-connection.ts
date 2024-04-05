@@ -28,6 +28,7 @@ export const runPlaywrightSession = async (
 
   // If the job is found to be obsolete, stop the process and return false
   if (isObsolete || hasAlreadyApplied) {
+    await context.close();
     return;
   }
 

@@ -23,6 +23,8 @@ export const consentPhrases = {
     "Politique de confidentialité",
     "I understand",
     "acknowledge",
+    "voluntary",
+    "declaration",
   ],
 };
 

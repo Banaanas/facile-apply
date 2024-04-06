@@ -25,7 +25,7 @@ export const questionsHandler = async (
 ) => {
   console.log("Handling Questions Page");
 
-  await page.waitForTimeout(4000);
+  // await page.waitForTimeout(4000);
   const questionContainers = await page.$$(".ia-Questions-item");
 
   for (const container of questionContainers) {
@@ -45,11 +45,21 @@ export const questionsHandler = async (
     // Unified method to get question label or legend
     const questionLabel = await getQuestionLabelOrLegend(container);
 
-    // Check if the label includes "optional" (case-insensitive)
+    /*
     if (questionLabel.toLowerCase().includes("optional")) {
-      console.log("Skipping optional question:", questionLabel);
-      continue; // Skip to the next container
+      // Define keywords to exclude from the skip logic
+      const keywords = ["portfolio", "website", "github", "linkedin"];
+      const containsExcludedKeyword = keywords.some((keyword) =>
+        questionLabel.toLowerCase().includes(keyword),
+      );
+
+      // Only skip if "optional" is found and none of the excluded keywords are present
+      if (!containsExcludedKeyword) {
+        console.log("Skipping optional question:", questionLabel);
+        continue; // Skip to the next container
+      }
     }
+*/
 
     try {
       // Handle checkbox inputs

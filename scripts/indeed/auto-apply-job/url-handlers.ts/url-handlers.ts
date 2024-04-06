@@ -10,6 +10,9 @@ import { profileLocationHandler } from "@/scripts/indeed/auto-apply-job/url-hand
 import { resumeHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/resume-handler";
 import { reviewHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/review-handler";
 import { workExperienceHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/work-experience-handler";
+import {
+  qualificationQuestionsHandler
+} from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/qualificationQuestionsHandler";
 
 export const BASE_URL = "https://smartapply.indeed.com/beta/indeedapply/form/";
 
@@ -20,6 +23,7 @@ export const urlHandlers: {
   [`${BASE_URL}documents`]: documentsHandler,
   [`${BASE_URL}ooc-question`]: oocQuestionHandler,
   [`${BASE_URL}profile-location`]: profileLocationHandler,
+  [`${BASE_URL}qualification-questions`]: qualificationQuestionsHandler,
   [`${BASE_URL}resume`]: resumeHandler,
   [`${BASE_URL}review`]: reviewHandler,
   [`${BASE_URL}work-experience`]: workExperienceHandler,

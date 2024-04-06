@@ -11,11 +11,16 @@ export const documentsHandler = async (
 ) => {
   console.log("Handling Documents Page");
 
+  // Check if the "Apply without cover letter" option is present
+  const noCoverLetterOptionVisible = await page.isVisible(
+    'span[data-testid="NoCoverLetterRadioCardHeader-title"]',
+  );
+
   // Directly use the `page` object to find the textarea
   const coverLetterTextarea = await page.$(
     'textarea[data-testid="CoverLetter-textarea"]',
   );
-  if (coverLetterTextarea) {
+  if (coverLetterTextarea && !noCoverLetterOptionVisible) {
     // Since there's no container, you might need to adjust how you obtain the label text
     // This assumes there's a uniquely identifiable label for the textarea
     const label = await page.$eval(

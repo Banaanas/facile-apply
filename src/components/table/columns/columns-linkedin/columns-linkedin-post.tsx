@@ -3,9 +3,11 @@
 import DataTableRowActions from "@components/table/data-table-row-actions";
 import SortingButton from "@components/table/SortingButton";
 import { getReadableStatus } from "@components/table/table.helpers";
+import { Button } from "@components/ui/button";
 import { LinkedinPost } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
+import { autoApplyLinkedinPost } from "@/actions";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
@@ -123,5 +125,17 @@ export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
     cell: ({ row }) => (
       <DataTableRowActions row={row} jobPlatform="linkedinPost" />
     ),
+  },
+  {
+    id: "applyButton",
+    cell: ({ row }) => {
+      const linkedinPost = row.original;
+
+      return (
+        <Button onClick={() => autoApplyLinkedinPost(linkedinPost)}>
+          Apply
+        </Button>
+      );
+    },
   },
 ];

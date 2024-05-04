@@ -2,8 +2,8 @@ import { IndeedJob } from "@prisma/client";
 import { Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
-import { generateDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
+import { generateDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 
 export const qualificationQuestionsHandler = async (
   page: Page,

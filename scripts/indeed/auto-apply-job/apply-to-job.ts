@@ -15,7 +15,7 @@ export const handlePageBasedOnUrl = async (
   indeedJobId: IndeedJob["id"],
 ) => {
   try {
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     const finalUrl = page.url();
     console.log(colors.blue(finalUrl));
 

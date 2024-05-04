@@ -91,7 +91,7 @@ const getFormattedTodayDate = () => {
 const generateDatePrompt = (questionLabel: string) => {
   const todayDate = getFormattedTodayDate();
 
-  return `Today's date is ${todayDate}. Considering the current date, and given the question: "${questionLabel}", please provide an appropriate date in the format DD/MM/YYYY. Remember, only the date is needed, without additional text.`;
+  return `Today's date is ${todayDate}. Considering the current date, and given the question: "${questionLabel}", please provide an appropriate date in the format MM/DD/YYYY. Remember, only the date is needed, without additional text.`;
 };
 
 export const handleNumberInput = async (

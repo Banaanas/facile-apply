@@ -32,3 +32,9 @@ export const ipRoyalConfig = {
 export const openAiConfig = {
   apiKey: process.env.OPENAI_API_KEY,
 };
+
+// GMAIL
+export const gmailConfig = {
+  user: process.env.GOOGLE_MAIL_USER,
+  facileApplyPassword: process.env.GMAIL_FACILE_APPLY_PASSWORD,
+};

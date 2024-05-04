@@ -123,15 +123,16 @@ export const DataTable = <TData, TValue>({
         selectedRows={table.getFilteredSelectedRowModel().rows}
       />
       <div className="flex items-center p-4">
-        <Input
-          placeholder="Filter title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-
+        {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (
+          <Input
+            placeholder="Filter title..."
+            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("title")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        ) : null}
         <div className="flex flex-wrap px-2">
           {facetFilters.map(({ columnId, title, options }) =>
             table.getColumn(columnId) ? (

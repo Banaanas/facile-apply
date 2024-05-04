@@ -18,7 +18,7 @@ export const runPlaywrightSession = async (
 
   await blockResourcesAndAds(page);
   await page.goto(url);
-  await page.waitForTimeout(1500);
+  await page.waitForTimeout(2000);
 
   console.log("Current page URL:", page.url());
 

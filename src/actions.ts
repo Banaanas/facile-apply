@@ -2,11 +2,14 @@
 
 import { IndeedJob, LinkedinJob, LinkedinPost } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
+import colors from "colors";
 import { revalidatePath } from "next/cache";
 
 import { appRoutes } from "@/data/app-routes";
 import { IS_BROWSER_HEADLESS } from "@/scripts/indeed/auto-apply-job/data/params";
 import { runPlaywrightSession } from "@/scripts/indeed/auto-apply-job/launch-browser/playwright-connection";
+import { generateEmailResponse } from "@/scripts/linkedin/auto-answer-post/generate-mail";
+import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
 
 export const updateIndeedJobStatus = async (
   indeedJobId: IndeedJob["id"],
@@ -50,6 +53,23 @@ export const autoApplyIndeedJob = async (
 ) => {
   try {
     await runPlaywrightSession(IS_BROWSER_HEADLESS, indeedJobLink, indeedJobId);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+export const autoApplyLinkedinPost = async (linkedinPost: LinkedinPost) => {
+  console.log(colors.cyan("Starting email dispatch..."));
+
+  try {
+    const { emailSubject, emailContent, emailTo } = await generateEmailResponse(
+      linkedinPost.summary,
+    );
+
+    console.log(colors.cyan("Starting email sending..."));
+    await sendEmail("diaphane69@gmail.com", emailSubject, emailContent);
+    // await updateLinkedinPostStatus(linkedinPost.id, "Applied");
+    console.log(colors.rainbow(`Email has been sent to ${emailTo}. Post has been updated as Applied.`));
   } catch (error) {
     console.error("An error occurred:", error);
   }

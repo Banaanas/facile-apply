@@ -4,9 +4,7 @@ import { checkDatabaseConnection } from "@/scripts/database/check-running-databa
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
 import { SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-jobs/data/region-search-configs";
-import {
-  LINKEDIN_JOB_SEARCH_COMMON_PARAMS,
-} from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
 import { fetchingWithMessage } from "@/scripts/utils/console/console-messages";

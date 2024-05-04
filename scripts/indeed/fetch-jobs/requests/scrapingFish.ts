@@ -13,7 +13,7 @@ export const fetchPageScrapingFish = async (
     url: targetUrl,
   };
 
-  if (!apiKey) {
+  if (!apiKey || !apiUrl) {
     throw new Error(missingVarMessage);
   }
 

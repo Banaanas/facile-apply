@@ -1,4 +1,4 @@
-import { linkedinJobRequestBuilder } from "@/scripts/linkedin/fetch-job/requests/linkedin-job-request-builder";
+import { linkedinJobRequestBuilder } from "@/scripts/linkedin/fetch-obsolete-jobs/requests/linkedin-job-request-builder";
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 
 export const getLinkedinJobState = async (

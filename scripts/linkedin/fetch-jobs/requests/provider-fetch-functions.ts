@@ -4,7 +4,7 @@ import {
   LINKEDIN_CURRENT_PROVIDER,
   LINKEDIN_RANDOM_DELAY_RANGE,
 } from "@/scripts/linkedin/common/data/linkedin-current-provider";
-import { RawLinkedinJobData } from "@/scripts/linkedin/fetch-job/parsing/get-linkedin-job-state";
+import { RawLinkedinJobData } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchLinkedinIpRoyal } from "@/scripts/linkedin/fetch-jobs/requests/ipRoyal";
 import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";

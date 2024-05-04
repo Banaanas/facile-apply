@@ -1,0 +1,80 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Model for Indeed jobs
+model IndeedJob {
+  id                 Int         @id @default(autoincrement())
+  company            String
+  country            CountryCode
+  createDate         DateTime
+  indeedApplyEnabled Boolean
+  jobkey             String      @unique
+  link               String
+  status             JobStatus
+  title              String
+}
+
+enum CountryCode {
+  CA
+  CH
+  FR
+  US
+}
+
+enum JobStatus {
+  Applied
+  Ignored
+  NotReviewed
+}
+
+// Model for Linkedin job
+model LinkedinJob {
+  id         Int       @id @default(autoincrement())
+  company    String
+  createDate DateTime  @default(now())
+  easyApply  Boolean
+  jobUrn     String    @unique
+  link       String
+  location   String
+  status     JobStatus
+  title      String
+}
+
+// Model for Linkedin Post
+model LinkedinPost {
+  id               Int        @id @default(autoincrement())
+  authorProfileUrl String?
+  authorCountry    String?
+  authorName       String
+  postDate         DateTime
+  postUrl          String     @unique
+  profilePhotoUrl  String?
+  summary          String
+  status           PostStatus
+  trackingUrn      String     @unique
+}
+
+enum PostStatus {
+  Applied
+  Ignored
+  NotReviewed
+}
+
+// Model for Job Searches Meta
+model JobSearchMeta {
+  id           Int        @id @default(autoincrement())
+  searchType   SearchType @unique
+  lastSearchAt DateTime   @default(now())
+}
+
+enum SearchType {
+  Indeed
+  LinkedIn
+}

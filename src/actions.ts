@@ -67,9 +67,14 @@ export const autoApplyLinkedinPost = async (linkedinPost: LinkedinPost) => {
     );
 
     console.log(colors.cyan("Starting email sending..."));
-    await sendEmail("diaphane69@gmail.com", emailSubject, emailContent);
-    // await updateLinkedinPostStatus(linkedinPost.id, "Applied");
-    console.log(colors.rainbow(`Email has been sent to ${emailTo}. Post has been updated as Applied.`));
+    await sendEmail(emailTo, emailSubject, emailContent);
+    await updateLinkedinPostStatus(linkedinPost.id, "Applied");
+
+    console.log(
+      colors.rainbow(
+        `Email has been sent to ${emailTo}. Post has been updated as Applied.`,
+      ),
+    );
   } catch (error) {
     console.error("An error occurred:", error);
   }

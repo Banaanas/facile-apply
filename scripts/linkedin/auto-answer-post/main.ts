@@ -6,6 +6,7 @@ import {
   filterPostsWithEmails,
 } from "@/scripts/linkedin/auto-answer-post/get-posts";
 import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
+import { updateLinkedinPostStatus } from "@/actions";
 
 const main = async () => {
   console.log(colors.cyan("Starting email dispatch..."));
@@ -19,6 +20,7 @@ const main = async () => {
     );
 
     await sendEmail(emailTo, emailSubject, emailContent);
+    await updateLinkedinPostStatus(post.id, "Applied");
   }
 
   console.log(colors.rainbow("All emails have been sent!"));

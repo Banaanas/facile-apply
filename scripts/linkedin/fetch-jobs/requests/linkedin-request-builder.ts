@@ -2,15 +2,10 @@ import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs
 import { SearchConfig } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 // Function to build the query string
-const buildQuery = (config: SearchConfig) => {
-  const { keywords, geoId } = config;
-  const {
-    sortBy,
-    experience,
-    timePostedRange,
-    workplaceType,
-    applyWithLinkedin,
-  } = LINKEDIN_JOB_SEARCH_COMMON_PARAMS;
+const buildQuery = async (searchConfig: SearchConfig) => {
+  const { keywords, geoId, timePostedRange } = searchConfig;
+  const { sortBy, experience, workplaceType, applyWithLinkedin } =
+    LINKEDIN_JOB_SEARCH_COMMON_PARAMS;
 
   const experienceList = experience.map((level) => level).join(",");
   const workplaceTypeList = [workplaceType].join(",");
@@ -30,8 +25,10 @@ const buildUrl = (query: string) => {
   return `${baseUrl}?decorationId=${decorationId}&count=${count}&q=jobSearch&query=${query}&start=${start}`;
 };
 
-export const buildSearchRequest = (config: SearchConfig): string => {
-  const query = buildQuery(config);
+export const buildSearchRequest = async (
+  searchConfig: SearchConfig,
+): Promise<string> => {
+  const query = await buildQuery(searchConfig);
   const url = buildUrl(query);
 
   return url;

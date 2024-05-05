@@ -69,12 +69,12 @@ enum PostStatus {
 
 // Model for Job Searches Meta
 model JobSearchMeta {
-  id           Int        @id @default(autoincrement())
-  searchType   SearchType @unique
-  lastSearchAt DateTime   @default(now())
+  id                Int               @id @default(autoincrement())
+  jobSearchPlatform JobSearchPlatform @unique
+  lastSearchAt      DateTime          @default(now())
 }
 
-enum SearchType {
+enum JobSearchPlatform {
   Indeed
-  LinkedIn
+  Linkedin
 }

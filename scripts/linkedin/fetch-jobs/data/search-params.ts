@@ -1,14 +1,8 @@
 import {
   ExperienceLevel,
   SortBy,
-  TimePostedRange,
   WorkplaceType,
 } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
-
-export const DelayOption = {
-  ENABLED: true,
-  DISABLED: false,
-};
 
 export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
   applyWithLinkedin: true,
@@ -17,7 +11,6 @@ export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
     ExperienceLevel.Mid,
     ExperienceLevel.Senior,
   ],
-  timePostedRange: TimePostedRange.Last24Hours,
   sortBy: SortBy.Relevance,
   workplaceType: WorkplaceType.Remote,
 };
@@ -25,7 +18,6 @@ export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
 interface CommonParams {
   applyWithLinkedin: boolean;
   experience: Array<ExperienceLevel>;
-  timePostedRange: TimePostedRange;
   sortBy: SortBy;
   workplaceType: WorkplaceType;
 }

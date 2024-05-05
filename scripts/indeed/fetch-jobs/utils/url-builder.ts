@@ -4,7 +4,7 @@ import { Country } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 export const buildSearchUrl = (
   country: Country,
   query: string,
-  dateFilter: number,
+  searchRangeDays: number,
 ): string => {
   const countryConfig = countryUrls[country];
 
@@ -25,7 +25,7 @@ export const buildSearchUrl = (
   const { domain } = countryConfig;
   const encodedQuery = encodeURIComponent(query);
 
-  let url = `https://${domain}/jobs?q=${encodedQuery}&fromage=${dateFilter}`;
+  let url = `https://${domain}/jobs?q=${encodedQuery}&fromage=${searchRangeDays}`;
   if (search.remoteFilter) {
     const remoteQuery = "remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11";
     url += `&${remoteQuery}`;

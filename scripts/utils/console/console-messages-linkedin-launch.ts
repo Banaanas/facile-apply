@@ -1,9 +1,9 @@
+import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
 import {
   ExperienceLevel,
   SortBy,
-  TimePostedRange,
   WorkplaceType,
 } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
 import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
@@ -51,14 +51,32 @@ const mapWorkplaceType = (workplaceType: WorkplaceType) => {
   }
 };
 
-export const logCommonLinkedinJobSearchParams = () => {
+export const logCommonLinkedinJobSearchParams = async (
+  timePostedRange: string,
+) => {
+  const lastIndeedJobSearch = await prisma.jobSearchMeta.findFirst({
+    where: {
+      jobSearchPlatform: "Linkedin",
+    },
+  });
+
   console.log(
     colors.cyan("Initializing search with the following common parameters:"),
   );
 
   console.log(
+    colors.bgBlue(
+      colors.yellow(
+        colors.bold(
+          `- Last Search Date: ${lastIndeedJobSearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
+        ),
+      ),
+    ),
+  );
+
+  console.log(
     colors.yellow(
-      `- Time Posted Range: ${mapTimePostedRange(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.timePostedRange)}`,
+      `- Time Posted Range: ${formatTimePostedRange(timePostedRange)}`,
     ),
   );
 
@@ -116,21 +134,23 @@ export const logCommonLinkedinPostSearchParams = (
   console.log(colors.yellow(`- Sort By: ${sortByStr}`));
 };
 
-function mapTimePostedRange(range: TimePostedRange): string {
-  switch (range) {
-    case TimePostedRange.Last24Hours:
-      return "Last 24 Hours";
-    case TimePostedRange.LastWeek:
-      return "Last Week";
-    case TimePostedRange.LastMonth:
-      return "Last Month";
-    case TimePostedRange.Last3Months:
-      return "Last 3 Months";
-    case TimePostedRange.Last6Months:
-      return "Last 6 Months";
-    case TimePostedRange.LastYear:
-      return "Last Year";
-    default:
-      return "Unknown Time Range";
+function formatTimePostedRange(range: string): string {
+  // Remove the "r" prefix and parse the numeric value
+  const timeInSeconds = parseInt(range.substring(1), 10);
+
+  // Calculate the number of days and hours
+  const days = Math.floor(timeInSeconds / (24 * 3600));
+  const hours = Math.floor((timeInSeconds % (24 * 3600)) / 3600);
+
+  // Construct the string with the number of days and hours
+  let result = "";
+  if (days > 0) {
+    result += `${days} day${days !== 1 ? "s" : ""}`;
   }
+  if (hours > 0) {
+    result += ` ${hours} hour${hours !== 1 ? "s" : ""}`;
+  }
+
+  // Return the formatted string
+  return result.trim() || "Unknown Time Range";
 }

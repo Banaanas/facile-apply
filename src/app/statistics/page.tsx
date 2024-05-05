@@ -4,13 +4,16 @@ import { prisma } from "@prisma/db.server";
 const StatisticsPage = async () => {
   const total = await getTotalCounts();
 
+  // Number of apply from previous (deleted) Database
+  const PREVIOUS_APPLY = 1700;
+
   return (
     <main className="flex min-h-screen flex-col items-center gap-y-24 p-10">
       <h1 className="text-4xl font-bold text-blue-700">Statistics</h1>
       <div className="flex flex-col gap-y-8">
         <div className="flex gap-x-2 bg-fuchsia-400 text-4xl font-extrabold">
           <span>Applied : </span>
-          <span>{total.Applied}</span>
+          <span>{total.Applied + PREVIOUS_APPLY}</span>
         </div>
         <div className="flex gap-x-2 text-4xl font-extrabold">
           <span>Ignored : </span>

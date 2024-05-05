@@ -2,21 +2,24 @@ import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
+import { updateLastSearchDate } from "@/scripts/database/update-search-date";
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
+import { calculateTimePostedRange } from "@/scripts/linkedin/fetch-jobs/data/calculate-time-range";
 import { SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-jobs/data/region-search-configs";
-import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
+import { filterLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/filter-linkedin-job";
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
 import { fetchingWithMessage } from "@/scripts/utils/console/console-messages";
 import { logCommonLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
-import { filterLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/filter-linkedin-job";
 
 const main = async () => {
   await checkDatabaseConnection();
 
   fetchingWithMessage(LINKEDIN_CURRENT_PROVIDER);
 
-  logCommonLinkedinJobSearchParams();
+  const timePostedRange = await calculateTimePostedRange();
+
+  await logCommonLinkedinJobSearchParams(timePostedRange);
 
   for (const region in SEARCH_CONFIGURATIONS) {
     const { geoId, keywords } = SEARCH_CONFIGURATIONS[region];
@@ -27,21 +30,28 @@ const main = async () => {
         ),
       );
 
-      await processSearchConfig(geoId, keyword);
+      await processSearchConfig(geoId, keyword, timePostedRange);
     }
   }
 
+  await updateLastSearchDate("Linkedin");
   console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 
-const processSearchConfig = async (geoId: string, keyword: string) => {
+const processSearchConfig = async (
+  geoId: string,
+  keyword: string,
+  timePostedRange: string,
+) => {
   const searchConfig = {
     keywords: keyword,
     geoId,
-    params: LINKEDIN_JOB_SEARCH_COMMON_PARAMS,
+    timePostedRange,
   };
 
-  const searchUrl = buildSearchRequest(searchConfig);
+  const searchUrl = await buildSearchRequest(searchConfig);
+
+  console.log(searchUrl);
 
   const jobResults = await getJobResults(searchUrl);
   const filteredJobResults = filterLinkedinJobResults(jobResults);

@@ -28,7 +28,7 @@ export const filterLinkedinJobResults = (
     // Convert filtersCompanies to lowercase for comparison
     const hasCompanyInJobCompany = filtersCompanies
       .map((company) => company.toLowerCase())
-      .includes(companyLowercase);
+      .includes(companyLowercase.trim());
 
     return !(
       hasLanguageInTitle ||

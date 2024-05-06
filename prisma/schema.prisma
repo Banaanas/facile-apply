@@ -67,14 +67,24 @@ enum PostStatus {
   NotReviewed
 }
 
-// Model for Job Searches Meta
-model JobSearchMeta {
-  id                Int               @id @default(autoincrement())
-  jobSearchPlatform JobSearchPlatform @unique
-  lastSearchAt      DateTime          @default(now())
+// Model for Indeed searches
+model IndeedJobSearchMeta {
+  id           Int      @id @default(autoincrement())
+  identifier   String   @unique
+  domain       String
+  query        String
+  lastSearchAt DateTime @default(now())
+
+  @@unique([domain, query])
 }
 
-enum JobSearchPlatform {
-  Indeed
-  Linkedin
+// Model for Indeed searches
+model LinkedinJobSearchMeta {
+  id           Int      @id @default(autoincrement())
+  identifier   String   @unique
+  geoId        String
+  query        String
+  lastSearchAt DateTime @default(now())
+
+  @@unique([geoId, query])
 }

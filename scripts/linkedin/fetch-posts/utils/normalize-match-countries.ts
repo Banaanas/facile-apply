@@ -1,8 +1,6 @@
 import { enabledCountries } from "@/scripts/linkedin/fetch-posts/data/enabled-countries";
 
-export const normalizeAndMatchCountry = (
-  locationString: string | undefined,
-) => {
+export const normalizeAndMatchCountry = (locationString: string | null) => {
   if (!locationString) {
     // If the input is undefined or an empty string, return null immediately.
     return null;

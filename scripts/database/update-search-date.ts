@@ -1,28 +1,60 @@
-import { JobSearchPlatform } from "@prisma/client";
+import { IndeedJobSearchMeta, LinkedinJobSearchMeta } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
-export const updateLastSearchDate = async (
-  jobSearchPlatform: JobSearchPlatform,
+export const updateLastSearchDateIndeed = async (
+  queryIdentifier: IndeedJobSearchMeta["identifier"],
+  domain: IndeedJobSearchMeta["domain"],
+  query: IndeedJobSearchMeta["query"],
 ) => {
   try {
-    // Find or create the record for the specified platform
-    const jobSearchMeta = await prisma.jobSearchMeta.upsert({
-      where: { jobSearchPlatform },
+    const jobSearchMeta = await prisma.indeedJobSearchMeta.upsert({
+      where: { identifier: queryIdentifier },
       update: { lastSearchAt: new Date() },
-      create: { jobSearchPlatform, lastSearchAt: new Date() },
+      create: {
+        identifier: queryIdentifier,
+        domain,
+        query,
+        lastSearchAt: new Date(),
+      },
     });
 
     console.log(
       colors.green(
-        `Last search date updated for ${jobSearchPlatform}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+        `Last search date updated for Indeed: ${jobSearchMeta.lastSearchAt.toDateString()}`,
       ),
     );
   } catch (error) {
-    console.error(
-      `Error updating last search date for ${jobSearchPlatform}:`,
-      error,
+    console.error(`Error updating last search date for Indeed:`, error);
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const updateLastSearchDateLinkedIn = async (
+  queryIdentifier: LinkedinJobSearchMeta["identifier"],
+  geoId: LinkedinJobSearchMeta["geoId"],
+  query: LinkedinJobSearchMeta["query"],
+) => {
+  try {
+    const jobSearchMeta = await prisma.linkedinJobSearchMeta.upsert({
+      where: { identifier: queryIdentifier },
+      update: { lastSearchAt: new Date() },
+      create: {
+        identifier: queryIdentifier,
+        geoId,
+        query,
+        lastSearchAt: new Date(),
+      },
+    });
+
+    console.log(
+      colors.green(
+        `Last search date updated for LinkedIn: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+      ),
     );
+  } catch (error) {
+    console.error(`Error updating last search date for LinkedIn:`, error);
   } finally {
     await prisma.$disconnect();
   }

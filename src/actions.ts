@@ -78,4 +78,6 @@ export const autoApplyLinkedinPost = async (linkedinPost: LinkedinPost) => {
   } catch (error) {
     console.error("An error occurred:", error);
   }
+
+  revalidatePath(appRoutes.linkedinPosts.href);
 };

@@ -1,4 +1,4 @@
-import { IndeedJob } from "@prisma/client";
+import { IndeedJob, IndeedJobSearchMeta } from "@prisma/client";
 
 // Indeed Job
 export type ScrapedIndeedJob = Omit<IndeedJob, "id" | "link"> & {
@@ -8,7 +8,7 @@ export type ScrapedIndeedJob = Omit<IndeedJob, "id" | "link"> & {
 export type TransformedScrapedIndeedJob = Omit<IndeedJob, "id">;
 
 // URL Builder
-interface Search {
+export interface Search {
   query: string;
   remoteFilter: boolean;
 }

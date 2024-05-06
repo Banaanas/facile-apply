@@ -1,3 +1,5 @@
+import console from "node:console";
+
 import colors from "colors";
 
 import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
@@ -28,4 +30,12 @@ export const linkedinSearchMessage = (
 
   console.log(colors.magenta.italic(`Search Keywords: ${keywords}`));
   console.log(colors.magenta(`Localization: ${localization}`));
+};
+
+export const skipSearchMessage = (query: string) => {
+  console.log(
+    colors.italic(
+      `Skipping search for keywords: "${query}". Search was performed within the last 24 hours.`,
+    ),
+  );
 };

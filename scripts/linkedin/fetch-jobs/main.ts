@@ -1,16 +1,39 @@
+import console from "node:console";
+
+import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
-import { updateLastSearchDate } from "@/scripts/database/update-search-date";
+import { updateLastSearchDateLinkedIn } from "@/scripts/database/update-search-date";
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
 import { calculateTimePostedRange } from "@/scripts/linkedin/fetch-jobs/data/calculate-time-range";
 import { SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-jobs/data/region-search-configs";
 import { filterLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/filter-linkedin-job";
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
-import { fetchingWithMessage } from "@/scripts/utils/console/console-messages";
+import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
+import {
+  fetchingWithMessage,
+  skipSearchMessage,
+} from "@/scripts/utils/console/console-messages";
 import { logCommonLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
+
+const hasSearchBeenPerformedWithin24Hours = async (
+  queryIdentifier: string,
+): Promise<boolean> => {
+  const MS_IN_ONE_DAY = 24 * 60 * 60 * 1000;
+
+  const lastSearch = await prisma.linkedinJobSearchMeta.findFirst({
+    where: {
+      identifier: queryIdentifier,
+      lastSearchAt: {
+        gte: new Date(Date.now() - MS_IN_ONE_DAY),
+      },
+    },
+  });
+  return !!lastSearch;
+};
 
 const main = async () => {
   await checkDatabaseConnection();
@@ -24,17 +47,30 @@ const main = async () => {
   for (const region in SEARCH_CONFIGURATIONS) {
     const { geoId, keywords } = SEARCH_CONFIGURATIONS[region];
     for (const keyword of keywords) {
-      console.log(
-        colors.cyan(
-          `Starting search for keyword "${keyword}" in location "${region}"...`,
-        ),
-      );
+      const queryIdentifier = buildSearchIdentifier(geoId, keyword);
 
-      await processSearchConfig(geoId, keyword, timePostedRange);
+      // Check if the search has been performed recently
+      const searchAlreadyPerformed =
+        await hasSearchBeenPerformedWithin24Hours(queryIdentifier);
+
+      if (searchAlreadyPerformed) {
+        skipSearchMessage(keyword);
+      }
+
+      if (!searchAlreadyPerformed) {
+        console.log(
+          colors.cyan(
+            `Starting search for keyword "${keyword}" in location "${region}"...`,
+          ),
+        );
+
+        await processSearchConfig(geoId, keyword, timePostedRange);
+
+        await updateLastSearchDateLinkedIn(queryIdentifier, geoId, keyword);
+      }
     }
   }
 
-  await updateLastSearchDate("Linkedin");
   console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 

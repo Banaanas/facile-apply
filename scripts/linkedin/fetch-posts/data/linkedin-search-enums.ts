@@ -10,9 +10,4 @@ export enum DatePosted {
 
 export enum SortBy {
   Relevance = "relevance",
-  DatePosted = "date_posted",
-}
-
-export enum FlagshipSearchIntent {
-  SEARCH_SRP = "SEARCH_SRP",
 }

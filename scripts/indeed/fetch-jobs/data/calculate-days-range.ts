@@ -1,10 +1,10 @@
 import { prisma } from "@prisma/db.server";
 
-export const calculateDaysRange = async () => {
+export const calculateDaysRange = async (identifier: string) => {
   // Retrieve the timestamp of the last search from the database
-  const lastIndeedJobSearch = await prisma.jobSearchMeta.findFirst({
+  const lastIndeedJobSearch = await prisma.indeedJobSearchMeta.findFirst({
     where: {
-      jobSearchPlatform: "Indeed",
+      identifier,
     },
   });
 

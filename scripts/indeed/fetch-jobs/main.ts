@@ -1,11 +1,12 @@
 import * as console from "node:console";
 
+import { prisma } from "@prisma/db.server";
 import colors from "colors";
 import { firefox } from "playwright";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-indeed";
-import { updateLastSearchDate } from "@/scripts/database/update-search-date";
+import { updateLastSearchDateIndeed } from "@/scripts/database/update-search-date";
 import { calculateDaysRange } from "@/scripts/indeed/fetch-jobs/data/calculate-days-range";
 import { INDEED_CURRENT_PROVIDER } from "@/scripts/indeed/fetch-jobs/data/search-params";
 import { countryUrls } from "@/scripts/indeed/fetch-jobs/data/urls/country-urls";
@@ -16,67 +17,97 @@ import { getSearchCountry } from "@/scripts/indeed/fetch-jobs/parsing/get-search
 import { transformJobResults } from "@/scripts/indeed/fetch-jobs/parsing/transform-job-results";
 import { fetchPageWithProvider } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 import { buildSearchUrl } from "@/scripts/indeed/fetch-jobs/utils/url-builder";
-import { fetchingWithMessage } from "@/scripts/utils/console/console-messages";
+import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
+import {
+  fetchingWithMessage,
+  skipSearchMessage,
+} from "@/scripts/utils/console/console-messages";
 import { logCommonIndeedJobSearchParams } from "@/scripts/utils/console/console-messages-indeed-launch";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
+const hasSearchBeenPerformedWithin24Hours = async (
+  queryIdentifier: string,
+): Promise<boolean> => {
+  const MS_IN_ONE_DAY = 24 * 60 * 60 * 1000;
+
+  const lastSearch = await prisma.indeedJobSearchMeta.findFirst({
+    where: {
+      identifier: queryIdentifier,
+      lastSearchAt: {
+        gte: new Date(Date.now() - MS_IN_ONE_DAY),
+      },
+    },
+  });
+
+  return !!lastSearch;
+};
+
 const main = async () => {
   const browser = await firefox.launch();
-  // If Database is not already running, STOP the process - Avoiding costs of fetching pages that won't be registered in the database after
   await checkDatabaseConnection();
-  // Fetch the search range days
-  const searchRangeDays = await calculateDaysRange();
-
   fetchingWithMessage(INDEED_CURRENT_PROVIDER);
-  await logCommonIndeedJobSearchParams();
 
   // Iterate over each country URL
   for (const [country, details] of Object.entries(countryUrls)) {
+    const { domain } = details; // Extract the domain once per country
+
     // Now iterate over each search query within the country
-    for (const [searchKey, searchQuery] of Object.entries(details.searches)) {
-      console.log(
-        colors.cyan(
-          `Searching ${searchKey} in ${country} for the past ${
-            searchRangeDays === 1 ? "1 day" : `${searchRangeDays} days`
-          }...`,
-        ),
+    for (const [searchKey, search] of Object.entries(details.searches)) {
+      const queryIdentifier = buildSearchIdentifier(
+        details.domain,
+        search.query,
       );
+      const searchRangeDays = await calculateDaysRange(queryIdentifier);
 
-      // Used in case of using Playwright session after (for auto-apply bot purpose)
-      const context = await browser.newContext();
-      const page = await context.newPage();
-      await blockResourcesAndAds(page);
-
-      const indeedSearchUrl = buildSearchUrl(
-        country as Country,
-        searchQuery.query,
+      await logCommonIndeedJobSearchParams(
+        searchKey,
+        country,
         searchRangeDays,
+        queryIdentifier,
       );
 
-      const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
+      // Check if the search has already been performed within the last 24 hours
+      const searchAlreadyPerformed =
+        await hasSearchBeenPerformedWithin24Hours(queryIdentifier);
 
-      const jobResults = await getJobResults(indeedSearchUrl);
+      if (searchAlreadyPerformed) {
+        skipSearchMessage(search.query);
+      }
 
-      const searchCountry = getSearchCountry(initialSearchHTML);
+      // Only execute the following block if the search has NOT been performed in the last 24 hours
+      if (!searchAlreadyPerformed) {
+        const context = await browser.newContext();
+        const page = await context.newPage();
+        await blockResourcesAndAds(page);
+        const indeedSearchUrl = buildSearchUrl(
+          country as Country,
+          search.query,
+          searchRangeDays,
+        );
 
-      const transformedJobResults = transformJobResults(
-        jobResults,
-        searchCountry,
-      );
+        const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
+        const jobResults = await getJobResults(indeedSearchUrl);
+        const searchCountry = getSearchCountry(initialSearchHTML);
+        const transformedJobResults = transformJobResults(
+          jobResults,
+          searchCountry,
+        );
+        const filteredTransformedJobResults = filterIndeedJobResults(
+          transformedJobResults,
+        );
 
-      const filteredTransformedJobResults = filterIndeedJobResults(
-        transformedJobResults,
-      );
+        await registerTransformedJobResultsInDB(
+          filteredTransformedJobResults,
+          indeedSearchUrl,
+        );
 
-      await registerTransformedJobResultsInDB(
-        filteredTransformedJobResults,
-        indeedSearchUrl,
-      );
-      await context.close();
+        // Update the last search date for this specific query
+        await updateLastSearchDateIndeed(queryIdentifier, domain, search.query);
+
+        await context.close();
+      }
     }
   }
-
-  await updateLastSearchDate("Indeed");
 
   console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
   await browser.close();

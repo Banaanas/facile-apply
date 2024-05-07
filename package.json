@@ -10,7 +10,12 @@
     "prisma:reset": "prisma migrate reset",
     "prisma:studio": "npx prisma studio",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "------------------------": "echo 'dummy-script-for-visual-separation'",
+    "indeed-jobs": "tsx scripts/indeed/fetch-jobs/main.ts",
+    "linkedin-jobs": "tsx scripts/linkedin/fetch-jobs/main.ts",
+    "linkedin-posts": "tsx scripts/linkedin/fetch-posts/main.ts",
+    "linkedin-obsolete": "tsx scripts/linkedin/fetch-obsolete-jobs/main.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",

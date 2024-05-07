@@ -1,3 +1,5 @@
+import console from "node:console";
+
 import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
@@ -51,12 +53,13 @@ const mapWorkplaceType = (workplaceType: WorkplaceType) => {
   }
 };
 
-export const logCommonLinkedinJobSearchParams = async (
+export const logLinkedinJobSearchParams = async (
   timePostedRange: string,
+  queryIdentifier: string,
 ) => {
-  const lastIndeedJobSearch = await prisma.jobSearchMeta.findFirst({
+  const querySearch = await prisma.linkedinJobSearchMeta.findFirst({
     where: {
-      jobSearchPlatform: "Linkedin",
+      identifier: queryIdentifier,
     },
   });
 
@@ -68,7 +71,7 @@ export const logCommonLinkedinJobSearchParams = async (
     colors.bgBlue(
       colors.yellow(
         colors.bold(
-          `- Last Search Date: ${lastIndeedJobSearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
+          `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
         ),
       ),
     ),
@@ -135,22 +138,28 @@ export const logCommonLinkedinPostSearchParams = (
 };
 
 function formatTimePostedRange(range: string): string {
-  // Remove the "r" prefix and parse the numeric value
   const timeInSeconds = parseInt(range.substring(1), 10);
 
-  // Calculate the number of days and hours
   const days = Math.floor(timeInSeconds / (24 * 3600));
-  const hours = Math.floor((timeInSeconds % (24 * 3600)) / 3600);
+  const remainderAfterDays = timeInSeconds % (24 * 3600);
+  const hours = Math.floor(remainderAfterDays / 3600);
+  const remainderAfterHours = remainderAfterDays % 3600;
+  const minutes = Math.floor(remainderAfterHours / 60);
+  const seconds = remainderAfterHours % 60;
 
-  // Construct the string with the number of days and hours
   let result = "";
   if (days > 0) {
-    result += `${days} day${days !== 1 ? "s" : ""}`;
+    result += `${days} day${days !== 1 ? "s" : ""} `;
   }
   if (hours > 0) {
-    result += ` ${hours} hour${hours !== 1 ? "s" : ""}`;
+    result += `${hours} hour${hours !== 1 ? "s" : ""} `;
+  }
+  if (minutes > 0) {
+    result += `${minutes} minute${minutes !== 1 ? "s" : ""} `;
+  }
+  if (seconds > 0) {
+    result += `${seconds} second${seconds !== 1 ? "s" : ""}`;
   }
 
-  // Return the formatted string
-  return result.trim() || "Unknown Time Range";
+  return result.trim() || "Less than a minute"; // Handles cases where the difference is under one minute
 }

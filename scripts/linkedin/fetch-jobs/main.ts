@@ -1,6 +1,5 @@
 import console from "node:console";
 
-import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
@@ -13,45 +12,32 @@ import { filterLinkedinJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/
 import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-results";
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
 import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
+import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 import {
   fetchingWithMessage,
   skipSearchMessage,
 } from "@/scripts/utils/console/console-messages";
-import { logCommonLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
-
-const hasSearchBeenPerformedWithin24Hours = async (
-  queryIdentifier: string,
-): Promise<boolean> => {
-  const MS_IN_ONE_DAY = 24 * 60 * 60 * 1000;
-
-  const lastSearch = await prisma.linkedinJobSearchMeta.findFirst({
-    where: {
-      identifier: queryIdentifier,
-      lastSearchAt: {
-        gte: new Date(Date.now() - MS_IN_ONE_DAY),
-      },
-    },
-  });
-  return !!lastSearch;
-};
+import { logLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
 
 const main = async () => {
   await checkDatabaseConnection();
 
   fetchingWithMessage(LINKEDIN_CURRENT_PROVIDER);
 
-  const timePostedRange = await calculateTimePostedRange();
-
-  await logCommonLinkedinJobSearchParams(timePostedRange);
-
   for (const region in SEARCH_CONFIGURATIONS) {
     const { geoId, keywords } = SEARCH_CONFIGURATIONS[region];
     for (const keyword of keywords) {
       const queryIdentifier = buildSearchIdentifier(geoId, keyword);
+      const timePostedRange = await calculateTimePostedRange(queryIdentifier);
+
+      await logLinkedinJobSearchParams(timePostedRange, queryIdentifier);
 
       // Check if the search has been performed recently
       const searchAlreadyPerformed =
-        await hasSearchBeenPerformedWithin24Hours(queryIdentifier);
+        await hasSearchBeenPerformedWithinThreshold(
+          "linkedinJobSearchMeta",
+          queryIdentifier,
+        );
 
       if (searchAlreadyPerformed) {
         skipSearchMessage(keyword);

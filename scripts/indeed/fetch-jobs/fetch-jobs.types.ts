@@ -1,4 +1,4 @@
-import { IndeedJob, IndeedJobSearchMeta } from "@prisma/client";
+import { IndeedJob } from "@prisma/client";
 
 // Indeed Job
 export type ScrapedIndeedJob = Omit<IndeedJob, "id" | "link"> & {

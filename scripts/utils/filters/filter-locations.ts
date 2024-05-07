@@ -1,11 +1,14 @@
 export const filtersLocation = [
   "Argentina",
+  "Barcelona",
   "Bogota",
   "Brazil",
   "Colombia",
+  "Greece",
   "India",
-  "Italia",
+  "Italy",
   "Mexico",
+  "Portugal",
   "Spain",
   "Sri Lanka",
 ];

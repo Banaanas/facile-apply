@@ -1,10 +1,10 @@
 import { prisma } from "@prisma/db.server";
 
-export const calculateTimePostedRange = async () => {
+export const calculateTimePostedRange = async (identifier: string) => {
   // Retrieve the timestamp of the last search from the database
-  const lastLinkedinJobSearch = await prisma.jobSearchMeta.findFirst({
+  const lastLinkedinJobSearch = await prisma.linkedinJobSearchMeta.findFirst({
     where: {
-      jobSearchPlatform: "Linkedin",
+      identifier,
     },
   });
 
@@ -14,7 +14,6 @@ export const calculateTimePostedRange = async () => {
     throw new Error("No previous search date found.");
   }
 
-  // Calculate the time difference in seconds between the current time and the last search timestamp
   const currentTimestamp = Math.floor(Date.now() / 1000);
   const timeDifference =
     currentTimestamp -

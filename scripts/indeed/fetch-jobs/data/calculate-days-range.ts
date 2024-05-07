@@ -14,7 +14,7 @@ export const calculateDaysRange = async (identifier: string) => {
     throw new Error("No previous search date found.");
   }
 
-  // Calculate the time difference in milliseconds between the current time and the last search timestamp
+  // Calculate the time difference in days between the current time and the last search timestamp
   const currentTimestamp = Date.now();
   const lastSearchTimestamp = lastIndeedJobSearch.lastSearchAt.getTime();
   const timeDifference = currentTimestamp - lastSearchTimestamp;

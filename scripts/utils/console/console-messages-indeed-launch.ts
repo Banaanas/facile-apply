@@ -3,7 +3,7 @@ import console from "node:console";
 import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
-export const logCommonIndeedJobSearchParams = async (
+export const logIndeedJobSearchParams = async (
   searchKey: string,
   country: string,
   searchRangeDays: number,

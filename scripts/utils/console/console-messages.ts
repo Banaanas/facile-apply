@@ -5,6 +5,7 @@ import colors from "colors";
 import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { ProviderName as LinkedinProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
+import { SEARCH_HOURS_ELAPSED_THRESHOLD } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 
 // Page Requests
 export const fetchingWithMessage = (
@@ -35,7 +36,7 @@ export const linkedinSearchMessage = (
 export const skipSearchMessage = (query: string) => {
   console.log(
     colors.italic(
-      `Skipping search for keywords: "${query}". Search was performed within the last 24 hours.`,
+      `Skipping search for keywords: "${query}". Search was performed within the last ${SEARCH_HOURS_ELAPSED_THRESHOLD} hours.`,
     ),
   );
 };

@@ -1,6 +1,4 @@
 import * as console from "node:console";
-
-import { prisma } from "@prisma/db.server";
 import colors from "colors";
 import { firefox } from "playwright";
 
@@ -22,25 +20,9 @@ import {
   fetchingWithMessage,
   skipSearchMessage,
 } from "@/scripts/utils/console/console-messages";
-import { logCommonIndeedJobSearchParams } from "@/scripts/utils/console/console-messages-indeed-launch";
+import { logIndeedJobSearchParams } from "@/scripts/utils/console/console-messages-indeed-launch";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
-
-const hasSearchBeenPerformedWithin24Hours = async (
-  queryIdentifier: string,
-): Promise<boolean> => {
-  const MS_IN_ONE_DAY = 24 * 60 * 60 * 1000;
-
-  const lastSearch = await prisma.indeedJobSearchMeta.findFirst({
-    where: {
-      identifier: queryIdentifier,
-      lastSearchAt: {
-        gte: new Date(Date.now() - MS_IN_ONE_DAY),
-      },
-    },
-  });
-
-  return !!lastSearch;
-};
+import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 
 const main = async () => {
   const browser = await firefox.launch();
@@ -59,7 +41,7 @@ const main = async () => {
       );
       const searchRangeDays = await calculateDaysRange(queryIdentifier);
 
-      await logCommonIndeedJobSearchParams(
+      await logIndeedJobSearchParams(
         searchKey,
         country,
         searchRangeDays,
@@ -68,7 +50,10 @@ const main = async () => {
 
       // Check if the search has already been performed within the last 24 hours
       const searchAlreadyPerformed =
-        await hasSearchBeenPerformedWithin24Hours(queryIdentifier);
+        await hasSearchBeenPerformedWithinThreshold(
+          "indeedJobSearchMeta",
+          queryIdentifier,
+        );
 
       if (searchAlreadyPerformed) {
         skipSearchMessage(search.query);

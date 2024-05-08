@@ -1,27 +1,31 @@
 import { prisma } from "@prisma/db.server";
 
 export const calculateDaysRange = async (identifier: string) => {
-  // Retrieve the timestamp of the last search from the database
   const lastIndeedJobSearch = await prisma.indeedJobSearchMeta.findFirst({
     where: {
       identifier,
     },
   });
 
-  // If no previous search found, throw an error with a console message
   if (!lastIndeedJobSearch?.lastSearchAt) {
     console.error("No previous search date found.");
     throw new Error("No previous search date found.");
   }
 
-  // Calculate the time difference in days between the current time and the last search timestamp
-  const currentTimestamp = Date.now();
-  const lastSearchTimestamp = lastIndeedJobSearch.lastSearchAt.getTime();
+  // Convert Date objects to timestamps before subtraction
+  const currentTimestamp = new Date().getTime(); // gets the current time as a timestamp
+  const lastSearchTimestamp = new Date(
+    lastIndeedJobSearch.lastSearchAt,
+  ).getTime(); // converts the last search date to a timestamp
+
+  // Calculate the difference in milliseconds
   const timeDifference = currentTimestamp - lastSearchTimestamp;
 
-  // Convert milliseconds to days and round down to the nearest whole number
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  // Convert milliseconds to days
+  const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
-  // Return the number of days, ensuring it's at least 1
-  return Math.max(daysDifference, 1);
+  // Use Math.ceil to round up to the nearest whole number
+  const daysRange = Math.ceil(daysDifference);
+
+  return daysRange;
 };

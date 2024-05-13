@@ -2,8 +2,8 @@ import { IndeedJob } from "@prisma/client";
 import { Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
+import { cyrilSkills } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/skills";
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
-import { generateDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 
 export const qualificationQuestionsHandler = async (
   page: Page,
@@ -20,13 +20,14 @@ export const qualificationQuestionsHandler = async (
     );
 
     if (!legendText) return;
-    const prompt = `Do I have experience in ${legendText.replace("Experience: ", "")}? Answer only with "Yes" or "No".`;
+    const question = legendText.replace("Experience: ", "");
 
-    const gptDecision = await generateDecision(prompt);
-
-    // Ensure the response is either "Yes" or "No"
-    const valueToSelect =
-      gptDecision.trim().toLowerCase() === "yes" ? "Yes" : "No";
+    // Check if the question matches any of the skills (case-insensitive)
+    const valueToSelect = cyrilSkills.some((skill) =>
+      question.toLowerCase().includes(skill.toLowerCase()),
+    )
+      ? "Yes"
+      : "No";
 
     const selector = `input[type="radio"][value="${valueToSelect}"]`;
     await fieldset.$eval(selector, (radio) => radio.click());

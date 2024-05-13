@@ -1,6 +1,7 @@
 import console from "node:console";
 
 import { IndeedJob } from "@prisma/client";
+import colors from "colors";
 import { ElementHandle, Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
@@ -45,6 +46,17 @@ export const questionsHandler = async (
     // Unified method to get question label or legend
     const questionLabel = await getQuestionLabelOrLegend(container);
 
+    // PREVENT GPT COST
+    const willSkipInput = await shouldSkipInput(
+      [...radioInputs, ...numberInputs, telInput, dateInput, textInput],
+      selectDropdown,
+      textarea,
+    );
+
+    if (willSkipInput) {
+      console.log(colors.green("Input already filled. It will be skipped."));
+    }
+
     /*
     if (questionLabel.toLowerCase().includes("optional")) {
       // Define keywords to exclude from the skip logic
@@ -63,12 +75,12 @@ export const questionsHandler = async (
 
     try {
       // Handle checkbox inputs
-      if (checkboxContainers.length > 0) {
+      if (checkboxContainers.length > 0 && !willSkipInput) {
         await handleCheckboxInput(container, questionLabel);
       }
 
       // Handle radio inputs
-      if (radioInputs.length > 0) {
+      if (radioInputs.length > 0 && !willSkipInput) {
         const prompt = await formulatePrompt(container);
         const decision = await generateDecision(prompt);
 
@@ -76,19 +88,19 @@ export const questionsHandler = async (
       }
 
       // Handle number inputs
-      if (numberInputs.length > 0) {
+      if (numberInputs.length > 0 && !willSkipInput) {
         for (const numberInput of numberInputs) {
           await handleNumberInput(container, questionLabel);
         }
       }
 
       // Handle date inputs
-      if (dateInput) {
+      if (dateInput && !willSkipInput) {
         await handleDateInput(container, questionLabel);
       }
 
       // Handle select dropdowns
-      if (selectDropdown) {
+      if (selectDropdown && !willSkipInput) {
         const optionsTexts = await selectDropdown.$$eval("option", (options) =>
           options.map((option) => option.textContent?.trim() || ""),
         );
@@ -100,12 +112,12 @@ export const questionsHandler = async (
         await selectDropdownFromDecision(selectDropdown, decision);
       }
 
-      if (telInput) {
+      if (telInput && !willSkipInput) {
         await telInput.fill(cyrilPersonalInfo.phone);
       }
 
       // Handle text inputs and textareas
-      if (textInput || textarea) {
+      if ((textInput && !willSkipInput) || (textarea && !willSkipInput)) {
         console.log(questionLabel);
         const answer = await generateAnswer(questionLabel);
         if (textInput) {
@@ -138,4 +150,46 @@ const getQuestionLabelOrLegend = async (
     .$eval("legend", (el) => el.textContent || "")
     .catch(() => "");
   return legend || label;
+};
+
+// PREVENT GPT COST
+const shouldSkipInput = async (
+  inputs: (ElementHandle<SVGElement | HTMLElement> | null)[],
+  selectDropdown: ElementHandle<HTMLSelectElement> | null,
+  textarea: ElementHandle<HTMLTextAreaElement> | null,
+): Promise<boolean> => {
+  // Check for non-empty values or selected states in inputs
+  for (const input of inputs) {
+    // skip if input is null
+    if (!input) continue;
+
+    const type = await input.getAttribute("type");
+
+    if (
+      (type === "checkbox" || type === "radio") &&
+      (await input.evaluate((node) => node.checked))
+    ) {
+      return true;
+    }
+
+    if (type !== "checkbox" && type !== "radio") {
+      const value = await input.inputValue();
+      if (value.length > 0) return true;
+    }
+  }
+
+  // Check select dropdown for a selected index
+  if (
+    selectDropdown &&
+    (await selectDropdown.evaluate((select) => select.selectedIndex)) > 0
+  ) {
+    return true;
+  }
+
+  // Check textarea for non-empty value
+  if (textarea && (await textarea.inputValue()).length > 0) {
+    return true;
+  }
+
+  return false;
 };

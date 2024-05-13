@@ -3,7 +3,6 @@ import console from "node:console";
 import colors from "colors";
 
 import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
-import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { ProviderName as LinkedinProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 import { SEARCH_HOURS_ELAPSED_THRESHOLD } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 
@@ -22,16 +21,6 @@ export const missingVarMessage =
 // Linkedin
 export const linkedinRequestErrorMessage =
   "An error occurred. This might be due to incorrect or expired session tokens. Please verify your session tokens (JSESSIONID, li_at) are correct by using them in a logged-in browser session.";
-
-export const linkedinSearchMessage = (
-  metadata: RawLinkedinData["metadata"],
-) => {
-  const { keywords } = metadata;
-  const localization = metadata.geo.fullLocalizedName;
-
-  console.log(colors.magenta.italic(`Search Keywords: ${keywords}`));
-  console.log(colors.magenta(`Localization: ${localization}`));
-};
 
 export const skipSearchMessage = (query: string) => {
   console.log(

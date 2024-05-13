@@ -4,7 +4,6 @@ import {
   transformLinkedinJobResults,
 } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
-import { linkedinSearchMessage } from "@/scripts/utils/console/console-messages";
 
 export const getJobResults = async (
   linkedinSearch: string,
@@ -32,11 +31,6 @@ export const getJobResults = async (
     if (rawData && rawData.elements && rawData.elements.length > 0) {
       const jobs = transformLinkedinJobResults(rawData);
       allJobs.push(...jobs); // Accumulate jobs
-
-      // Log search details on the first page
-      if (start === 0 && rawData.metadata) {
-        linkedinSearchMessage(rawData.metadata);
-      }
 
       start += jobs.length; // Prepare for fetching the next page
       if (allJobs.length >= totalJobsCount) {

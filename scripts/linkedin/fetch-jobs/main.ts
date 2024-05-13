@@ -73,8 +73,6 @@ const processSearchConfig = async (
 
   const searchUrl = await buildSearchRequest(searchConfig);
 
-  console.log(searchUrl);
-
   const jobResults = await getJobResults(searchUrl);
   const filteredJobResults = filterLinkedinJobResults(jobResults);
 

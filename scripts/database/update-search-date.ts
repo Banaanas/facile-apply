@@ -21,7 +21,7 @@ export const updateLastSearchDateIndeed = async (
 
     console.log(
       colors.green(
-        `Last search date updated for Indeed: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+        `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
       ),
     );
   } catch (error) {
@@ -50,7 +50,7 @@ export const updateLastSearchDateLinkedIn = async (
 
     console.log(
       colors.green(
-        `Last search date updated for LinkedIn: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+        `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
       ),
     );
   } catch (error) {

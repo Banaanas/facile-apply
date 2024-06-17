@@ -28,7 +28,12 @@ export const resumeHandler = async (
     }
   }
 
-  await page.click(`text=${continueButtonRegex}`);
+  // For now, we have to click on the parent because of multiple buttons in one container resulting in an ineffective click
+
+  // await page.click(`text=${continueButtonRegex}`);
+
+  const buttonContainer = await page.$(".ia-BasePage-footer");
+  await buttonContainer?.click();
   console.log("Resume handled successfully.");
 
   await handlePageBasedOnUrl(page, indeedJobId);

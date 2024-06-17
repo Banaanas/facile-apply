@@ -9,8 +9,10 @@ import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform
 import { fetchLinkedinIpRoyal } from "@/scripts/linkedin/fetch-jobs/requests/ipRoyal";
 import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";
 import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
+import { fetchLinkedinVPN } from "@/scripts/linkedin/fetch-jobs/requests/withVPN";
 
 export const providerFunctions: ProviderFetchFunctions = {
+  withVPN: fetchLinkedinVPN,
   ipRoyal: fetchLinkedinIpRoyal,
 };
 
@@ -31,6 +33,7 @@ export const fetchResultsWithProvider = async (searchUrl: string) => {
 };
 
 interface ProviderFetchFunctions {
+  withVPN: FetchFunction;
   ipRoyal: FetchFunction;
 }
 

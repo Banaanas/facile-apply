@@ -10,9 +10,15 @@ import { SEARCH_HOURS_ELAPSED_THRESHOLD } from "@/scripts/searches/utils/search-
 export const fetchingWithMessage = (
   providerName: IndeedProviderName | LinkedinProviderName,
 ) => {
-  console.log(
-    colors.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
-  );
+  if (providerName !== "withVPN") {
+    console.log(
+      colors.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
+    );
+  }
+
+  if (providerName === "withVPN") {
+    console.log(colors.italic("Fetching with VPN Provider"));
+  }
 };
 
 export const missingVarMessage =

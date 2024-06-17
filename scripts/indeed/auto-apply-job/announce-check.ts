@@ -9,7 +9,8 @@ export const checkAndUpdateIfJobIsObsolete = async (
 ): Promise<boolean> => {
   // Check for the specific elements that indicate the job has expired
   const hasExpiredNotice =
-    (await page.locator('text="This job has expired on Indeed"').count()) > 0;
+    (await page.locator('text="This job has expired on Indeed"').count()) > 0 ||
+    (await page.locator('text="Cette offre a expiré sur Indeed"').count()) > 0;
   const hasNotFoundNotice =
     (await page.locator("h1", { hasText: "We can't find this page" }).count()) >
       0 ||

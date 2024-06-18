@@ -8,7 +8,7 @@ import { executeFastApply } from "@/scripts/indeed/auto-apply-job/execute-fast-a
 import { launchLocalBrowser } from "@/scripts/indeed/auto-apply-job/launch-browser/launch-local-browser";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
-export const runPlaywrightSession = async (
+export const runIndeedPlaywrightSession = async (
   headless: Headless,
   url: string,
   indeedJobId: IndeedJob["id"],

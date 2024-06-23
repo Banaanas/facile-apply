@@ -15,12 +15,10 @@ export const executeFastApply = async (
   const selector =
     "div.jobs-apply-button--top-card >> text=Candidature simplifiée";
 
-  // Move cursor to the selector and click
+  // Click to open the Easy Apply form
   await humanLikeMoveAndClick(page, selector);
 
   // Identify and handle the initial step
   const step = await identifyStep(page);
-  await handleStep(page, step);
-
-  await page.pause();
+  await handleStep(page, step, linkedinJobId);
 };

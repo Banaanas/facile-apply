@@ -1,10 +1,6 @@
 import { Page } from "playwright";
+
 import { humanLikeMoveAndClick } from "@/scripts/linkedin/auto-apply-job/human-move-and-click";
-
-
-
-
-
 
 export const handleHomeAddressStep = async (page: Page) => {
   console.log("Handling Home Address Step");

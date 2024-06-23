@@ -1,8 +1,8 @@
 import { Page } from "playwright";
 
-import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/self-identification/radio-buttons";
-import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/self-identification/select-dropdown";
-import { humanLikeMoveAndClick } from "@/scripts/linkedin/auto-apply-job/human-move-and-click";
+import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/radio-buttons";
+import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown";
+import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
 export const handleSelfIdentificationStep = async (page: Page) => {
   console.log("Handling Self Identification Step");
@@ -34,9 +34,5 @@ export const handleSelfIdentificationStep = async (page: Page) => {
     }
   }
 
-  await page.waitForTimeout(100000);
-
-  // Use the human-like click function to click the "Suivant" button
-  const nextButtonSelector = 'button[aria-label="Passez à l’étape suivante"]';
-  await humanLikeMoveAndClick(page, nextButtonSelector);
+  await clickSubmitFormStep(page);
 };

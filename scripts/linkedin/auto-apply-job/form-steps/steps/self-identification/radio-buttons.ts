@@ -24,17 +24,14 @@ export const handleRadioButtonFieldset = async (
   legendText: string,
 ) => {
   if (!legendText) {
-
-    console.log("GINA");
-    const isDisabilityLabelExist = await section.$eval(
-      'label',
-      (labelNode) =>
-        labelNode.getAttribute('data-test-text-selectable-option__label')?.toLowerCase().includes('disability'),
+    const isDisabilityLabelExist = await section.$eval("label", (labelNode) =>
+      labelNode
+        .getAttribute("data-test-text-selectable-option__label")
+        ?.toLowerCase()
+        .includes("disability"),
     );
 
     if (isDisabilityLabelExist) {
-
-      console.log("LALALALALAL");
       const disabilityLabel = await section.$(
         'label[data-test-text-selectable-option__label="No, I Don\'t Have A Disability, Or A History/Record Of Having A Disability"]',
       );

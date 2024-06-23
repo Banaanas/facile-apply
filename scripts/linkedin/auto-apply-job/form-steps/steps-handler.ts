@@ -1,33 +1,71 @@
 // Function to identify the current step based on the `h3` element text
+import console from "node:console";
+
+import { LinkedinJob } from "@prisma/client";
 import { Page } from "playwright";
 
-import { handleHomeAddressStep } from "@/scripts/linkedin/auto-apply-job/form-steps/home-address-step";
-import { handleSimpleStep } from "@/scripts/linkedin/auto-apply-job/form-steps/simple-step";
-import { handleSelfIdentificationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/self-identification/self-identification";
+import { handleCheckApplicationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/check-application";
+import { handleAdditionalQuestionsStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions-step";
+import { handleApplicationSent } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/application-sent-step";
+import { handleContactInformationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/contact-information-step";
+import { handleHomeAddressStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/home-address-step";
+import { handlePrivacyPolicyStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/privacy-policy-step";
+import { handleSelfIdentificationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/self-identification";
+import { handleSimpleStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/simple-step";
+import { handleWorkAuthorizationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/work-authorization-step";
+import { handleResumeStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/resume-step";
 
 export const identifyStep = async (page: Page): Promise<string | undefined> => {
   const h3Text = await page.textContent("h3");
+
+  if (h3Text?.trim().startsWith("Votre candidature a été envoyée")) {
+    return "Application Sent";
+  }
 
   return h3Text?.trim();
 };
 
 // Function to handle the steps based on the identified step
-export const handleStep = async (page: Page, step: string | undefined) => {
+export const handleStep = async (
+  page: Page,
+  step: string | undefined,
+  linkedinJobId: LinkedinJob["id"],
+) => {
   console.log(step);
   switch (step) {
-    case "Coordonnées":
     case "Contacts":
-    case "Resume":
     case "Work experience":
     case "Education":
+    case "Coordonnées":
+      await handleContactInformationStep(page, step);
+      break;
+    case "Screening questions":
       await handleSimpleStep(page, step);
       break;
     case "Home address":
       await handleHomeAddressStep(page);
       break;
+    case "Resume":
+      await handleResumeStep(page);
+      break;
     case "Auto-identification volontaire":
       await handleSelfIdentificationStep(page);
       break;
+    case "Permis de travail":
+      await handleWorkAuthorizationStep(page);
+      break;
+    case "Privacy policy":
+      await handlePrivacyPolicyStep(page);
+      break;
+    case "Additional Questions":
+      await handleAdditionalQuestionsStep(page);
+      break;
+    case "Vérifiez votre candidature":
+      await handleCheckApplicationStep(page);
+      break;
+    case "Application Sent":
+      await handleApplicationSent(linkedinJobId);
+      return; // End the loop after handling Application Sent
     default:
       console.log("Unknown step");
       return;
@@ -35,6 +73,6 @@ export const handleStep = async (page: Page, step: string | undefined) => {
   // Recursively identify and handle the next step
   const nextStep = await identifyStep(page);
   if (nextStep !== undefined) {
-    await handleStep(page, nextStep);
+    await handleStep(page, nextStep, linkedinJobId);
   }
 };

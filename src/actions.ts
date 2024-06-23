@@ -7,9 +7,10 @@ import { revalidatePath } from "next/cache";
 
 import { appRoutes } from "@/data/app-routes";
 import { IS_BROWSER_HEADLESS } from "@/scripts/indeed/auto-apply-job/data/params";
-import { runPlaywrightSession } from "@/scripts/indeed/auto-apply-job/launch-browser/playwright-connection";
+import { runIndeedPlaywrightSession } from "@/scripts/indeed/auto-apply-job/launch-browser/playwright-connection";
 import { generateEmailResponse } from "@/scripts/linkedin/auto-answer-post/generate-mail";
 import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
+import { runLinkedinPlaywrightSession } from "@/scripts/linkedin/auto-apply-job/launch-browser/playwright-connection";
 
 export const updateIndeedJobStatus = async (
   indeedJobId: IndeedJob["id"],
@@ -52,7 +53,26 @@ export const autoApplyIndeedJob = async (
   indeedJobId: IndeedJob["id"],
 ) => {
   try {
-    await runPlaywrightSession(IS_BROWSER_HEADLESS, indeedJobLink, indeedJobId);
+    await runIndeedPlaywrightSession(
+      IS_BROWSER_HEADLESS,
+      indeedJobLink,
+      indeedJobId,
+    );
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+
+export const autoApplyLinkedinJob = async (
+  linkedinJobLink: LinkedinJob["link"],
+  linkedinJobId: LinkedinJob["id"],
+) => {
+  try {
+    await runLinkedinPlaywrightSession(
+      IS_BROWSER_HEADLESS,
+      linkedinJobLink,
+      linkedinJobId,
+    );
   } catch (error) {
     console.error("An error occurred:", error);
   }

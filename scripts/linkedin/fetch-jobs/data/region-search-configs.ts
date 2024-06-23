@@ -1,7 +1,10 @@
+import { WorkplaceType } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
+
 export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
   France: {
     geoId: "105015875",
     keywords: ["next.js", "react", "Intégrateur Web"],
+    applyWithLinkedin: false,
   },
   Europe: {
     geoId: "91000000",
@@ -28,6 +31,9 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
 interface SearchRegionConfiguration {
   geoId: string;
   keywords: Array<string>;
+  applyWithLinkedin?: boolean;
+  earlyApplicant?: boolean;
+  workplaceType?: WorkplaceType;
 }
 
 export interface SearchConfigurations {

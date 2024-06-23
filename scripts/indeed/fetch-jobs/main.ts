@@ -1,4 +1,5 @@
 import * as console from "node:console";
+
 import colors from "colors";
 import { firefox } from "playwright";
 
@@ -16,13 +17,13 @@ import { transformJobResults } from "@/scripts/indeed/fetch-jobs/parsing/transfo
 import { fetchPageWithProvider } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 import { buildSearchUrl } from "@/scripts/indeed/fetch-jobs/utils/url-builder";
 import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
+import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 import {
   fetchingWithMessage,
   skipSearchMessage,
 } from "@/scripts/utils/console/console-messages";
 import { logIndeedJobSearchParams } from "@/scripts/utils/console/console-messages-indeed-launch";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
-import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
 
 const main = async () => {
   const browser = await firefox.launch();

@@ -7,7 +7,6 @@ export const getSearchCountry = (
   htmlPage: string,
 ): ScrapedIndeedJob["country"] => {
   const $ = cheerio.load(htmlPage);
-
   const scriptContent = $("#mosaic-data").html();
 
   if (scriptContent) {

@@ -41,7 +41,6 @@ const handleRaceField = async (page: Page, labelText: string) => {
 
 export const handleSelectFieldset = async (
   page: Page,
-  section: ElementHandle,
   labelText: string,
 ) => {
   await handleGenderField(page, labelText);

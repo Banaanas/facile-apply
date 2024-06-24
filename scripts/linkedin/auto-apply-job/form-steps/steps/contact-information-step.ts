@@ -2,8 +2,8 @@ import { Page } from "playwright";
 
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
-export const handleContactInformationStep = async (page: Page, stepName: string) => {
-  console.log(`Handling ${stepName} Step`);
+export const handleContactInformationStep = async (page: Page) => {
+  console.log(`Handling Contact Information Step`);
 
   await fillAddressInput(page);
 

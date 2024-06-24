@@ -36,11 +36,11 @@ export const handleStep = async (
     case "Contacts":
     case "Work experience":
     case "Education":
-    case "Coordonnées":
-      await handleContactInformationStep(page, step);
-      break;
     case "Screening questions":
       await handleSimpleStep(page, step);
+      break;
+    case "Coordonnées":
+      await handleContactInformationStep(page);
       break;
     case "Home address":
       await handleHomeAddressStep(page);

@@ -5,5 +5,7 @@ import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-step
 export const handleAdditionalQuestionsStep = async (page: Page) => {
   console.log("Handling Additional Questions Step");
 
+  await page.pause();
+
   await clickSubmitFormStep(page);
 };

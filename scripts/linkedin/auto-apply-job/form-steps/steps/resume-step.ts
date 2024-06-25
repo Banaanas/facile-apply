@@ -2,16 +2,14 @@ import { Page } from "playwright";
 
 import { cyrilPersonalInfo } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/personal-info";
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
+import { ensureNextButtonIsClickable } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/ensure-button-clickable";
 
 export const handleResumeStep = async (page: Page) => {
   console.log(`Handling Resume Step`);
 
   await fillLinkedInProfileInput(page);
 
-  // Without those lines, the following button's click doesn't seem to work
-  const nextButton = await page.$("text='Suivant'");
-  await nextButton?.scrollIntoViewIfNeeded();
-
+  await ensureNextButtonIsClickable(page, "Suivant");
   await clickSubmitFormStep(page);
 };
 

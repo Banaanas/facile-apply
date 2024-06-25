@@ -35,5 +35,4 @@ export const clickSubmitFormStep = async (page: Page) => {
       "No 'Next step', 'Verify', or 'Send application' button found",
     );
   }
-  await page.waitForTimeout(1000); // Adjust the timeout as needed
 };

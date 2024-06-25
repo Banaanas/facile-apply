@@ -5,6 +5,7 @@ import { handleInputField } from "@/scripts/linkedin/auto-apply-job/form-steps/s
 import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/radio-buttons";
 import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown";
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
+import { ensureNextButtonIsClickable } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/ensure-button-clickable";
 
 export const handleSelfIdentificationStep = async (page: Page) => {
   console.log("Handling Self Identification Step");
@@ -41,5 +42,6 @@ export const handleSelfIdentificationStep = async (page: Page) => {
     }
   }
 
+  await ensureNextButtonIsClickable(page, "Suivant");
   await clickSubmitFormStep(page);
 };

@@ -10,10 +10,10 @@ import { handleApplicationSent } from "@/scripts/linkedin/auto-apply-job/form-st
 import { handleContactInformationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/contact-information-step";
 import { handleHomeAddressStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/home-address-step";
 import { handlePrivacyPolicyStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/privacy-policy-step";
+import { handleResumeStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/resume-step";
 import { handleSelfIdentificationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/self-identification";
 import { handleSimpleStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/simple-step";
 import { handleWorkAuthorizationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/work-authorization-step";
-import { handleResumeStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/resume-step";
 
 export const identifyStep = async (page: Page): Promise<string | undefined> => {
   const h3Text = await page.textContent("h3");
@@ -69,7 +69,7 @@ export const handleStep = async (
       return; // End the loop after handling Application Sent
     default:
       console.log("Unknown step");
-      await page.pause()
+      await page.pause();
       return;
   }
   // Recursively identify and handle the next step

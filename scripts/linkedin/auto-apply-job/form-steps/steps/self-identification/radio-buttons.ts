@@ -1,45 +1,36 @@
-import { ElementHandle, Page } from "playwright";
+import { ElementHandle } from "playwright";
 
 export const handleRadioButtonFieldset = async (
-  page: Page,
-  container: ElementHandle,
-  radioButtonFieldset: ElementHandle,
+  formControlContainer: ElementHandle,
+  formControlIdentifier: string,
 ) => {
-  let legendText = "No Legend Text";
-
-  try {
-    legendText = await radioButtonFieldset.$eval(
-      "legend span",
-      (node) => (node as HTMLElement).innerText,
-    );
-  } catch (error) {
-    // If no legend span is found, use the default 'No Legend Text'
-  }
-
-  if (legendText === "No Legend Text") {
-    await handleNoLegendText(container);
+  if (formControlIdentifier === "No Legend Text") {
+    await handleNoLegendText(formControlContainer);
     return;
   }
 
   for (const { legend, label } of legendActions) {
-    if (legendText.includes(legend)) {
-      await clickLabelByText(container, label);
+    if (formControlIdentifier.includes(legend)) {
+      await clickLabelByText(formControlContainer, label);
       return;
     }
   }
 
-  console.error(`No matching legend found for: ${legendText}`);
+  console.error(`No matching legend found for: ${formControlIdentifier}`);
 };
 
-const handleNoLegendText = async (container: ElementHandle) => {
-  const isDisabilityLabelExist = await container.$eval("label", (labelNode) =>
-    labelNode
-      .getAttribute("data-test-text-selectable-option__label")
-      ?.toLowerCase()
-      .includes("disability"),
+const handleNoLegendText = async (formControlContainer: ElementHandle) => {
+  const isDisabilityLabelExist = await formControlContainer.$eval(
+    "label",
+    (labelNode) =>
+      labelNode
+        .getAttribute("data-test-text-selectable-option__label")
+        ?.toLowerCase()
+        .includes("disability"),
   );
+
   if (isDisabilityLabelExist) {
-    const disabilityLabel = await container.$(
+    const disabilityLabel = await formControlContainer.$(
       'label[data-test-text-selectable-option__label="No, I Don\'t Have A Disability, Or A History/Record Of Having A Disability"]',
     );
 
@@ -51,12 +42,12 @@ const handleNoLegendText = async (container: ElementHandle) => {
 };
 
 const clickLabelByText = async (
-  container: ElementHandle,
+  formControlContainer: ElementHandle,
   label: string,
 ): Promise<void> => {
   const labelSelector = `label[data-test-text-selectable-option__label="${label}"]`;
 
-  const labelElement = await container.$(labelSelector);
+  const labelElement = await formControlContainer.$(labelSelector);
   if (labelElement) {
     await labelElement.click();
   }

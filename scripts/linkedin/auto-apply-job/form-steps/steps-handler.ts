@@ -49,6 +49,7 @@ export const handleStep = async (
       await handleResumeStep(page);
       break;
     case "Auto-identification volontaire":
+    case "Diversity":
       await handleSelfIdentificationStep(page);
       break;
     case "Permis de travail":
@@ -68,6 +69,7 @@ export const handleStep = async (
       return; // End the loop after handling Application Sent
     default:
       console.log("Unknown step");
+      await page.pause()
       return;
   }
   // Recursively identify and handle the next step

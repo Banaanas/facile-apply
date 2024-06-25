@@ -1,93 +1,66 @@
-import colors from "colors";
 import { ElementHandle, Page } from "playwright";
 
+import { getClosestGroupTitle } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/get-group-title";
 import { handleInputField } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/input";
 import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/radio-buttons";
-import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown";
+import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown";
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
 export const handleSelfIdentificationStep = async (page: Page) => {
   console.log("Handling Self Identification Step");
 
   // Iterate over each form section and handle the inputs dynamically
-  const formElementContainers = await page.$$(
+  const formControlContainers = await page.$$(
     ".jobs-easy-apply-form-section__grouping",
   );
 
-  for (const container of formElementContainers) {
-    const radioButtonFieldset = await container.$("fieldset");
-    const selectDropdown = await container.$("select");
-    const inputField = await container.$("input");
+  for (const formControlContainer of formControlContainers) {
+    const radioButtonFieldset = await formControlContainer.$("fieldset");
+    const selectDropdown = await formControlContainer.$("select");
+    const inputField = await formControlContainer.$("input");
 
-    // Get the closest group title for the current section
-    const groupTitle = await getClosestGroupTitle(container);
-    console.log("Found group title:", groupTitle);
+    // Get the label text or group title for the current section
+    const formControlIdentifier =
+      await getFormControlIdentifier(formControlContainer);
 
     if (radioButtonFieldset) {
-      await handleRadioButtonFieldset(page, container, radioButtonFieldset);
+      await handleRadioButtonFieldset(
+        formControlContainer,
+        formControlIdentifier,
+      );
     }
 
     // Check if the section contains a select dropdown
     if (selectDropdown) {
-      const labelText = await container.$eval(
-        "label span",
-        (node) => (node as HTMLElement).innerText,
-      );
-      await handleSelectFieldset(page, labelText);
+      await handleSelectFieldset(page, formControlIdentifier);
     }
 
     // Check if the section contains an input field
     if (inputField) {
-      await handleInputField(container, groupTitle);
+      await handleInputField(formControlContainer, formControlIdentifier);
     }
   }
 
   await clickSubmitFormStep(page);
 };
 
-const getClosestGroupTitle = async (
-  container: ElementHandle,
+// Helper function to get the label text or group title
+const getFormControlIdentifier = async (
+  formControlContainer: ElementHandle,
 ): Promise<string> => {
-  console.log(colors.cyan("Starting search for group title..."));
+  let labelText = await formControlContainer
+    .$eval("label span", (node) => (node as HTMLElement).innerText)
+    .catch(() => null);
 
-  // Start with the previous sibling of the container
-  let siblingNode = await container.evaluateHandle(
-    (node) => node.previousElementSibling,
-  );
-
-  while (siblingNode) {
-    // Check if the sibling is another form element container
-    const isFormElementContainer = await siblingNode.evaluate((node) => {
-      return node.classList.contains("jobs-easy-apply-form-section__grouping");
-    });
-
-    if (isFormElementContainer) {
-      console.log(
-        colors.cyan("Encountered another form element, stopping search."),
-      );
-      break;
-    }
-
-    // Check if the sibling is the group title
-    const isGroupTitle = await siblingNode.evaluate(
-      (node) =>
-        node.tagName.toLowerCase() === "span" &&
-        node.classList.contains("jobs-easy-apply-form-section__group-title"),
-    );
-
-    if (isGroupTitle) {
-      const titleText = await siblingNode.evaluate(
-        (node) => node.textContent || "",
-      );
-      return titleText;
-    }
-
-    // Move to the previous sibling
-    siblingNode = await siblingNode.evaluateHandle(
-      (node) => node.previousElementSibling,
-    );
+  if (!labelText) {
+    labelText = await formControlContainer
+      .$eval("legend span", (node) => (node as HTMLElement).innerText)
+      .catch(() => null);
   }
-  const noTitleFoundMessage = "No group title found";
-  console.log(colors.cyan(noTitleFoundMessage));
-  return noTitleFoundMessage;
+
+  if (!labelText) {
+    labelText = await getClosestGroupTitle(formControlContainer);
+  }
+
+  return labelText || "Unknown";
 };

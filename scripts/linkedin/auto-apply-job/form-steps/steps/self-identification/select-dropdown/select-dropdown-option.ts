@@ -1,6 +1,6 @@
-// Utility function to select an option from a dropdown
 import { Page } from "playwright";
 
+// Utility function to select an option from a dropdown
 export const selectOptionFromDropdown = async (
   page: Page,
   labelSubstring: string,
@@ -9,9 +9,6 @@ export const selectOptionFromDropdown = async (
   console.log(
     `Selecting Option from Dropdown for label containing: "${labelSubstring}"`,
   );
-
-
-  console.log("LALALALALALALLALALALAL");
 
   // Try to find the label element containing the substring
   const labelElements = await page.$$("label, legend");

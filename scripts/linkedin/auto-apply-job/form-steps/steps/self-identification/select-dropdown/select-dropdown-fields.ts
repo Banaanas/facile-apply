@@ -1,16 +1,21 @@
 import { Page } from "playwright";
-import {
-  selectOptionFromDropdown
-} from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown-option";
 
-export const handleGenderField = async (page: Page, formControlIdentifier: string) => {
+import { selectOptionFromDropdown } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown-option";
+
+export const handleGenderField = async (
+  page: Page,
+  formControlIdentifier: string,
+) => {
   if (!formControlIdentifier.toLowerCase().includes("gender")) return;
 
   console.log("Handling Gender Field");
   await selectOptionFromDropdown(page, "Gender", "Male");
 };
 
-export const handleRaceField = async (page: Page, formControlIdentifier: string) => {
+export const handleRaceField = async (
+  page: Page,
+  formControlIdentifier: string,
+) => {
   if (!formControlIdentifier.toLowerCase().includes("race")) return;
 
   console.log("Handling Race Field");

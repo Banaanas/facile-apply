@@ -1,6 +1,6 @@
-import { ElementHandle, Page } from "playwright";
+import { Page } from "playwright";
 
-import { getClosestGroupTitle } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/get-group-title";
+import { getFormControlIdentifier } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/form-control-identifier/get-form-control-identifier";
 import { handleInputField } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/input";
 import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/radio-buttons";
 import { handleSelectFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown";
@@ -42,25 +42,4 @@ export const handleSelfIdentificationStep = async (page: Page) => {
   }
 
   await clickSubmitFormStep(page);
-};
-
-// Helper function to get the label text or group title
-const getFormControlIdentifier = async (
-  formControlContainer: ElementHandle,
-): Promise<string> => {
-  let labelText = await formControlContainer
-    .$eval("label span", (node) => (node as HTMLElement).innerText)
-    .catch(() => null);
-
-  if (!labelText) {
-    labelText = await formControlContainer
-      .$eval("legend span", (node) => (node as HTMLElement).innerText)
-      .catch(() => null);
-  }
-
-  if (!labelText) {
-    labelText = await getClosestGroupTitle(formControlContainer);
-  }
-
-  return labelText || "Unknown";
 };

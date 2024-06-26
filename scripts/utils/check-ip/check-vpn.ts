@@ -9,7 +9,7 @@ import colors from "colors";
  * through the ProtonVPN GUI.
  */
 
-const vpnIp = "185.182.193.73"; // Replace with your actual VPN IP address
+const vpnIp = "138.199.53.244"; // Replace with your actual VPN IP address
 
 export const verifyVPNUsage = async () => {
   const ipApi = "https://httpbin.org/ip";
@@ -17,7 +17,6 @@ export const verifyVPNUsage = async () => {
   // Fetch the local IP address
   const localIpResponse = await axios.get(ipApi);
   const localIp = localIpResponse.data.origin;
-
 
   // Compare the IP addresses
   if (localIp !== vpnIp) {

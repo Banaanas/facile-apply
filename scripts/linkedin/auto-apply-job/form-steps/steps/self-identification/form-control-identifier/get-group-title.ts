@@ -1,13 +1,14 @@
 import colors from "colors";
 import { ElementHandle } from "playwright";
 
+// Sometimes, when we don't have no label, we can look for a group title that will serve us as label for our Form Container
 export const getClosestGroupTitle = async (
-  container: ElementHandle,
+  formControlContainer: ElementHandle,
 ): Promise<string> => {
   console.log(colors.cyan("Starting search for group title..."));
 
   // Start with the previous sibling of the container
-  let siblingNode = await container.evaluateHandle(
+  let siblingNode = await formControlContainer.evaluateHandle(
     (node) => (node as Element).previousElementSibling,
   );
 
@@ -18,13 +19,16 @@ export const getClosestGroupTitle = async (
     }
 
     // Check if the sibling is another form element container
-    const isFormElementContainer = await siblingNode.evaluate((node) => {
+    const isAnotherFormControlContainer = await siblingNode.evaluate((node) => {
       return (node as Element).classList.contains(
         "jobs-easy-apply-form-section__grouping",
       );
     });
 
-    if (isFormElementContainer) {
+    // If another form element container is encountered, the search stops.
+    // This indicates that the next group title found will belong to this new form element container,
+    // not the current one we are investigating. Therefore, it means there is no group title for the current form element.
+    if (isAnotherFormControlContainer) {
       console.log(
         colors.cyan("Encountered another form element, stopping search."),
       );
@@ -52,6 +56,5 @@ export const getClosestGroupTitle = async (
   }
 
   const noTitleFoundMessage = "No group title found";
-  console.log(colors.cyan(noTitleFoundMessage));
   return noTitleFoundMessage;
 };

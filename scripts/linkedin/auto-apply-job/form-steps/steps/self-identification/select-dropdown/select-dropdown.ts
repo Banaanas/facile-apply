@@ -7,7 +7,7 @@ import {
   handleVeteranStatusField,
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/select-dropdown/select-dropdown-fields";
 
-export const handleSelectFieldset = async (
+export const handleSelectDropdown = async (
   page: Page,
   formControlIdentifier: string,
 ) => {

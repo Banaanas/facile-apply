@@ -5,7 +5,7 @@ import { LinkedinJob } from "@prisma/client";
 import { Page } from "playwright";
 
 import { handleCheckApplicationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/check-application";
-import { handleAdditionalQuestionsStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions-step";
+import { handleAdditionalQuestionsStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/additional-questions-step";
 import { handleApplicationSent } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/application-sent-step";
 import { handleContactInformationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/contact-information-step";
 import { handleHomeAddressStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/home-address-step";
@@ -59,12 +59,14 @@ export const handleStep = async (
       await handlePrivacyPolicyStep(page);
       break;
     case "Additional Questions":
+    case "Additional":
       await handleAdditionalQuestionsStep(page);
       break;
     case "Vérifiez votre candidature":
       await handleCheckApplicationStep(page);
       break;
     case "Application Sent":
+    case "Candidature Envoyée":
       await handleApplicationSent(linkedinJobId);
       return; // End the loop after handling Application Sent
     default:

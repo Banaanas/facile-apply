@@ -3,12 +3,11 @@ import console from "node:console";
 import colors from "colors";
 import { ElementHandle } from "playwright";
 
+import { cyrilSkills } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/skills";
 import { getLabelForElement } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/get-element-label";
 
 export const handleTextInput = async (
   formControlContainer: ElementHandle,
-  predefinedAnswers: { [key: string]: string },
-  chatGPTFunction: (labelText: string) => Promise<string>,
 ): Promise<void> => {
   const inputField = await formControlContainer.$("input");
 
@@ -17,21 +16,22 @@ export const handleTextInput = async (
       formControlContainer,
       inputField,
     );
-    console.log("LABEL TEXT", labelText);
 
-    // Check if the input field already has an answer
-    const alreadyAnswered = await checkIfAlreadyAnswered(inputField);
-    if (alreadyAnswered) {
-      console.log(colors.green("Input already filled. It will be skipped."));
+    if (!labelText) {
+      console.log(colors.yellow("Label text not found. Skipping input field."));
       return;
     }
 
-    // Identify if the label includes specific keywords
-    const lowerCaseLabel = labelText.toLowerCase();
-    for (const keyword in predefinedAnswers) {
-      if (lowerCaseLabel.includes(keyword)) {
-        await inputField.type(predefinedAnswers[keyword]);
-        return;
+    // Identify if the label includes specific keywords related to work experience
+    if (isYearsOfExperienceQuestion(labelText)) {
+      const lowerCaseLabel = labelText.toLowerCase();
+
+      // Check if the label includes any of our skills or technologies
+      for (const skill of cyrilSkills) {
+        if (lowerCaseLabel.includes(skill)) {
+          await inputField.fill("3");
+          return;
+        }
       }
     }
 
@@ -48,6 +48,19 @@ const checkIfAlreadyAnswered = async (
     (el) => (el as HTMLInputElement).value,
   );
   return value.trim().length > 0;
+};
+
+const isYearsOfExperienceQuestion = (labelText: string): boolean => {
+  const keywords = [
+    "years of work experience",
+    "experience years",
+    "years experience",
+    "years",
+    "expérience",
+    "année",
+  ];
+  const lowerCaseLabel = labelText.toLowerCase();
+  return keywords.some((keyword) => lowerCaseLabel.includes(keyword));
 };
 
 // Dummy ChatGPT function to handle other questions

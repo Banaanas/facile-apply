@@ -1,12 +1,13 @@
 import { ElementHandle } from "playwright";
 
 import {
+  checkIfDateField,
+  fillTodaysDate,
   isAskingForTodaysDate,
-  isDateField,
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/text-input/date";
 import {
+  checkIfNameField,
   fillNameField,
-  isNameField,
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/text-input/name";
 
 export const handleTextInput = async (
@@ -15,25 +16,41 @@ export const handleTextInput = async (
 ) => {
   const inputField = await formControlContainer.$("input");
 
-  if (inputField) {
-    const inputId = await inputField.getAttribute("id");
+  if (!inputField) {
+    console.log("No input field.");
+    return;
+  }
 
-    if (inputId) {
-      const label = await formControlContainer.$(`label[for="${inputId}"]`);
-      if (label) {
-        if (await isNameField(label)) {
-          await fillNameField(inputField);
-          return;
-        }
-      }
-    }
+  const inputId = await inputField.getAttribute("id");
 
-    // Handle specific known placeholders
-    if (await isDateField(inputField)) {
-      if (isAskingForTodaysDate(groupTitle)) {
-        const currentDate = new Date().toLocaleDateString("fr-FR");
-        await inputField.fill(currentDate);
-      }
+  if (inputId) {
+    await handleLabel(inputId, formControlContainer);
+  }
+
+  // Handle specific known placeholders when NO inputID
+  const isDateField = await checkIfDateField(inputField);
+  if (isDateField && isAskingForTodaysDate(groupTitle)) {
+    await fillTodaysDate(inputField);
+  }
+};
+
+// Helper function to handle the label of the input field
+const handleLabel = async (
+  inputId: string,
+  formControlContainer: ElementHandle,
+): Promise<void> => {
+  const label = await formControlContainer.$(`label[for="${inputId}"]`);
+
+  if (!label) {
+    console.log("No label.");
+    return;
+  }
+
+  if (await checkIfNameField(label)) {
+    const inputField = await formControlContainer.$("input");
+
+    if (inputField) {
+      await fillNameField(inputField);
     }
   }
 };

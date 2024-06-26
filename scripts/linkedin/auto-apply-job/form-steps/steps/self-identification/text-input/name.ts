@@ -1,8 +1,9 @@
 import { ElementHandle } from "playwright";
+
 import { cyrilPersonalInfo } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/personal-info";
 
 // Helper function to identify if the input field is for "Your Name"
-export const isNameField = async (label: ElementHandle): Promise<boolean> => {
+export const checkIfNameField = async (label: ElementHandle): Promise<boolean> => {
   const labelText = await label.innerText();
   return labelText.includes("Your Name");
 };

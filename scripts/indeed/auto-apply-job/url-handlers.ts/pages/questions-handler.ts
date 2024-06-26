@@ -108,7 +108,6 @@ export const questionsHandler = async (
 
         const decision = await generateDecision(prompt);
 
-        console.log(decision);
         await selectDropdownFromDecision(selectDropdown, decision);
       }
 
@@ -167,7 +166,7 @@ const shouldSkipInput = async (
 
     if (
       (type === "checkbox" || type === "radio") &&
-      (await input.evaluate((node) => node.checked))
+      (await input.evaluate((node) => (node as HTMLInputElement).checked))
     ) {
       return true;
     }

@@ -70,7 +70,7 @@ export const handleStep = async (
       await handleApplicationSent(linkedinJobId);
       return; // End the loop after handling Application Sent
     default:
-      console.log("Unknown step");
+      console.log("Unknown step: ", console.log(step));
       await page.pause();
       return;
   }

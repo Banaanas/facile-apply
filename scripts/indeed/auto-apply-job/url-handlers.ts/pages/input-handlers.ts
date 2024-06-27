@@ -21,16 +21,23 @@ export const clickRadioButtonBasedOnDecision = async (
       .trim();
     const normalizedDecision = decision
       .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-      .toLowerCase()
       .trim();
 
+    console.log("LABEL", normalizedLabelText);
+    console.log("DECISION", normalizedDecision);
+
+    // Construct the selector string to find the label
+    const labelSelector = `label[data-test-text-selectable-option__label="${normalizedDecision}"]`;
+
+    // Find the label element using the constructed selector
+    const labelElement = await container.$(labelSelector);
+
     // Use strict comparison for accuracy
-    if (normalizedLabelText === normalizedDecision) {
-      const radioButton = await label.$('input[type="radio"]');
-      if (radioButton) {
-        await radioButton.click();
-        break;
-      }
+    if (labelElement) {
+      // Click the label element, which should select the corresponding radio button
+      await labelElement.click();
+      console.log("Radio button clicked for decision:", decision);
+      break; // Exit the loop after clicking
     }
   }
 };

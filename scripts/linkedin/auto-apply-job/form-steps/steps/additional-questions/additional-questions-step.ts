@@ -3,15 +3,16 @@ import console from "node:console";
 import colors from "colors";
 import { Page } from "playwright";
 
-import { handleRadioButtonFieldset } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/radio-buttons";
+import { clickRadioButtonBasedOnDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
+import {
+  generateDecision,
+} from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 import { handleTextInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/text-input";
 import { willSkipInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/will-skip-question";
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 import {
-  formulatePrompt,
-  generateDecision,
-} from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
-import { clickRadioButtonBasedOnDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
+  radioInputQuestionPrompt
+} from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/question-utilities";
 
 export const handleAdditionalQuestionsStep = async (page: Page) => {
   console.log("Handling Additional Questions Step");
@@ -45,18 +46,13 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
       console.log("SELECT");
     }
 
-
-
-
     if (radioButtonFieldset) {
-
-      const prompt = await formulatePrompt(formControlContainer);
+      const prompt = await radioInputQuestionPrompt(formControlContainer);
       const decision = await generateDecision(prompt);
-      console.log("PROMPT", prompt);
       console.log("DECISION", decision);
       await clickRadioButtonBasedOnDecision(formControlContainer, decision);
 
-//      await handleRadioButtonFieldset(formControlContainer);
+      // await handleRadioButtonFieldset(formControlContainer);
     }
 
     if (textArea) {
@@ -64,6 +60,6 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
     }
   }
 
-  await page.waitForTimeout(1000); // Adjust timeout as needed
+  await page.waitForTimeout(1000000); // Adjust timeout as needed
   await clickSubmitFormStep(page);
 };

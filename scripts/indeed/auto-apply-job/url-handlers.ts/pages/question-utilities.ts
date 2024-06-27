@@ -28,18 +28,18 @@ export const generateAnswer = async (question: string): Promise<string> => {
   return content ? content.trim() : "";
 };
 
-export const formulatePrompt = async (
-  container: ElementHandle<SVGElement | HTMLElement>,
+export const radioInputQuestionPrompt = async (
+  formControlContainer: ElementHandle<SVGElement | HTMLElement>,
 ) => {
-  const questionText = await container.$eval(
+  const questionText = await formControlContainer.$eval(
     "legend",
     (el) => el.textContent?.trim() ?? "",
   );
-  const optionsText = await container.$$eval("label", (labels) =>
+  const optionsText = await formControlContainer.$$eval("label", (labels) =>
     labels.map((label) => label.textContent?.trim() ?? ""),
   );
 
-  const prompt = `Question: ${questionText} Options: ${optionsText.join(", ")}. Based on the options, which should be selected?`;
+  const prompt = `Question: ${questionText} Options: ${optionsText.join(", ")}. Based on the options, which should be selected? Provide the exact option text, case-sensitive, with no additional words or punctuation. The answer must be one of the options provided.`;
 
   return prompt;
 };

@@ -7,10 +7,6 @@ export const handleRadioButtonFieldset = async (
   const fieldsetLabel =
     await extractRadioButtonFieldsetLabel(formControlContainer);
   console.log(`Fieldset Label: ${fieldsetLabel}`);
-
-
-
-
 };
 
 const extractRadioButtonFieldsetLabel = async (

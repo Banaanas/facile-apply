@@ -15,7 +15,7 @@ import {
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
 import {
-  formulatePrompt,
+  radioInputQuestionPrompt,
   generateAnswer,
   generateDecision,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
@@ -81,10 +81,10 @@ export const questionsHandler = async (
 
       // Handle radio inputs
       if (radioInputs.length > 0 && !willSkipInput) {
-        const prompt = await formulatePrompt(container);
+        const prompt = await radioInputQuestionPrompt(container);
         const decision = await generateDecision(prompt);
 
-        await clickRadioButtonBasedOnDecision(container, decision);
+        await clickRadioButtonBasedOnDecision(questionLabel, decision);
       }
 
       // Handle number inputs

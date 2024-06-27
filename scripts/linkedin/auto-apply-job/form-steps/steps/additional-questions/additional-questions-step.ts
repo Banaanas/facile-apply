@@ -3,16 +3,14 @@ import console from "node:console";
 import colors from "colors";
 import { Page } from "playwright";
 
-import { clickRadioButtonBasedOnDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
+import { generateDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 import {
-  generateDecision,
-} from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
-import { handleTextInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/text-input";
-import { willSkipInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/will-skip-question";
-import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
-import {
-  radioInputQuestionPrompt
+  clickRadioButtonBasedOnDecision,
+  radioInputQuestionPrompt,
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/question-utilities";
+import { handleTextInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/text-input";
+import { shouldSkipInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/will-skip-question";
+import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
 export const handleAdditionalQuestionsStep = async (page: Page) => {
   console.log("Handling Additional Questions Step");
@@ -31,31 +29,35 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
     const selectDropdown = await formControlContainer.$("select");
     const radioButtonFieldset = await formControlContainer.$("fieldset");
 
-    const willSkip = await willSkipInput([textInput], selectDropdown, textArea);
+    const willSkipInput = await shouldSkipInput(
+      [textInput],
+      selectDropdown,
+      textArea,
+    );
 
-    if (willSkip) {
+    if (willSkipInput) {
       console.log(colors.green("Input already filled. It will be skipped."));
     }
 
     // Log the type of form elements found in each container
-    if (textInput) {
+    if (textInput && !willSkipInput) {
       await handleTextInput(formControlContainer);
     }
 
-    if (selectDropdown) {
+    if (selectDropdown && !willSkipInput) {
       console.log("SELECT");
     }
 
-    if (radioButtonFieldset) {
+    if (radioButtonFieldset && !willSkipInput) {
       const prompt = await radioInputQuestionPrompt(formControlContainer);
       const decision = await generateDecision(prompt);
-      console.log("DECISION", decision);
+
       await clickRadioButtonBasedOnDecision(formControlContainer, decision);
 
       // await handleRadioButtonFieldset(formControlContainer);
     }
 
-    if (textArea) {
+    if (textArea && !willSkipInput) {
       console.log("TEXTAREA");
     }
   }

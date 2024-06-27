@@ -1,6 +1,6 @@
 import { ElementHandle } from "playwright";
 
-export const willSkipInput = async (
+export const shouldSkipInput = async (
   inputs: (ElementHandle<SVGElement | HTMLElement> | null)[],
   selectDropdown: ElementHandle<HTMLSelectElement> | null,
   textarea: ElementHandle<HTMLTextAreaElement> | null,

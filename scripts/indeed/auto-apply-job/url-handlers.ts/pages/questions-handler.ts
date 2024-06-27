@@ -15,9 +15,9 @@ import {
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/input-handlers";
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
 import {
-  radioInputQuestionPrompt,
   generateAnswer,
   generateDecision,
+  radioInputQuestionPrompt,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 
 export const questionsHandler = async (

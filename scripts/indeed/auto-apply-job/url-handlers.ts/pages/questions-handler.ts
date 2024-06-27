@@ -81,10 +81,12 @@ export const questionsHandler = async (
 
       // Handle radio inputs
       if (radioInputs.length > 0 && !willSkipInput) {
-        const prompt = await radioInputQuestionPrompt(container);
-        const decision = await generateDecision(prompt);
+        if (radioInputs.length > 0 && !willSkipInput) {
+          const prompt = await radioInputQuestionPrompt(container);
+          const decision = await generateDecision(prompt);
 
-        await clickRadioButtonBasedOnDecision(questionLabel, decision);
+          await clickRadioButtonBasedOnDecision(container, decision);
+        }
       }
 
       // Handle number inputs

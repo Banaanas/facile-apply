@@ -10,7 +10,7 @@ export const generateAnswer = async (question: string): Promise<string> => {
   const instructionContext = gptInstructions.join(" ");
 
   const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
     messages: [
       {
         role: "system",
@@ -39,7 +39,7 @@ export const radioInputQuestionPrompt = async (
     labels.map((label) => label.textContent?.trim() ?? ""),
   );
 
-  const prompt = `Question: ${questionText} Options: ${optionsText.join(", ")}. Based on the options, which should be selected? Provide the exact option text, case-sensitive, with no additional words or punctuation. The answer must be one of the options provided.`;
+  const prompt = `Question: ${questionText}.Based on the options, which should be selected? Provide the exact option text, case-sensitive, with no additional words or punctuation. The answer must be one of the options provided. Chose one of those following options: ${optionsText.join(", ")}. `;
 
   return prompt;
 };

@@ -37,18 +37,19 @@ export const handleStep = async (
   console.log(step);
   switch (step) {
     case "Contacts":
-    case "Work experience":
     case "Education":
     case "Screening questions":
       await handleSimpleStep(page, step);
       break;
     case "Coordonnées":
+    case "Kontaktinfo":
       await handleContactInformationStep(page);
       break;
     case "Home address":
       await handleHomeAddressStep(page);
       break;
     case "Resume":
+    case "Lebenslauf":
       await handleResumeStep(page);
       break;
     case "Auto-identification volontaire":
@@ -63,6 +64,8 @@ export const handleStep = async (
       break;
     case "Additional Questions":
     case "Additional":
+    case "Work experience":
+    case "Weitere Fragen":
       await handleAdditionalQuestionsStep(page);
       break;
     case "Vérifiez votre candidature":

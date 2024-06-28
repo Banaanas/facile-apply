@@ -1,12 +1,12 @@
 import colors from "colors";
 
+import { updateLinkedinPostStatus } from "@/actions";
 import { generateEmailResponse } from "@/scripts/linkedin/auto-answer-post/generate-mail";
 import {
   fetchNotReviewedPosts,
   filterPostsWithEmails,
 } from "@/scripts/linkedin/auto-answer-post/get-posts";
 import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
-import { updateLinkedinPostStatus } from "@/actions";
 
 const main = async () => {
   console.log(colors.cyan("Starting email dispatch..."));

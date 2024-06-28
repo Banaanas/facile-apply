@@ -7,10 +7,10 @@ import { documentsHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.t
 import { indeedApplyPageHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/indeed-apply-handler";
 import { oocQuestionHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/ooc-question-handler";
 import { profileLocationHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/profile-location-handler";
+import { qualificationQuestionsHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/qualificationQuestionsHandler";
 import { resumeHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/resume-handler";
 import { reviewHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/review-handler";
 import { workExperienceHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/work-experience-handler";
-import { qualificationQuestionsHandler } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/qualificationQuestionsHandler";
 
 export const BASE_URL = "https://smartapply.indeed.com/beta/indeedapply/form/";
 

@@ -1,6 +1,7 @@
 import colors from "colors";
-import { Resend } from "resend";
 import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
 import { gmailConfig } from "@/scripts/config";
 
 const {

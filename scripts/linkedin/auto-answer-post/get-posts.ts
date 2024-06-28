@@ -1,5 +1,5 @@
-import { prisma } from "@prisma/db.server";
 import { LinkedinPost } from "@prisma/client";
+import { prisma } from "@prisma/db.server";
 
 export const fetchNotReviewedPosts = async () => {
   const posts = await prisma.linkedinPost.findMany({

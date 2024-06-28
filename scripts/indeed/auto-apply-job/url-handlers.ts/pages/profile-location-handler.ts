@@ -1,8 +1,8 @@
+import { IndeedJob } from "@prisma/client";
 import { Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
-import { IndeedJob } from "@prisma/client";
 
 export const profileLocationHandler = async (
   page: Page,

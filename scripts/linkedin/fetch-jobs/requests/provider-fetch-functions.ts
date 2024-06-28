@@ -4,12 +4,12 @@ import {
   LINKEDIN_CURRENT_PROVIDER,
   LINKEDIN_RANDOM_DELAY_RANGE,
 } from "@/scripts/linkedin/common/data/linkedin-current-provider";
-import { RawLinkedinJobData } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
 import { fetchLinkedinIpRoyal } from "@/scripts/linkedin/fetch-jobs/requests/ipRoyal";
+import { fetchLinkedinVPN } from "@/scripts/linkedin/fetch-jobs/requests/withVPN";
+import { RawLinkedinJobData } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
 import { RawLinkedinPostData } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";
 import { waitForRandomDelay } from "@/scripts/utils/wait-random-delay";
-import { fetchLinkedinVPN } from "@/scripts/linkedin/fetch-jobs/requests/withVPN";
 
 export const providerFunctions: ProviderFetchFunctions = {
   withVPN: fetchLinkedinVPN,

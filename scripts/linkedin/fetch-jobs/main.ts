@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import colors from "colors";
 
 import { checkDatabaseConnection } from "@/scripts/database/check-running-database";

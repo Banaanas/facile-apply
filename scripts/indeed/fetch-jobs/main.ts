@@ -1,5 +1,3 @@
-import * as console from "node:console";
-
 import colors from "colors";
 import { firefox } from "playwright";
 

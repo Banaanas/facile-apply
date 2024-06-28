@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { fetchResultsWithProvider } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
 import { constructLinkedInGraphQLUrl } from "@/scripts/linkedin/fetch-posts/parsing/country-api-call-builder";
 import { extractCountryFromCompanyProfileResponse } from "@/scripts/linkedin/fetch-posts/parsing/extract-country-company";

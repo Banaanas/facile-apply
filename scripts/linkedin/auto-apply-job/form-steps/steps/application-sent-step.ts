@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { LinkedinJob } from "@prisma/client";
 import colors from "colors";
 

@@ -1,14 +1,10 @@
-import console from "node:console";
-
 import colors from "colors";
 import { Page } from "playwright";
 
-import { generateDecision } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
-import {
-  clickRadioButtonBasedOnDecision,
-  radioInputQuestionPrompt,
-} from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/question-utilities";
-import { handleTextInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/text-input";
+import { handleRadioInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/radio-input";
+import { handleSelectInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/select-input";
+import { handleTextAreaInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/text-area-input";
+import { handleTextInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/text-input";
 import { shouldSkipInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/will-skip-question";
 import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
@@ -39,29 +35,22 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
       console.log(colors.green("Input already filled. It will be skipped."));
     }
 
+    if (selectDropdown && !willSkipInput) {
+      await handleSelectInput(formControlContainer);
+    }
+    if (radioButtonFieldset && !willSkipInput) {
+      await handleRadioInput(formControlContainer);
+    }
+
     // Log the type of form elements found in each container
     if (textInput && !willSkipInput) {
       await handleTextInput(formControlContainer);
     }
 
-    if (selectDropdown && !willSkipInput) {
-      console.log("SELECT");
-    }
-
-    if (radioButtonFieldset && !willSkipInput) {
-      const prompt = await radioInputQuestionPrompt(formControlContainer);
-      const decision = await generateDecision(prompt);
-
-      await clickRadioButtonBasedOnDecision(formControlContainer, decision);
-
-      // await handleRadioButtonFieldset(formControlContainer);
-    }
-
     if (textArea && !willSkipInput) {
-      console.log("TEXTAREA");
+      await handleTextAreaInput(formControlContainer);
     }
   }
 
-  await page.waitForTimeout(1000000); // Adjust timeout as needed
   await clickSubmitFormStep(page);
 };

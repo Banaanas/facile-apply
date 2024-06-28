@@ -1,6 +1,3 @@
-// Function to identify the current step based on the `h3` element text
-import console from "node:console";
-
 import { LinkedinJob } from "@prisma/client";
 import { Page } from "playwright";
 
@@ -15,8 +12,14 @@ import { handleSelfIdentificationStep } from "@/scripts/linkedin/auto-apply-job/
 import { handleSimpleStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/simple-step";
 import { handleWorkAuthorizationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/work-authorization-step";
 
+// Function to identify the current step based on the `h3` element text
 export const identifyStep = async (page: Page): Promise<string | undefined> => {
+  const url = page.url();
   const h3Text = await page.textContent("h3");
+
+  if (url.includes("post-apply")) {
+    return "Application Sent";
+  }
 
   if (h3Text?.trim().startsWith("Votre candidature a été envoyée")) {
     return "Application Sent";
@@ -70,7 +73,7 @@ export const handleStep = async (
       await handleApplicationSent(linkedinJobId);
       return; // End the loop after handling Application Sent
     default:
-      console.log("Unknown step: ", console.log(step));
+      console.log("Unknown step: ", step);
       await page.pause();
       return;
   }

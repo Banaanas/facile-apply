@@ -9,7 +9,7 @@ import colors from "colors";
  * through the ProtonVPN GUI.
  */
 
-const vpnIp = "185.107.56.244"; // Replace with your actual VPN IP address
+const vpnIp = "149.34.244.130"; // Replace with your actual VPN IP address
 
 export const verifyVPNUsage = async () => {
   const ipApi = "https://httpbin.org/ip";

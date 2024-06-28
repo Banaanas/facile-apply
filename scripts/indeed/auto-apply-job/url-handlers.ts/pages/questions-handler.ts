@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { IndeedJob } from "@prisma/client";
 import colors from "colors";
 import { ElementHandle, Page } from "playwright";
@@ -16,7 +14,6 @@ import {
 import { continueButtonRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";
 import {
   generateAnswer,
-  generateDecision,
   radioInputQuestionPrompt,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 
@@ -83,7 +80,7 @@ export const questionsHandler = async (
       if (radioInputs.length > 0 && !willSkipInput) {
         if (radioInputs.length > 0 && !willSkipInput) {
           const prompt = await radioInputQuestionPrompt(container);
-          const decision = await generateDecision(prompt);
+          const decision = await generateAnswer(prompt);
 
           await clickRadioButtonBasedOnDecision(container, decision);
         }
@@ -108,7 +105,7 @@ export const questionsHandler = async (
         );
         const prompt = `Given these options: ${optionsTexts.join(", ")}, which should be selected for the shortest answer possible? Please provide only the name.`;
 
-        const decision = await generateDecision(prompt);
+        const decision = await generateAnswer(prompt);
 
         await selectDropdownFromDecision(selectDropdown, decision);
       }
@@ -119,7 +116,6 @@ export const questionsHandler = async (
 
       // Handle text inputs and textareas
       if ((textInput && !willSkipInput) || (textarea && !willSkipInput)) {
-        console.log(questionLabel);
         const answer = await generateAnswer(questionLabel);
         if (textInput) {
           await textInput.fill(answer);

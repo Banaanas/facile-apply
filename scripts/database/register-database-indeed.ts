@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { PrismaClient } from "@prisma/client";
 import colors from "colors";
 

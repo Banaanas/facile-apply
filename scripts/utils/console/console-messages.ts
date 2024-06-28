@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import colors from "colors";
 
 import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";

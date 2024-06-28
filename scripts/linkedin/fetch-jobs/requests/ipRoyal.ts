@@ -5,10 +5,7 @@ import { SocksProxyAgent } from "socks-proxy-agent";
 import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
 import { verifyProxyUsage } from "@/scripts/indeed/fetch-jobs/requests/verify-proxy-usage";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
-import {
-  linkedinRequestErrorMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console/console-messages";
+import { linkedinRequestErrorMessage, missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 /**
  * This function fetches LinkedIn data using the IPRoyal SOCKS5 proxy.

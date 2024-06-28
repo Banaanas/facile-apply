@@ -1,5 +1,5 @@
 // Launch Firefox with a Persistent Context
-import { BrowserContext, firefox, chromium } from "playwright";
+import { BrowserContext, firefox } from "playwright";
 
 const userDataDirPath = "/Users/cyril/Desktop/PWUser";
 

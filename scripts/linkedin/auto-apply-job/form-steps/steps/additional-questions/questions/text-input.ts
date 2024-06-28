@@ -1,8 +1,7 @@
-import console from "node:console";
-
 import colors from "colors";
 import { ElementHandle } from "playwright";
 
+import { generateAnswer } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 import { getLabelForElement } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/get-element-label";
 import {
   handleYearsOfExperienceQuestion,
@@ -10,7 +9,7 @@ import {
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/years-experience-question";
 
 export const handleTextInput = async (
-  formControlContainer: ElementHandle,
+  formControlContainer: ElementHandle<SVGElement | HTMLElement>,
 ): Promise<void> => {
   const inputField = await formControlContainer.$("input");
   if (!inputField) return;
@@ -28,13 +27,17 @@ export const handleTextInput = async (
   }
 
   // If not a predefined keyword, use the ChatGPT function
-  const chatGPTResponse = await dummyChatGPTFunction(labelText);
-  await inputField.fill(chatGPTResponse);
+  await generateGPTAnswer(formControlContainer, labelText);
 };
 
 // Dummy ChatGPT function to handle other questions
-const dummyChatGPTFunction = async (labelText: string): Promise<string> => {
-  console.log(`Calling ChatGPT for label: ${labelText}`);
-  // Simulate the response from ChatGPT
-  return "Dummy ChatGPT Response";
+const generateGPTAnswer = async (
+  formControlContainer: ElementHandle<SVGElement | HTMLElement>,
+  labelText: string,
+) => {
+  const textInput = await formControlContainer.$("input[type='text']");
+  const prompt = `Here is the question: "${labelText}". Please provide a clear, short, and concise answer, no more than 1 line. If the question is related to a number, answer with just the number. If it requires a text answer, keep it to a few words at most.`;
+
+  const answer = await generateAnswer(prompt);
+  await textInput?.fill(answer);
 };

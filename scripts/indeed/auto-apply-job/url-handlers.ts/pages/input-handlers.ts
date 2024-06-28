@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { ElementHandle, Page } from "playwright";
 
 import { consentRegex } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/inputs-regex";

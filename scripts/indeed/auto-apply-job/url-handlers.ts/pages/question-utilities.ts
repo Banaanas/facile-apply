@@ -43,10 +43,3 @@ export const radioInputQuestionPrompt = async (
 
   return prompt;
 };
-
-export const generateDecision = async (prompt: string) => {
-  // Call GPT-3 with the prompt
-  const gptResponse = await generateAnswer(prompt); // Implement this function to query GPT-3
-
-  return gptResponse.trim();
-};

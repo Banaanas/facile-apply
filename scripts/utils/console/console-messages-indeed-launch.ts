@@ -1,5 +1,3 @@
-import console from "node:console";
-
 import { prisma } from "@prisma/db.server";
 import colors from "colors";
 

@@ -1,13 +1,31 @@
 import { ElementHandle } from "playwright";
 
+import { generateAnswer } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
+
+export const handleRadioInput = async (
+  formControlContainer: ElementHandle<SVGElement | HTMLElement>,
+): Promise<void> => {
+  const prompt = await radioInputQuestionPrompt(formControlContainer);
+  const decision = await generateAnswer(prompt);
+
+  await clickRadioButtonBasedOnDecision(formControlContainer, decision);
+};
+
+// Dummy ChatGPT function to handle other questions
+const dummyChatGPTFunction = async (labelText: string): Promise<string> => {
+  console.log(`Calling ChatGPT for label: ${labelText}`);
+  // Simulate the response from ChatGPT
+  return "Dummy ChatGPT Response";
+};
+
 export const radioInputQuestionPrompt = async (
-  container: ElementHandle<SVGElement | HTMLElement>,
+  formControlContainer: ElementHandle<SVGElement | HTMLElement>,
 ) => {
-  const questionText = await container.$eval(
+  const questionText = await formControlContainer.$eval(
     "legend",
     extractVisibleTextFromLegend,
   );
-  const optionsText = await container.$$eval("label", (labels) =>
+  const optionsText = await formControlContainer.$$eval("label", (labels) =>
     labels.map((label) => label.textContent?.trim() ?? ""),
   );
 

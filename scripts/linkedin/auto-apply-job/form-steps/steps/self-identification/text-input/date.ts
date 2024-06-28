@@ -13,7 +13,9 @@ export const isAskingForTodaysDate = (groupTitle: string): boolean => {
 };
 
 // Helper function to fill today's date
-export const fillTodaysDate = async (inputField: ElementHandle): Promise<void> => {
+export const fillTodaysDate = async (
+  inputField: ElementHandle,
+): Promise<void> => {
   const currentDate = new Date().toLocaleDateString("fr-FR");
   await inputField.fill(currentDate);
 };

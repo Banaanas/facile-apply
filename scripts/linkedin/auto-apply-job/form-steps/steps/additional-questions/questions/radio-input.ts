@@ -11,13 +11,6 @@ export const handleRadioInput = async (
   await clickRadioButtonBasedOnDecision(formControlContainer, decision);
 };
 
-// Dummy ChatGPT function to handle other questions
-const dummyChatGPTFunction = async (labelText: string): Promise<string> => {
-  console.log(`Calling ChatGPT for label: ${labelText}`);
-  // Simulate the response from ChatGPT
-  return "Dummy ChatGPT Response";
-};
-
 export const radioInputQuestionPrompt = async (
   formControlContainer: ElementHandle<SVGElement | HTMLElement>,
 ) => {

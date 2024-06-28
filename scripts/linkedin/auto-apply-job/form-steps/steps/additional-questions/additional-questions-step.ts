@@ -52,5 +52,7 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
     }
   }
 
+  console.log("CLCK");
+
   await clickSubmitFormStep(page);
 };

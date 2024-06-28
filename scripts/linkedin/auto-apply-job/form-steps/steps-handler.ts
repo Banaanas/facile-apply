@@ -34,52 +34,64 @@ export const handleStep = async (
   step: string | undefined,
   linkedinJobId: LinkedinJob["id"],
 ) => {
+  if (!step) {
+    console.log("Step is undefined");
+    return;
+  }
+
   console.log(step);
-  switch (step) {
-    case "Contacts":
-    case "Education":
-    case "Screening questions":
+
+  // Convert step to lower case to make the comparison case-insensitive
+  const lowerCaseStep = step.toLowerCase();
+
+  switch (lowerCaseStep) {
+    case "contacts":
+    case "education":
+    case "screening questions":
       await handleSimpleStep(page, step);
       break;
-    case "Coordonnées":
-    case "Kontaktinfo":
+    case "coordonnées":
+    case "kontaktinfo":
       await handleContactInformationStep(page);
       break;
-    case "Home address":
+    case "home address":
       await handleHomeAddressStep(page);
       break;
-    case "Resume":
-    case "Lebenslauf":
+    case "resume":
+    case "lebenslauf":
       await handleResumeStep(page);
       break;
-    case "Auto-identification volontaire":
-    case "Diversity":
+    case "auto-identification volontaire":
+    case "diversity":
       await handleSelfIdentificationStep(page);
       break;
-    case "Permis de travail":
+    case "permis de travail":
       await handleWorkAuthorizationStep(page);
       break;
-    case "Privacy policy":
+    case "privacy policy":
       await handlePrivacyPolicyStep(page);
       break;
-    case "Additional Questions":
-    case "Additional":
-    case "Work experience":
-    case "Weitere Fragen":
+    case "additional questions":
+    case "additional":
+    case "personal info":
+    case "weitere fragen":
+    case "work experience":
       await handleAdditionalQuestionsStep(page);
       break;
-    case "Vérifiez votre candidature":
+    case "vérifiez votre candidature":
       await handleCheckApplicationStep(page);
       break;
-    case "Application Sent":
-    case "Candidature Envoyée":
+    case "application sent":
+    case "candidature envoyée":
       await handleApplicationSent(linkedinJobId);
+      await page.waitForTimeout(2000);
       return; // End the loop after handling Application Sent
     default:
       console.log("Unknown step: ", step);
       await page.pause();
       return;
   }
+
   // Recursively identify and handle the next step
   const nextStep = await identifyStep(page);
   if (nextStep !== undefined) {

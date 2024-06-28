@@ -22,17 +22,24 @@ export const clickSubmitFormStep = async (page: Page) => {
     await humanLikeMoveAndClick(page, sendButtonSelector);
     await page.waitForTimeout(1000);
     console.log("Clicked 'Send application' button");
-  } else if (verifyButton) {
+    return;
+  }
+
+  if (verifyButton) {
     await humanLikeMoveAndClick(page, verifyButtonSelector);
     await page.waitForTimeout(1000);
     console.log("Clicked 'Verify' button");
-  } else if (nextButton) {
+    return;
+  }
+
+  if (nextButton) {
     await humanLikeMoveAndClick(page, nextButtonSelector);
     await page.waitForTimeout(1000);
     console.log("Clicked 'Next step' button");
-  } else {
-    throw new Error(
-      "No 'Next step', 'Verify', or 'Send application' button found",
-    );
+    return;
   }
+
+  throw new Error(
+    "No 'Next step', 'Verify', or 'Send application' button found",
+  );
 };

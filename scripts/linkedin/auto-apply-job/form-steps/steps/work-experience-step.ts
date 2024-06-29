@@ -1,6 +1,7 @@
 import { Page } from "playwright";
 
 import { humanLikeMoveAndClick } from "@/scripts/linkedin/auto-apply-job/human-move-and-click";
+import { ensureNextButtonIsClickable } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/ensure-button-clickable";
 
 export const handleWorkExperienceStep = async (page: Page) => {
   console.log("Handling Work Experience Step");
@@ -19,6 +20,7 @@ export const handleWorkExperienceStep = async (page: Page) => {
   await page.click(formContentSelector);
 
   // Use the human-like click function to click the "Suivant" button
+  await ensureNextButtonIsClickable(page, "buttonText", "Suivant");
   const nextButtonSelector = 'button:has-text("Suivant")';
   await humanLikeMoveAndClick(page, nextButtonSelector);
 };

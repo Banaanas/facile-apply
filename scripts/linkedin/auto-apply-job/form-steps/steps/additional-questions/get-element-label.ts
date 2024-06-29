@@ -16,9 +16,11 @@ export const getLabelForElement = async (
   }
 
   // For elements without 'id' attribute, look for the parent fieldset's legend
-  const fieldset = await element.$("ancestor::fieldset");
+
+  // For elements without 'id' attribute, look for the parent fieldset's legend
+  const fieldset = await element.$("xpath=ancestor::fieldset");
   if (fieldset) {
-    const legend = await fieldset.$("legend");
+    const legend = await fieldset.$("xpath=legend");
     if (legend) {
       const legendText = await legend.innerText();
       return legendText;

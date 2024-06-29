@@ -44,6 +44,7 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
 
     // Log the type of form elements found in each container
     if (textInput && !willSkipInput) {
+      console.log("INPUT");
       await handleTextInput(formControlContainer);
     }
 
@@ -51,8 +52,6 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
       await handleTextAreaInput(formControlContainer);
     }
   }
-
-  console.log("CLCK");
 
   await clickSubmitFormStep(page);
 };

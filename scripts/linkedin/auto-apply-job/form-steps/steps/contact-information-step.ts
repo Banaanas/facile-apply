@@ -8,7 +8,7 @@ export const handleContactInformationStep = async (page: Page) => {
 
   await fillAddressInput(page);
 
-  await ensureNextButtonIsClickable(page, "Suivant");
+  await ensureNextButtonIsClickable(page, "buttonText", "Suivant");
   await clickSubmitFormStep(page);
 };
 

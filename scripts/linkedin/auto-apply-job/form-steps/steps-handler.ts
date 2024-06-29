@@ -11,11 +11,12 @@ import { handleResumeStep } from "@/scripts/linkedin/auto-apply-job/form-steps/s
 import { handleSelfIdentificationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/self-identification/self-identification";
 import { handleSimpleStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/simple-step";
 import { handleWorkAuthorizationStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/work-authorization-step";
+import { handleWorkExperienceStep } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/work-experience-step";
 
 // Function to identify the current step based on the `h3` element text
 export const identifyStep = async (page: Page): Promise<string | undefined> => {
   const url = page.url();
-  const h3Text = await page.textContent("h3");
+  const h3Text = await page.textContent("form h3");
 
   if (url.includes("post-apply")) {
     return "Application Sent";
@@ -57,7 +58,11 @@ export const handleStep = async (
     case "home address":
       await handleHomeAddressStep(page);
       break;
+    case "work experience":
+      await handleWorkExperienceStep(page);
+      break;
     case "resume":
+    case "cv":
     case "lebenslauf":
       await handleResumeStep(page);
       break;
@@ -71,11 +76,11 @@ export const handleStep = async (
     case "privacy policy":
       await handlePrivacyPolicyStep(page);
       break;
-    case "additional questions":
     case "additional":
+    case "additional questions":
     case "personal info":
+    case "questions supplémentaires":
     case "weitere fragen":
-    case "work experience":
       await handleAdditionalQuestionsStep(page);
       break;
     case "vérifiez votre candidature":

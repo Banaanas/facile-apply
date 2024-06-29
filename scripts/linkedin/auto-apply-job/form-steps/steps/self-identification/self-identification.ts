@@ -42,6 +42,6 @@ export const handleSelfIdentificationStep = async (page: Page) => {
     }
   }
 
-  await ensureNextButtonIsClickable(page, "Suivant");
+  await ensureNextButtonIsClickable(page, "buttonText", "Suivant");
   await clickSubmitFormStep(page);
 };

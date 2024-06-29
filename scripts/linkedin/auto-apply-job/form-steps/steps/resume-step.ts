@@ -9,7 +9,7 @@ export const handleResumeStep = async (page: Page) => {
 
   await fillLinkedInProfileInput(page);
 
-  await ensureNextButtonIsClickable(page, "Suivant");
+  await ensureNextButtonIsClickable(page, "buttonText", "Suivant");
   await clickSubmitFormStep(page);
 };
 

@@ -7,6 +7,6 @@ import { ensureNextButtonIsClickable } from "@/scripts/linkedin/auto-apply-job/f
 export const handleSimpleStep = async (page: Page, stepName: string) => {
   console.log(`Handling ${stepName} Step`);
 
-  await ensureNextButtonIsClickable(page, "Suivant");
+  await ensureNextButtonIsClickable(page, "buttonText", "Suivant");
   await clickSubmitFormStep(page);
 };

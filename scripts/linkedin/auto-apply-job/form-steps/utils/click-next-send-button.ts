@@ -1,5 +1,6 @@
 import { Page } from "playwright";
 
+import { ensureNextButtonIsClickable } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/ensure-button-clickable";
 import { uncheckFollowCompany } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/uncheck-follow-company";
 import { humanLikeMoveAndClick } from "@/scripts/linkedin/auto-apply-job/human-move-and-click";
 
@@ -18,6 +19,7 @@ export const clickSubmitFormStep = async (page: Page) => {
   const verifyButton = await page.$(verifyButtonSelector);
 
   if (sendButton) {
+    await ensureNextButtonIsClickable(page, "ariaLabelText", sendButtonLabel);
     await uncheckFollowCompany(page);
     await humanLikeMoveAndClick(page, sendButtonSelector);
     await page.waitForTimeout(1000);
@@ -26,6 +28,7 @@ export const clickSubmitFormStep = async (page: Page) => {
   }
 
   if (verifyButton) {
+    await ensureNextButtonIsClickable(page, "ariaLabelText", verifyButtonLabel);
     await humanLikeMoveAndClick(page, verifyButtonSelector);
     await page.waitForTimeout(1000);
     console.log("Clicked 'Verify' button");
@@ -33,6 +36,7 @@ export const clickSubmitFormStep = async (page: Page) => {
   }
 
   if (nextButton) {
+    await ensureNextButtonIsClickable(page, "ariaLabelText", nextButtonLabel);
     await humanLikeMoveAndClick(page, nextButtonSelector);
     await page.waitForTimeout(1000);
     console.log("Clicked 'Next step' button");

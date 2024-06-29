@@ -6,6 +6,7 @@ export const cyrilSkills = [
   "CSS",
   "Responsive Design",
   "Web Performance",
+  "Front End",
 
   // Front-end frameworks and libraries
   "React",

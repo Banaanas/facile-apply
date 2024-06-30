@@ -16,12 +16,31 @@ import { handleWorkExperienceStep } from "@/scripts/linkedin/auto-apply-job/form
 // Function to identify the current step based on the `h3` element text
 export const identifyStep = async (page: Page): Promise<string | undefined> => {
   const url = page.url();
-  const h3Text = await page.textContent("form h3");
 
+  // Check URL for "post-apply"
   if (url.includes("post-apply")) {
     return "Application Sent";
   }
 
+  let h3Text: string | null = null;
+
+  // Try to get h3 text from within the form with a shorter timeout
+  try {
+    h3Text = await page.textContent("form h3", { timeout: 1000 });
+  } catch (error) {
+    console.log("form h3 not found within the timeout period.");
+  }
+
+  // If h3 is not found in form, try to find it within .artdeco-modal
+  if (!h3Text) {
+    try {
+      h3Text = await page.textContent(".artdeco-modal h3", { timeout: 5000 });
+    } catch (error) {
+      console.log(".artdeco-modal h3 not found within the timeout period.");
+    }
+  }
+
+  // Check the content of h3Text
   if (h3Text?.trim().startsWith("Votre candidature a été envoyée")) {
     return "Application Sent";
   }
@@ -89,7 +108,7 @@ export const handleStep = async (
     case "application sent":
     case "candidature envoyée":
       await handleApplicationSent(linkedinJobId);
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(400);
       return; // End the loop after handling Application Sent
     default:
       console.log("Unknown step: ", step);

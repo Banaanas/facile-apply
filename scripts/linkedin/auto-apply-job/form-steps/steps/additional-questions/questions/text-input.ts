@@ -1,5 +1,5 @@
 import colors from "colors";
-import { ElementHandle } from "playwright";
+import { ElementHandle, Page } from "playwright";
 
 import { generateAnswer } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
 import { getLabelForElement } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/get-element-label";
@@ -9,6 +9,7 @@ import {
 } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/years-experience-question";
 
 export const handleTextInput = async (
+  page: Page,
   formControlContainer: ElementHandle<SVGElement | HTMLElement>,
 ): Promise<void> => {
   const inputField = await formControlContainer.$("input");
@@ -21,10 +22,10 @@ export const handleTextInput = async (
   }
 
   console.log(labelText);
-  // Identify if the label includes specific keywords related to work experience
 
+  // Identify if the label includes specific keywords related to work experience
   if (isYearsOfExperienceQuestion(labelText)) {
-    await handleYearsOfExperienceQuestion(inputField, labelText);
+    await handleYearsOfExperienceQuestion(page, inputField, labelText);
     return;
   }
 
@@ -37,7 +38,6 @@ const generateGPTAnswer = async (
   formControlContainer: ElementHandle<SVGElement | HTMLElement>,
   labelText: string,
 ) => {
-
   console.log("GENERATE");
   const textInput = await formControlContainer.$("input[type='text']");
   const prompt = `Here is the question: "${labelText}". Please provide a clear, short, and concise answer, no more than 1 line. If the question is related to a number, answer with just the number. If it requires a text answer, keep it to a few words at most.`;

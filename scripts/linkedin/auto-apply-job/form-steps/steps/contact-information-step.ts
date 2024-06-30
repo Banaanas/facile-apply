@@ -12,18 +12,32 @@ export const handleContactInformationStep = async (page: Page) => {
   await clickSubmitFormStep(page);
 };
 
+const getFormField = async (page: Page, selector: string) => {
+  try {
+    const inputField = await page.$(selector);
+    if (!inputField) {
+      console.log(`Form field with selector '${selector}' not found.`);
+      return null;
+    }
+    return inputField;
+  } catch (error) {
+    console.log(
+      `An error occurred while trying to find a form field with selector '${selector}':`,
+      error,
+    );
+    return null;
+  }
+};
+
 const fillAddressInput = async (page: Page) => {
   const inputSelector = 'label:has-text("Address") + input';
-
   const address = "40, rue du Ciel";
 
-  // Check if the input field is present
-  const inputField = await page.$(inputSelector);
-
-  if (inputField) {
-    await inputField.fill(address);
-    console.log("Address input filled with:", address);
-  } else {
-    console.log("Address input field not found.");
+  const inputField = await getFormField(page, inputSelector);
+  if (!inputField) {
+    return;
   }
+
+  await inputField.fill(address);
+  console.log("Address input filled with:", address);
 };

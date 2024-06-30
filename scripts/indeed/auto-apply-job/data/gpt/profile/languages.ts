@@ -1,7 +1,7 @@
 export const cyrilLanguages = [
   {
     language: "English",
-    proficiency: "Professional proficiency",
+    proficiency: "Bilingual",
   },
   {
     language: "Spanish",

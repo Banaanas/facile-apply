@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 
-import { humanLikeMoveAndClick } from "@/scripts/linkedin/auto-apply-job/human-move-and-click";
+import { clickSubmitFormStep } from "@/scripts/linkedin/auto-apply-job/form-steps/utils/click-next-send-button";
 
 export const handleHomeAddressStep = async (page: Page) => {
   console.log("Handling Home Address Step");
@@ -18,7 +18,5 @@ export const handleHomeAddressStep = async (page: Page) => {
   const formContentSelector = "div.jobs-easy-apply-content";
   await page.click(formContentSelector);
 
-  // Use the human-like click function to click the "Suivant" button
-  const nextButtonSelector = 'button:has-text("Suivant")';
-  await humanLikeMoveAndClick(page, nextButtonSelector);
+  await clickSubmitFormStep(page);
 };

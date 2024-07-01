@@ -27,6 +27,7 @@ export const cyrilSkills = [
 
   // Back-end technologies
   "Node.js",
+  "Node3",
   "Express.js",
 
   // Databases
@@ -45,7 +46,12 @@ export const cyrilSkills = [
   "Github",
   "Webpack",
   "Babel",
+  "Testing",
 
   // Design tools
   "Figma",
+
+  // Others
+  "E-Commerce",
+  "SEO",
 ];

@@ -18,6 +18,10 @@ export const workExperienceHandler = async (
   await page.fill('input[name="companyName"]', "Start-Up");
   console.log("Company name filled: Start-Up");
 
+  // Click outside the input to ensure changes are registered
+  await page.click("body");
+  console.log("Clicked outside input fields to register changes");
+
   console.log("Last work experience details entered.");
   await page.click(`text=${continueButtonRegex}`);
 

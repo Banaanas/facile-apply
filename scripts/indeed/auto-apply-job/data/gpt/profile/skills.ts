@@ -7,6 +7,7 @@ export const cyrilSkills = [
   "Responsive Design",
   "Web Performance",
   "Front End",
+  "Full Stack",
   "Developer",
 
   // Front-end frameworks and libraries
@@ -27,7 +28,7 @@ export const cyrilSkills = [
 
   // Back-end technologies
   "Node.js",
-  "Node3",
+  "Node",
   "Express.js",
 
   // Databases

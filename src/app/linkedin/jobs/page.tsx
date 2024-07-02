@@ -6,6 +6,14 @@ const LinkedinJobsPage = async () => {
   const jobs = await prisma.linkedinJob.findMany({
     where: {
       status: "NotReviewed",
+      location: {
+        contains: "",
+        mode: "insensitive",
+      },
+      /*   location: {
+        contains: "Germany",
+        mode: "insensitive",
+      }, */
     },
   });
 

@@ -12,7 +12,7 @@ import { filterIndeedJobResults } from "@/scripts/indeed/fetch-jobs/parsing/filt
 import { getJobResults } from "@/scripts/indeed/fetch-jobs/parsing/get-job-results";
 import { getSearchCountry } from "@/scripts/indeed/fetch-jobs/parsing/get-search-country";
 import { transformJobResults } from "@/scripts/indeed/fetch-jobs/parsing/transform-job-results";
-import { fetchPageWithProvider } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
+import { fetchWithRetry } from "@/scripts/indeed/fetch-jobs/requests/prevent-challenge";
 import { buildSearchUrl } from "@/scripts/indeed/fetch-jobs/utils/url-builder";
 import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
 import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
@@ -69,7 +69,8 @@ const main = async () => {
           searchRangeDays,
         );
 
-        const initialSearchHTML = await fetchPageWithProvider(indeedSearchUrl);
+        const initialSearchHTML = await fetchWithRetry(indeedSearchUrl);
+
         const jobResults = await getJobResults(indeedSearchUrl);
         const searchCountry = getSearchCountry(initialSearchHTML);
         const transformedJobResults = transformJobResults(

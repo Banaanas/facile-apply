@@ -31,7 +31,8 @@ export const checkIfAlreadyApplied = async (
 ): Promise<boolean> => {
   // Check if the "Candidature envoyée" text is present
   const appliedByText =
-    (await page.locator('text="Candidature envoyée"').count()) > 0;
+    (await page.locator('text="Candidature envoyée"').count()) > 0 ||
+    (await page.locator('text="CV envoyé"').count()) > 0;
 
   // Check if the "post-apply-timeline__entity" class is present
   const appliedByClass =

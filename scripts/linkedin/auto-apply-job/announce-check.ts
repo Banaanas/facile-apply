@@ -2,52 +2,12 @@ import chalk from "chalk";
 import { Page } from "playwright";
 
 import { updateLinkedinJobStatus } from "@/actions";
-import { getLinkedinJobState } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
-import { prisma } from "@prisma/db.server";
+
+// We could not use here our getLinkedinJobState function, because this function uses
+// a verifyVPNUsage function to verify that we are using a VPN while we fetch the job info. But in our case, we
+// don't want to use a VPN, because we are applying through our normal Linkedin Account.
 
 export const checkAndUpdateIfJobIsObsolete = async (
-  page: Page,
-  indeedJobId: number,
-): Promise<boolean> => {
-  // Retrieve the job from the database to get the jobUrn
-  const job = await prisma.linkedinJob.findUnique({
-    where: {
-      id: indeedJobId,
-    },
-  });
-
-  if (!job) {
-    console.log(chalk.red(`Job with ID ${indeedJobId} not found.`));
-    return false;
-  }
-
-  const jobUrn = job.jobUrn;
-  const linkedinJobState = await getLinkedinJobState(jobUrn);
-
-  if (linkedinJobState === "CLOSED" || linkedinJobState === "SUSPENDED") {
-    console.log(linkedinJobState);
-    console.log(job.link);
-
-    await updateLinkedinJobStatus(indeedJobId, "Ignored");
-    console.log(
-      chalk.red(
-        `Job ${indeedJobId} has been marked as Ignored due to being ${linkedinJobState}.`,
-      ),
-    );
-
-    return true;
-  }
-
-  // Perform the visual/manual check for expiration IF PREVIOUS CHECK DID NOT FIND NOTHING
-  const isVisuallyExpired = await performVisualCheckForExpiration(
-    page,
-    indeedJobId,
-  );
-
-  return isVisuallyExpired;
-};
-
-const performVisualCheckForExpiration = async (
   page: Page,
   indeedJobId: number,
 ): Promise<boolean> => {

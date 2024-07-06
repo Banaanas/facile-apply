@@ -40,7 +40,7 @@ export const verifyVPNUsage = async () => {
     }
 
     console.log(
-      chalk.red(
+      chalk.green(
         "The current IP location does not match the non-VPN location. The VPN is correctly set up.",
       ),
     );

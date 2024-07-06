@@ -47,10 +47,18 @@ cd /Users/cyril/Desktop/facile-apply || {
   exit 1
 }
 
-# Run the npm script
+# Run the indeed-jobs npm script
 if npm run indeed-jobs; then
-  print_message "NPM script ran successfully."
+  print_message "NPM script indeed-jobs ran successfully."
 else
-  print_error "NPM script failed."
+  print_error "NPM script indeed-jobs failed."
+  exit 1
+fi
+
+# Run the linkedin-jobs npm script
+if npm run linkedin-jobs; then
+  print_message "NPM script linkedin-jobs ran successfully."
+else
+  print_error "NPM script linkedin-jobs failed."
   exit 1
 fi

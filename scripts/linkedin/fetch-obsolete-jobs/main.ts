@@ -1,6 +1,5 @@
 import { JobStatus } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
 
 import { getLinkedinJobState } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
@@ -37,9 +36,8 @@ const main = async () => {
   jobsConverted++; // Increment the counter
 
   console.log(
-    colors.rainbow(
-      `ALL SEARCHES HAVE BEEN COMPLETED. Number of jobs converted: ${jobsConverted}`,
-    ),
+    `ALL SEARCHES HAVE BEEN COMPLETED. Number of jobs converted: ${jobsConverted}`
+      .rainbow,
   );
 };
 

@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import colors from "colors";
 
 import { TransformedScrapedLinkedinPost } from "@/scripts/linkedin/fetch-posts/parsing/linkedin-api-response-posts-types";
 
@@ -17,9 +16,8 @@ export const registerTransformedPostResultsInDB = async (
   const newlyRegisteredCount = response.count;
 
   console.log(
-    colors.green(
-      `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "posts" : "post"} in the database.`,
-    ),
+    `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "posts" : "post"} in the database.`
+      .green,
   );
 
   return response;

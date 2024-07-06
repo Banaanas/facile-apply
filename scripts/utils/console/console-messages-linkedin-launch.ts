@@ -1,5 +1,4 @@
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
 
 import {
   ExperienceLevel,
@@ -61,52 +60,38 @@ export const logLinkedinJobSearchParams = async (
     },
   });
 
+  console.log("Initializing search with the following common parameters:".cyan);
+
   console.log(
-    colors.cyan("Initializing search with the following common parameters:"),
+    `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`
+      .bgBlue.yellow.bold,
   );
 
   console.log(
-    colors.bgBlue(
-      colors.yellow(
-        colors.bold(
-          `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
-        ),
-      ),
-    ),
-  );
-
-  console.log(
-    colors.yellow(
-      `- Time Posted Range: ${formatTimePostedRange(timePostedRange)}`,
-    ),
+    `- Time Posted Range: ${formatTimePostedRange(timePostedRange)}`.yellow,
   );
 
   // Log workplace type preference
   console.log(
-    colors.yellow(
-      `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
-    ),
+    `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`
+      .yellow,
   );
 
   // Log whether applying with LinkedIn is enabled
   console.log(
-    colors.yellow(
-      `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
-    ),
+    `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`
+      .yellow,
   );
 
   // Log experience levels
   console.log(
-    colors.yellow(
-      `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
-    ),
+    `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`
+      .yellow,
   );
 
   // Log sorting preference
   console.log(
-    colors.yellow(
-      `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`,
-    ),
+    `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`.yellow,
   );
 };
 
@@ -117,22 +102,20 @@ export const logCommonLinkedinPostSearchParams = (
   const { datePosted, sortBy } =
     LINKEDIN_POST_SEARCH_COMMON_PARAMS.queryParameters;
 
-  console.log(
-    colors.cyan("Initializing search with the following common parameters:"),
-  );
+  console.log("Initializing search with the following common parameters:".cyan);
 
   // Assuming each parameter array contains only a single value for logging purposes
   const datePostedStr = datePosted.join(", ").toString();
   const sortByStr = sortBy.join(", ").toString();
 
   // Logging Keywords Array
-  console.log(colors.yellow(`- Keywords: ${keywordsArray.join(", ")}`));
+  console.log(`- Keywords: ${keywordsArray.join(", ")}`.yellow);
 
   // Logging Date Posted
-  console.log(colors.yellow(`- Date Posted: ${datePostedStr}`));
+  console.log(`- Date Posted: ${datePostedStr}`.yellow);
 
   // Logging Sort By
-  console.log(colors.yellow(`- Sort By: ${sortByStr}`));
+  console.log(`- Sort By: ${sortByStr}`.yellow);
 };
 
 function formatTimePostedRange(range: string): string {

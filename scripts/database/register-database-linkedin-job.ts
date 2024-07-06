@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import colors from "colors";
 
 import { TransformedScrapedLinkedinJob } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
@@ -17,9 +16,8 @@ export const registerTransformedJobResultsInDB = async (
   const newlyRegisteredCount = response.count;
 
   console.log(
-    colors.green(
-      `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "jobs" : "job"} in the database.`,
-    ),
+    `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "jobs" : "job"} in the database.`
+      .green,
   );
 
   return response;

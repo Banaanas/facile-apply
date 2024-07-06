@@ -1,5 +1,3 @@
-import colors from "colors";
-
 import { gptInstructions } from "@/scripts/indeed/auto-apply-job/data/gpt/gpt-instructions";
 import { cyrilPersonalInfo } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/personal-info";
 import {
@@ -18,7 +16,7 @@ export const generateEmailResponse = async (
 
   // Abort the process if no email address is extracted
   if (!emailTo) {
-    console.log(colors.red("No email address found in the post summary."));
+    console.log("No email address found in the post summary.".red);
     throw new Error("No email address found. Aborting email dispatch process.");
   }
 

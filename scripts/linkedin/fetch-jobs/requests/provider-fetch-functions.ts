@@ -1,5 +1,3 @@
-import colors from "colors";
-
 import {
   LINKEDIN_CURRENT_PROVIDER,
   LINKEDIN_RANDOM_DELAY_RANGE,
@@ -26,7 +24,7 @@ export const fetchResultsWithProvider = async (searchUrl: string) => {
 
   if (!fetchFunction) {
     throw new Error(
-      colors.red(`Fetch provider ${LINKEDIN_CURRENT_PROVIDER} is not defined.`),
+      `Fetch provider ${LINKEDIN_CURRENT_PROVIDER} is not defined.`.red,
     );
   }
   return fetchFunction(searchUrl);

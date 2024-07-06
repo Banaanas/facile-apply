@@ -1,5 +1,4 @@
 import { IndeedJob } from "@prisma/client";
-import colors from "colors";
 import { ElementHandle, Page } from "playwright";
 
 import { handlePageBasedOnUrl } from "@/scripts/indeed/auto-apply-job/apply-to-job";
@@ -51,7 +50,7 @@ export const questionsHandler = async (
     );
 
     if (willSkipInput) {
-      console.log(colors.green("Input already filled. It will be skipped."));
+      console.log("Input already filled. It will be skipped.".green);
     }
 
     /*

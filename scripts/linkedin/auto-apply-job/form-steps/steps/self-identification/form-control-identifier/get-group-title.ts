@@ -1,11 +1,11 @@
-import colors from "colors";
+import chalk from "chalk";
 import { ElementHandle } from "playwright";
 
 // Sometimes, when we don't have no label, we can look for a group title that will serve us as label for our Form Container
 export const getClosestGroupTitle = async (
   formControlContainer: ElementHandle,
 ): Promise<string> => {
-  console.log(colors.cyan("Starting search for group title..."));
+  console.log(chalk.cyan("Starting search for group title..."));
 
   // Start with the previous sibling of the container
   let siblingNode = await formControlContainer.evaluateHandle(
@@ -30,7 +30,7 @@ export const getClosestGroupTitle = async (
     // not the current one we are investigating. Therefore, it means there is no group title for the current form element.
     if (isAnotherFormControlContainer) {
       console.log(
-        colors.cyan("Encountered another form element, stopping search."),
+        chalk.cyan("Encountered another form element, stopping search."),
       );
       break;
     }

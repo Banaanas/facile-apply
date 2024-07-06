@@ -1,6 +1,6 @@
 import { IndeedJobSearchMeta, LinkedinJobSearchMeta } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
+import chalk from "chalk";
 
 export const updateLastSearchDateIndeed = async (
   queryIdentifier: IndeedJobSearchMeta["identifier"],
@@ -20,7 +20,7 @@ export const updateLastSearchDateIndeed = async (
     });
 
     console.log(
-      colors.green(
+      chalk.green(
         `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
       ),
     );
@@ -49,7 +49,7 @@ export const updateLastSearchDateLinkedIn = async (
     });
 
     console.log(
-      colors.green(
+      chalk.green(
         `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
       ),
     );

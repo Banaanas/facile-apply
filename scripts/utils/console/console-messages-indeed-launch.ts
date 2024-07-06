@@ -1,5 +1,5 @@
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
+import chalk from "chalk";
 
 export const logIndeedJobSearchParams = async (
   searchKey: string,
@@ -14,21 +14,21 @@ export const logIndeedJobSearchParams = async (
   });
 
   console.log(
-    colors.bgBlue(
-      colors.yellow(
-        colors.bold(
+    chalk.bgBlue(
+      chalk.yellow(
+        chalk.bold(
           `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
         ),
       ),
     ),
   );
 
-  console.log(colors.yellow(`- Country: ${country}`));
+  console.log(chalk.yellow(`- Country: ${country}`));
 
-  console.log(colors.yellow(`- Search: ${searchKey}`));
+  console.log(chalk.yellow(`- Search: ${searchKey}`));
 
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Time Posted Range: ${searchRangeDays === 1 ? "1 day" : `${searchRangeDays} days`}`,
     ),
   );

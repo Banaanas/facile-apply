@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 import { ElementHandle } from "playwright";
 
 import { generateAnswer } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/question-utilities";
@@ -9,7 +9,7 @@ export const handleTextAreaInput = async (
   const textArea = await formControlContainer.$("textarea");
   const labelText = await getTextAreaLabel(formControlContainer);
   if (!labelText) {
-    console.log(colors.yellow("Label text not found. Skipping input field."));
+    console.log(chalk.yellow("Label text not found. Skipping input field."));
     return;
   }
 

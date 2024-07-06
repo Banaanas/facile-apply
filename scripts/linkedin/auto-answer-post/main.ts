@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 
 import { updateLinkedinPostStatus } from "@/actions";
 import { generateEmailResponse } from "@/scripts/linkedin/auto-answer-post/generate-mail";
@@ -10,7 +10,7 @@ import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 
 const main = async () => {
-  console.log(colors.cyan("Starting email dispatch..."));
+  console.log(chalk.cyan("Starting email dispatch..."));
 
   await checkDatabaseConnection();
 
@@ -26,12 +26,12 @@ const main = async () => {
     await updateLinkedinPostStatus(post.id, "Applied");
   }
 
-  console.log(colors.rainbow("All emails have been sent!"));
+  console.log(chalk.bgMagentaBright.whiteBright("All emails have been sent!"));
 };
 
 main().catch((error) => {
   console.error(
-    colors.red("An error occurred during the email dispatch process:"),
+    chalk.red("An error occurred during the email dispatch process:"),
     error,
   );
 });

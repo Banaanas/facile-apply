@@ -1,5 +1,5 @@
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
+import chalk from "chalk";
 
 // Executes a basic database query as a preliminary check to ensure database availability.
 // This approach is resource-efficient, as it avoids expending computational and network resources on data scraping tasks
@@ -9,11 +9,11 @@ export const checkDatabaseConnection = async () => {
   try {
     // Attempt a simple query - Fetching the first job
     await prisma.indeedJob.findFirst();
-    console.log(colors.green("Database is up and running."));
+    console.log(chalk.green("Database is up and running."));
     await prisma.$disconnect();
   } catch (error) {
     console.log(
-      colors.red(
+      chalk.red(
         "Failed to connect to the database. Ensure the Docker database container is running.",
       ),
     );

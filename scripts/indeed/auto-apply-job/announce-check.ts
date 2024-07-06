@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 import { Page } from "playwright";
 
 import { updateIndeedJobStatus } from "@/actions";
@@ -19,7 +19,7 @@ export const checkAndUpdateIfJobIsObsolete = async (
   if (hasExpiredNotice || hasNotFoundNotice) {
     await updateIndeedJobStatus(indeedJobId, "Ignored");
     console.log(
-      colors.red(
+      chalk.red(
         `Job ${indeedJobId} has been marked as Ignored due to being obsolete.`,
       ),
     );
@@ -41,7 +41,7 @@ export const checkIfAlreadyApplied = async (
   if (appliedByText || appliedByClass) {
     await updateIndeedJobStatus(indeedJobId, "Applied");
     console.log(
-      colors.green(
+      chalk.green(
         `Job ${indeedJobId} has been marked as Applied due to being already applied.`,
       ),
     );

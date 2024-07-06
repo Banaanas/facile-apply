@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 
 import {
   LINKEDIN_CURRENT_PROVIDER,
@@ -26,7 +26,7 @@ export const fetchResultsWithProvider = async (searchUrl: string) => {
 
   if (!fetchFunction) {
     throw new Error(
-      colors.red(`Fetch provider ${LINKEDIN_CURRENT_PROVIDER} is not defined.`),
+      chalk.red(`Fetch provider ${LINKEDIN_CURRENT_PROVIDER} is not defined.`),
     );
   }
   return fetchFunction(searchUrl);

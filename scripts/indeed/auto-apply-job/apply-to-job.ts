@@ -1,5 +1,5 @@
 import { IndeedJob } from "@prisma/client";
-import colors from "colors";
+import chalk from "chalk";
 import { Page } from "playwright";
 
 import { updateIndeedJobStatus } from "@/actions";
@@ -17,13 +17,13 @@ export const handlePageBasedOnUrl = async (
   try {
     await page.waitForTimeout(2000);
     const finalUrl = page.url();
-    console.log(colors.blue(finalUrl));
+    console.log(chalk.blue(finalUrl));
 
     // Directly handle the post-apply scenario
     if (finalUrl.includes("post-apply")) {
       await updateIndeedJobStatus(indeedJobId, "Applied");
       console.log(
-        colors.green(
+        chalk.green(
           "Process has ben achieved and Job as been updated as Applied.",
         ),
       );

@@ -1,5 +1,5 @@
 import { LinkedinJob } from "@prisma/client";
-import colors from "colors";
+import chalk from "chalk";
 
 import { updateLinkedinJobStatus } from "@/actions";
 
@@ -11,8 +11,6 @@ export const handleApplicationSent = async (
   await updateLinkedinJobStatus(linkedinJobId, "Applied");
 
   console.log(
-    colors.green(
-      "Process has ben achieved and Job as been updated as Applied.",
-    ),
+    chalk.green("Process has ben achieved and Job as been updated as Applied."),
   );
 };

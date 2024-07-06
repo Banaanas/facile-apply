@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 import { firefox } from "playwright";
 
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-indeed";
@@ -94,7 +94,7 @@ const main = async () => {
     }
   }
 
-  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(chalk.bgMagentaBright.whiteBright("ALL SEARCHES HAVE BEEN COMPLETED"));
   await browser.close();
 };
 

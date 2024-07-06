@@ -1,14 +1,11 @@
 import axios from "axios";
-import colors from "colors";
+import chalk from "chalk";
 import { SocksProxyAgent } from "socks-proxy-agent";
 
 import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
 import { verifyProxyUsage } from "@/scripts/indeed/fetch-jobs/requests/verify-proxy-usage";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
-import {
-  linkedinRequestErrorMessage,
-  missingVarMessage,
-} from "@/scripts/utils/console/console-messages";
+import { linkedinRequestErrorMessage, missingVarMessage } from "@/scripts/utils/console/console-messages";
 
 /**
  * This function fetches LinkedIn data using the IPRoyal SOCKS5 proxy.
@@ -49,7 +46,7 @@ export const fetchLinkedinIpRoyal = async (
 
     return data;
   } catch (error) {
-    console.log(colors.red(linkedinRequestErrorMessage));
+    console.log(chalk.red(linkedinRequestErrorMessage));
     throw error;
   }
 };

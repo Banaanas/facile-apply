@@ -1,4 +1,5 @@
 import axios from "axios";
+import chalk from "chalk";
 
 /**
  * This script checks if the current IP address indicates the use of a VPN.
@@ -24,23 +25,27 @@ export const verifyVPNUsage = async () => {
 
     if (country === expectedCountry && region === expectedRegion) {
       console.log(
-        "The current IP location matches the non-VPN location. It seems you are not using a VPN."
-          .red,
+        chalk.red(
+          "The current IP location matches the non-VPN location. It seems you are not using a VPN.",
+        ),
       );
       console.log(
-        `Possible reasons:\n` +
-          `- VPN app is not running.\n` +
-          `- VPN is running, but the VPN IP location matches the non-VPN location.\n${"Please check the VPN settings and ensure it's connected to a server outside France, Rhône-Alpes.".magenta.italic}`,
+        chalk.italic(
+          `Possible reasons:\n` +
+            `- VPN app is not running.\n` +
+            `- VPN is running, but the VPN IP location matches the non-VPN location.\n${"Please check the VPN settings and ensure it's connected to a server outside France, Rhône-Alpes."}`,
+        ),
       );
       process.exit(1);
     }
 
     console.log(
-      "The current IP location does not match the non-VPN location. The VPN is correctly set up."
-        .green,
+      chalk.red(
+        "The current IP location does not match the non-VPN location. The VPN is correctly set up.",
+      ),
     );
   } catch (error) {
-    console.log("An error occurred while fetching the IP address:".red);
+    console.log(chalk.red("An error occurred while fetching the IP address:"));
     console.error(error);
   }
 };

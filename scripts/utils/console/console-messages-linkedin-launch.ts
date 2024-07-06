@@ -1,5 +1,5 @@
 import { prisma } from "@prisma/db.server";
-import colors from "colors";
+import chalk from "chalk";
 
 import {
   ExperienceLevel,
@@ -62,13 +62,13 @@ export const logLinkedinJobSearchParams = async (
   });
 
   console.log(
-    colors.cyan("Initializing search with the following common parameters:"),
+    chalk.cyan("Initializing search with the following common parameters:"),
   );
 
   console.log(
-    colors.bgBlue(
-      colors.yellow(
-        colors.bold(
+    chalk.bgBlue(
+      chalk.yellow(
+        chalk.bold(
           `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
         ),
       ),
@@ -76,35 +76,35 @@ export const logLinkedinJobSearchParams = async (
   );
 
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Time Posted Range: ${formatTimePostedRange(timePostedRange)}`,
     ),
   );
 
   // Log workplace type preference
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
     ),
   );
 
   // Log whether applying with LinkedIn is enabled
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
     ),
   );
 
   // Log experience levels
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
     ),
   );
 
   // Log sorting preference
   console.log(
-    colors.yellow(
+    chalk.yellow(
       `- Sort By: ${mapSortBy(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.sortBy)}`,
     ),
   );
@@ -118,7 +118,7 @@ export const logCommonLinkedinPostSearchParams = (
     LINKEDIN_POST_SEARCH_COMMON_PARAMS.queryParameters;
 
   console.log(
-    colors.cyan("Initializing search with the following common parameters:"),
+    chalk.cyan("Initializing search with the following common parameters:"),
   );
 
   // Assuming each parameter array contains only a single value for logging purposes
@@ -126,13 +126,13 @@ export const logCommonLinkedinPostSearchParams = (
   const sortByStr = sortBy.join(", ").toString();
 
   // Logging Keywords Array
-  console.log(colors.yellow(`- Keywords: ${keywordsArray.join(", ")}`));
+  console.log(chalk.yellow(`- Keywords: ${keywordsArray.join(", ")}`));
 
   // Logging Date Posted
-  console.log(colors.yellow(`- Date Posted: ${datePostedStr}`));
+  console.log(chalk.yellow(`- Date Posted: ${datePostedStr}`));
 
   // Logging Sort By
-  console.log(colors.yellow(`- Sort By: ${sortByStr}`));
+  console.log(chalk.yellow(`- Sort By: ${sortByStr}`));
 };
 
 function formatTimePostedRange(range: string): string {

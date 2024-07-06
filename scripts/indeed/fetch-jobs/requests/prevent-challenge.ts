@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 
 import { fetchPageWithProvider } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 
@@ -9,7 +9,7 @@ export const fetchWithRetry = async (indeedSearchUrl: string) => {
   // Retry until the fetched page is not a challenge page
   while (isChallengePage(htmlContent)) {
     console.log(
-      colors.grey(
+      chalk.grey(
         "Retrying fetch... Indeed's anti-bot protection seems to be active.",
       ),
     );

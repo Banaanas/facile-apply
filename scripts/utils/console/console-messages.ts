@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 
 import { ProviderName as IndeedProviderName } from "@/scripts/indeed/fetch-jobs/requests/provider-fetch-functions";
 import { ProviderName as LinkedinProviderName } from "@/scripts/linkedin/fetch-jobs/requests/provider-fetch-functions";
@@ -10,12 +10,12 @@ export const fetchingWithMessage = (
 ) => {
   if (providerName !== "withVPN") {
     console.log(
-      colors.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
+      chalk.magenta.italic(`Fetching with ${providerName} Proxy Provider`),
     );
   }
 
   if (providerName === "withVPN") {
-    console.log(colors.italic("Fetching with VPN Provider"));
+    console.log(chalk.italic("Fetching with VPN Provider"));
   }
 };
 
@@ -28,7 +28,7 @@ export const linkedinRequestErrorMessage =
 
 export const skipSearchMessage = (query: string) => {
   console.log(
-    colors.italic(
+    chalk.italic(
       `Skipping search for keywords: "${query}". Search was performed within the last ${SEARCH_HOURS_ELAPSED_THRESHOLD} hours.`,
     ),
   );

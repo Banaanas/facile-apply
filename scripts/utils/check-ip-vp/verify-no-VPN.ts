@@ -1,5 +1,5 @@
 import axios from "axios";
-import colors from "colors";
+import chalk from "chalk";
 
 /**
  * To use our bot on Indeed and Linkedin, it's better to not use a VPN but our real IP.
@@ -19,26 +19,26 @@ export const verifyNoVPNUsage = async () => {
     const response = await axios.get(ipApi);
     const { ip, country, region } = response.data;
 
-    console.log(colors.blue(`Current IP: ${ip}`));
-    console.log(colors.blue(`Country: ${country}`));
-    console.log(colors.blue(`Region: ${region}`));
+    console.log(chalk.blue(`Current IP: ${ip}`));
+    console.log(chalk.blue(`Country: ${country}`));
+    console.log(chalk.blue(`Region: ${region}`));
 
     // Compare the location information
     if (country !== expectedCountry || region !== expectedRegion) {
       console.log(
-        colors.red("The current IP indicates you might be using a VPN."),
+        chalk.red("The current IP indicates you might be using a VPN."),
       );
       process.exit(1); // Exit the process if the IP location does not match the expected location
     }
 
     console.log(
-      colors.green(
+      chalk.green(
         "The current IP location matches the expected location. You are not using a VPN.",
       ),
     );
   } catch (error) {
     console.error(
-      colors.red("An error occurred while fetching the IP address:"),
+      chalk.red("An error occurred while fetching the IP address:"),
       error,
     );
   }

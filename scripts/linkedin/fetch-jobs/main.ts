@@ -1,4 +1,4 @@
-import colors from "colors";
+import chalk from "chalk";
 
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
 import { updateLastSearchDateLinkedIn } from "@/scripts/database/update-search-date";
@@ -43,7 +43,7 @@ const main = async () => {
 
       if (!searchAlreadyPerformed) {
         console.log(
-          colors.cyan(
+          chalk.cyan(
             `Starting search for keyword "${keyword}" in location "${region}"...`,
           ),
         );
@@ -55,7 +55,7 @@ const main = async () => {
     }
   }
 
-  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(chalk.bgMagentaBright.whiteBright("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 
 const processSearchConfig = async (

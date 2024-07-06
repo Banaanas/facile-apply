@@ -30,7 +30,7 @@ export const qualificationQuestionsHandler = async (
       : "No";
 
     const selector = `input[type="radio"][value="${valueToSelect}"]`;
-    await fieldset.$eval(selector, (radio) => radio.click());
+    await fieldset.$eval(selector, (radio) => (radio as HTMLElement).click());
   }
 
   await page.click(`text=${continueButtonRegex}`);

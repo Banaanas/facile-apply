@@ -24,28 +24,28 @@ export const verifyVPNUsage = async () => {
     const { country, region } = await fetchIPAddressInfo();
 
     if (country === expectedCountry && region === expectedRegion) {
-      console.log(
-        chalk.red(
-          "The current IP location matches the non-VPN location. It seems you are not using a VPN.",
-        ),
-      );
-      console.log(
-        chalk.italic(
-          `Possible reasons:\n` +
-            `- VPN app is not running.\n` +
-            `- VPN is running, but the VPN IP location matches the non-VPN location.\n${"Please check the VPN settings and ensure it's connected to a server outside France, Rhône-Alpes."}`,
-        ),
-      );
+      consoleErrorMessage();
       process.exit(1);
     }
 
-    console.log(
-      chalk.green(
-        "The current IP location does not match the non-VPN location. The VPN is correctly set up.",
-      ),
-    );
+    console.log(chalk.green("The VPN is correctly set up."));
   } catch (error) {
     console.log(chalk.red("An error occurred while fetching the IP address:"));
     console.error(error);
   }
+};
+
+const consoleErrorMessage = () => {
+  console.log(
+    chalk.red(
+      "The current IP location matches the non-VPN location. It seems you are not using a VPN.",
+    ),
+  );
+  console.log(
+    chalk.italic(
+      `Possible reasons:\n` +
+        `- VPN app is not running.\n` +
+        `- VPN is running, but the VPN IP location matches the non-VPN location.\n${"Please check the VPN settings and ensure it's connected to a server outside France, Rhône-Alpes."}`,
+    ),
+  );
 };

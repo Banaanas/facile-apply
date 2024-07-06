@@ -37,7 +37,7 @@ const main = async () => {
   jobsConverted++; // Increment the counter
 
   console.log(
-    chalk.rainbow(
+    chalk.bgMagentaBright.whiteBright(
       `ALL SEARCHES HAVE BEEN COMPLETED. Number of jobs converted: ${jobsConverted}`,
     ),
   );

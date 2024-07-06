@@ -36,7 +36,9 @@ const main = async () => {
     }
   }
 
-  console.log(chalk.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(
+    chalk.bgMagentaBright.whiteBright("ALL SEARCHES HAVE BEEN COMPLETED"),
+  );
 };
 
 main().catch(console.error);

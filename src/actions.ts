@@ -91,7 +91,7 @@ export const autoApplyLinkedinPost = async (linkedinPost: LinkedinPost) => {
     await updateLinkedinPostStatus(linkedinPost.id, "Applied");
 
     console.log(
-      chalk.rainbow(
+      chalk.bgMagentaBright.whiteBright(
         `Email has been sent to ${emailTo}. Post has been updated as Applied.`,
       ),
     );

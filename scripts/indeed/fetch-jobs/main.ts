@@ -1,3 +1,4 @@
+import colors from "colors";
 import { firefox } from "playwright";
 
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-indeed";
@@ -93,7 +94,7 @@ const main = async () => {
     }
   }
 
-  console.log("ALL SEARCHES HAVE BEEN COMPLETED".rainbow);
+  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
   await browser.close();
 };
 

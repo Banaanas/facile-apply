@@ -1,3 +1,5 @@
+import colors from "colors";
+
 import { updateLinkedinPostStatus } from "@/actions";
 import { generateEmailResponse } from "@/scripts/linkedin/auto-answer-post/generate-mail";
 import {
@@ -8,7 +10,7 @@ import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 
 const main = async () => {
-  console.log("Starting email dispatch...".cyan);
+  console.log(colors.cyan("Starting email dispatch..."));
 
   await checkDatabaseConnection();
 
@@ -24,12 +26,12 @@ const main = async () => {
     await updateLinkedinPostStatus(post.id, "Applied");
   }
 
-  console.log("All emails have been sent!".rainbow);
+  console.log(colors.rainbow("All emails have been sent!"));
 };
 
 main().catch((error) => {
   console.error(
-    "An error occurred during the email dispatch process:".red,
+    colors.red("An error occurred during the email dispatch process:"),
     error,
   );
 });

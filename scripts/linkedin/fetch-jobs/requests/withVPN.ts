@@ -1,4 +1,5 @@
 import axios from "axios";
+import colors from "colors";
 
 import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
@@ -39,7 +40,7 @@ export const fetchLinkedinVPN = async (
 
     return data;
   } catch (error) {
-    console.log(linkedinRequestErrorMessage.red);
+    console.log(colors.red(linkedinRequestErrorMessage));
     throw error;
   }
 };

@@ -1,3 +1,5 @@
+import colors from "colors";
+
 import { registerTransformedPostResultsInDB } from "@/scripts/database/register-database-linkedin-post";
 import { POST_SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-posts/data/post-search-configs";
 import { getPostResults } from "@/scripts/linkedin/fetch-posts/parsing/get-post-results";
@@ -26,7 +28,7 @@ const main = async () => {
       await registerTransformedPostResultsInDB(filteredResults);
     } catch (error) {
       console.error(
-        "Error fetching LinkedIn data for configuration: ".red,
+        colors.red("Error fetching LinkedIn data for configuration: "),
         configName,
         error,
       );
@@ -34,7 +36,7 @@ const main = async () => {
     }
   }
 
-  console.log("ALL SEARCHES HAVE BEEN COMPLETED".rainbow);
+  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 
 main().catch(console.error);

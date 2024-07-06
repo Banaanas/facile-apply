@@ -1,3 +1,4 @@
+import colors from "colors";
 import { Page } from "playwright";
 
 import { handleRadioInput } from "@/scripts/linkedin/auto-apply-job/form-steps/steps/additional-questions/questions/radio-input";
@@ -31,7 +32,7 @@ export const handleAdditionalQuestionsStep = async (page: Page) => {
     );
 
     if (willSkipInput) {
-      console.log("Input already filled. It will be skipped.".green);
+      console.log(colors.green("Input already filled. It will be skipped."));
     }
 
     if (selectDropdown && !willSkipInput) {

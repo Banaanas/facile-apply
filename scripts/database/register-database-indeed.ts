@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import colors from "colors";
 
 import { TransformedScrapedIndeedJob } from "@/scripts/indeed/fetch-jobs/fetch-jobs.types";
 
@@ -16,10 +17,11 @@ export const registerTransformedJobResultsInDB = async (
 
   const newlyRegisteredCount = response.count;
 
-  console.log(indeedSearchUrl.gray);
+  console.log(colors.gray(indeedSearchUrl));
   console.log(
-    `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "jobs" : "job"} in the database.`
-      .green,
+    colors.green(
+      `Registered ${newlyRegisteredCount} ${newlyRegisteredCount > 1 ? "jobs" : "job"} in the database.`,
+    ),
   );
 
   return response;

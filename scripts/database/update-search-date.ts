@@ -1,5 +1,6 @@
 import { IndeedJobSearchMeta, LinkedinJobSearchMeta } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
+import colors from "colors";
 
 export const updateLastSearchDateIndeed = async (
   queryIdentifier: IndeedJobSearchMeta["identifier"],
@@ -19,8 +20,9 @@ export const updateLastSearchDateIndeed = async (
     });
 
     console.log(
-      `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`
-        .green,
+      colors.green(
+        `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+      ),
     );
   } catch (error) {
     console.error(`Error updating last search date for Indeed:`, error);
@@ -47,8 +49,9 @@ export const updateLastSearchDateLinkedIn = async (
     });
 
     console.log(
-      `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`
-        .green,
+      colors.green(
+        `Last search date updated for ${query}: ${jobSearchMeta.lastSearchAt.toDateString()}`,
+      ),
     );
   } catch (error) {
     console.error(`Error updating last search date for LinkedIn:`, error);

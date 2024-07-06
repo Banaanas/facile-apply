@@ -1,4 +1,5 @@
 import axios from "axios";
+import colors from "colors";
 import { SocksProxyAgent } from "socks-proxy-agent";
 
 import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
@@ -48,7 +49,7 @@ export const fetchLinkedinIpRoyal = async (
 
     return data;
   } catch (error) {
-    console.log(linkedinRequestErrorMessage.red);
+    console.log(colors.red(linkedinRequestErrorMessage));
     throw error;
   }
 };

@@ -1,3 +1,4 @@
+import colors from "colors";
 import nodemailer from "nodemailer";
 
 import { gmailConfig } from "@/scripts/config";
@@ -30,9 +31,9 @@ export const sendEmail = async (
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully:".green, info);
+    console.log(colors.green("Email sent successfully:"), info);
   } catch (error) {
-    console.error("Error sending email:".red, error);
+    console.error(colors.red("Error sending email:"), error);
   }
 };
 

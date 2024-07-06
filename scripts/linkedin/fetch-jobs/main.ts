@@ -1,3 +1,5 @@
+import colors from "colors";
+
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
 import { updateLastSearchDateLinkedIn } from "@/scripts/database/update-search-date";
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
@@ -41,8 +43,9 @@ const main = async () => {
 
       if (!searchAlreadyPerformed) {
         console.log(
-          `Starting search for keyword "${keyword}" in location "${region}"...`
-            .cyan,
+          colors.cyan(
+            `Starting search for keyword "${keyword}" in location "${region}"...`,
+          ),
         );
 
         await processSearchConfig(geoId, keyword, timePostedRange);
@@ -52,7 +55,7 @@ const main = async () => {
     }
   }
 
-  console.log("ALL SEARCHES HAVE BEEN COMPLETED".rainbow);
+  console.log(colors.rainbow("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 
 const processSearchConfig = async (

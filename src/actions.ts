@@ -2,6 +2,7 @@
 
 import { IndeedJob, LinkedinJob, LinkedinPost } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
+import colors from "colors";
 import { revalidatePath } from "next/cache";
 
 import { appRoutes } from "@/data/app-routes";
@@ -78,20 +79,21 @@ export const autoApplyLinkedinJob = async (
 };
 
 export const autoApplyLinkedinPost = async (linkedinPost: LinkedinPost) => {
-  console.log("Starting email dispatch...".cyan);
+  console.log(colors.cyan("Starting email dispatch..."));
 
   try {
     const { emailSubject, emailContent, emailTo } = await generateEmailResponse(
       linkedinPost.summary,
     );
 
-    console.log("Starting email sending...".cyan);
+    console.log(colors.cyan("Starting email sending..."));
     await sendEmail(emailTo, emailSubject, emailContent);
     await updateLinkedinPostStatus(linkedinPost.id, "Applied");
 
     console.log(
-      `Email has been sent to ${emailTo}. Post has been updated as Applied.`
-        .rainbow,
+      colors.rainbow(
+        `Email has been sent to ${emailTo}. Post has been updated as Applied.`,
+      ),
     );
   } catch (error) {
     console.error("An error occurred:", error);

@@ -37,7 +37,7 @@ const main = async () => {
   }
 
   console.log(
-    chalk.bgMagentaBright.whiteBright("ALL SEARCHES HAVE BEEN COMPLETED"),
+    chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"),
   );
 };
 

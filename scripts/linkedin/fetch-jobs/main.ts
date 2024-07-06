@@ -55,7 +55,7 @@ const main = async () => {
     }
   }
 
-  console.log(chalk.bgMagentaBright.whiteBright("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"));
 };
 
 const processSearchConfig = async (

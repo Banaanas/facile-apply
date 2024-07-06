@@ -10,7 +10,7 @@ export const fetchWithRetry = async (indeedSearchUrl: string) => {
   while (isChallengePage(htmlContent)) {
     console.log(
       chalk.grey(
-        "Retrying fetch... Indeed's anti-bot protection seems to be active.",
+        "Indeed's anti-bot protection seems to be active. Retrying fetch... ",
       ),
     );
     // Wait for a certain period before re-fetch

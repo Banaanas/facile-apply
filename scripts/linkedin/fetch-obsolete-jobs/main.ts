@@ -4,10 +4,12 @@ import chalk from "chalk";
 
 import { getLinkedinJobState } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
+import { verifyVPNUsage } from "@/scripts/utils/check-ip-vp/check-vpn";
 
 // Get all NOT REVIEWED Jobs that are SUSPENDED or CLOSE and update status as IGNORED
 const main = async () => {
   await checkDatabaseConnection();
+  await verifyVPNUsage();
 
   console.log("Fetching all jobs with NotReviewed status...");
   const jobs = await prisma.linkedinJob.findMany({
@@ -37,7 +39,7 @@ const main = async () => {
   jobsConverted++; // Increment the counter
 
   console.log(
-    chalk.bgMagentaBright.whiteBright(
+    chalk.bgMagentaBright.whiteBright.bold(
       `ALL SEARCHES HAVE BEEN COMPLETED. Number of jobs converted: ${jobsConverted}`,
     ),
   );

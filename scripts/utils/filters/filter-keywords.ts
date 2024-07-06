@@ -31,6 +31,7 @@ export const filterKeywords = [
   "docview",
   "dotnet",
   "drupal",
+  "gutenberg",
   "gpl",
   "haskel",
   "ios",

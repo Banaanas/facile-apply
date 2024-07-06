@@ -33,7 +33,7 @@ export const verifyNoVPNUsage = async () => {
 
     console.log(
       chalk.green(
-        "The current IP location matches the expected location. You are not using a VPN.",
+        "Correct configuration: you are NOT using a VPN.",
       ),
     );
   } catch (error) {

@@ -7,9 +7,12 @@ import {
   filterPostsWithEmails,
 } from "@/scripts/linkedin/auto-answer-post/get-posts";
 import { sendEmail } from "@/scripts/linkedin/auto-answer-post/send-mail";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 
 const main = async () => {
   console.log(colors.cyan("Starting email dispatch..."));
+
+  await checkDatabaseConnection();
 
   const posts = await fetchNotReviewedPosts();
   const postsWithEmails = filterPostsWithEmails(posts);

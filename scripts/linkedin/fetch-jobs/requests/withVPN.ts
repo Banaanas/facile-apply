@@ -3,7 +3,7 @@ import colors from "colors";
 
 import { ipRoyalConfig, linkedinConfig } from "@/scripts/config";
 import { RawLinkedinData } from "@/scripts/linkedin/fetch-jobs/parsing/transform-job-results";
-import { verifyVPNUsage } from "@/scripts/utils/check-ip/check-vpn";
+import { verifyVPNUsage } from "@/scripts/utils/check-ip-vp/check-vpn";
 import {
   linkedinRequestErrorMessage,
   missingVarMessage,

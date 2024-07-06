@@ -6,6 +6,8 @@ import {
 } from "@/scripts/linkedin/auto-apply-job/announce-check";
 import { executeFastApply } from "@/scripts/linkedin/auto-apply-job/execute-fast-apply";
 import { launchLocalBrowser } from "@/scripts/linkedin/auto-apply-job/launch-browser/launch-local-browser";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
+import { verifyNoVPNUsage } from "@/scripts/utils/check-ip-vp/verify-no-VPN";
 import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
 export const runLinkedinPlaywrightSession = async (
@@ -16,6 +18,8 @@ export const runLinkedinPlaywrightSession = async (
   const context = await launchLocalBrowser(headless);
   const page = await context.newPage();
 
+  await checkDatabaseConnection();
+  await verifyNoVPNUsage();
   await blockResourcesAndAds(page);
   await page.goto(url);
 

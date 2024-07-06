@@ -1,11 +1,11 @@
 import colors from "colors";
 
-import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedPostResultsInDB } from "@/scripts/database/register-database-linkedin-post";
 import { POST_SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-posts/data/post-search-configs";
 import { getPostResults } from "@/scripts/linkedin/fetch-posts/parsing/get-post-results";
 import { buildLinkedInQueryUrl } from "@/scripts/linkedin/fetch-posts/requests/linkedin-posts-request-builder";
 import { normalizeAndMatchCountry } from "@/scripts/linkedin/fetch-posts/utils/normalize-match-countries";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 import { logCommonLinkedinPostSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
 
 const main = async () => {

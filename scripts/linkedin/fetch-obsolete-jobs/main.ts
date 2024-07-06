@@ -2,8 +2,8 @@ import { JobStatus } from "@prisma/client";
 import { prisma } from "@prisma/db.server";
 import colors from "colors";
 
-import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { getLinkedinJobState } from "@/scripts/linkedin/fetch-obsolete-jobs/parsing/get-linkedin-job-state";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 
 // Get all NOT REVIEWED Jobs that are SUSPENDED or CLOSE and update status as IGNORED
 const main = async () => {

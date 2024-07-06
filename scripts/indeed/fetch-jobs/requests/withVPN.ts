@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 
-import { verifyVPNUsage } from "@/scripts/utils/check-ip/check-vpn";
+import { verifyVPNUsage } from "@/scripts/utils/check-ip-vp/check-vpn";
 
 const headers = {
   "user-agent":

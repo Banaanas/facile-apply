@@ -1,7 +1,6 @@
 import colors from "colors";
 import { firefox } from "playwright";
 
-import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-indeed";
 import { updateLastSearchDateIndeed } from "@/scripts/database/update-search-date";
 import { calculateDaysRange } from "@/scripts/indeed/fetch-jobs/data/calculate-days-range";
@@ -16,6 +15,7 @@ import { fetchWithRetry } from "@/scripts/indeed/fetch-jobs/requests/prevent-cha
 import { buildSearchUrl } from "@/scripts/indeed/fetch-jobs/utils/url-builder";
 import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
 import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 import {
   fetchingWithMessage,
   skipSearchMessage,

@@ -1,6 +1,5 @@
 import colors from "colors";
 
-import { checkDatabaseConnection } from "@/scripts/database/check-running-database";
 import { registerTransformedJobResultsInDB } from "@/scripts/database/register-database-linkedin-job";
 import { updateLastSearchDateLinkedIn } from "@/scripts/database/update-search-date";
 import { LINKEDIN_CURRENT_PROVIDER } from "@/scripts/linkedin/common/data/linkedin-current-provider";
@@ -11,6 +10,7 @@ import { getJobResults } from "@/scripts/linkedin/fetch-jobs/parsing/get-job-res
 import { buildSearchRequest } from "@/scripts/linkedin/fetch-jobs/requests/linkedin-request-builder";
 import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-identifier";
 import { hasSearchBeenPerformedWithinThreshold } from "@/scripts/searches/utils/search-elapsed-time-threshold";
+import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 import {
   fetchingWithMessage,
   skipSearchMessage,

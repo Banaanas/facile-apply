@@ -20,5 +20,5 @@ export const getFormControlIdentifier = async (
     labelText = await getClosestGroupTitle(formControlContainer);
   }
 
-  return labelText || "Unknown";
+  return (labelText || "Unknown").trim();
 };

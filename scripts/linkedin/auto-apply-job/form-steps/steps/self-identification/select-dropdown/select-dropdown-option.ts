@@ -16,6 +16,7 @@ export const selectOptionFromDropdown = async (
 
   for (const labelElement of labelElements) {
     const labelText = await labelElement.innerText();
+
     if (labelText.toLowerCase().includes(labelSubstring.toLowerCase())) {
       selectId = await labelElement.getAttribute("for");
       break;
@@ -44,7 +45,8 @@ export const selectOptionFromDropdown = async (
           console.log(
             `Found matching option "${optionText}" in a select element.`,
           );
-          await selectElement.selectOption({ label: optionText });
+
+          await selectElement.selectOption({ label: optionValue });
           return;
         }
       }

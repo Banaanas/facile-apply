@@ -38,7 +38,6 @@ const generateGPTAnswer = async (
   formControlContainer: ElementHandle<SVGElement | HTMLElement>,
   labelText: string,
 ) => {
-  console.log("GENERATE");
   const textInput = await formControlContainer.$("input[type='text']");
   const prompt = `Here is the question: "${labelText}". Please provide a clear, short, and concise answer, no more than 1 line. If the question is related to a number, answer with just the number. If it requires a text answer, keep it to a few words at most.`;
 

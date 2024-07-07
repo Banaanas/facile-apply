@@ -9,14 +9,22 @@ export const handleRadioButtonFieldset = async (
     return;
   }
 
-  for (const { legend, label } of legendActions) {
-    if (formControlIdentifier.includes(legend)) {
-      await clickLabelByText(formControlContainer, label);
-      return;
-    }
+  const normalizedIdentifier = formControlIdentifier.toLowerCase();
+
+  const legendAction = legendActions.find(({ legends }) =>
+    legends.some((legend) =>
+      normalizedIdentifier.includes(legend.toLowerCase()),
+    ),
+  );
+
+  if (!legendAction) {
+    console.error(`No matching legend found for: ${formControlIdentifier}`);
+    return;
   }
 
-  console.error(`No matching legend found for: ${formControlIdentifier}`);
+  for (const label of legendAction.labels) {
+    await clickLabelByText(formControlContainer, label);
+  }
 };
 
 const handleNoLegendText = async (formControlContainer: ElementHandle) => {
@@ -45,37 +53,43 @@ const clickLabelByText = async (
   formControlContainer: ElementHandle,
   label: string,
 ): Promise<void> => {
-  const labelSelector = `label[data-test-text-selectable-option__label="${label}"]`;
+  const labelElements = await formControlContainer.$$("label");
 
-  const labelElement = await formControlContainer.$(labelSelector);
-  if (labelElement) {
-    await labelElement.click();
+  let foundLabelElement: ElementHandle | null = null;
+
+  for (const labelElement of labelElements) {
+    const labelText = await labelElement.innerText();
+
+    if (labelText.toLowerCase().includes(label.toLowerCase())) {
+      foundLabelElement = labelElement;
+      break;
+    }
   }
 
-  if (!labelElement) {
+  if (!foundLabelElement) {
     console.error(`Label element with text "${label}" not found`);
+    return;
   }
+
+  await foundLabelElement.click();
 };
 
-const YES = "Yes";
-const NO = "No, I do not have a disability and have not had one in the past.";
+interface Interactions {
+  legends: Array<string>;
+  labels: Array<string>;
+}
 
 const legendActions: Array<Interactions> = [
   {
-    legend: "Are you a protected veteran?",
-    label: YES,
+    legends: ["gender"],
+    labels: ["Male"],
   },
   {
-    legend: "Are you Hispanic or Latino?",
-    label: YES,
+    legends: ["veteran status", "protected veteran"],
+    labels: ["I am not a protected veteran"],
   },
   {
-    legend: "Do you have (or have a history/record of having) a disability?",
-    label: NO,
+    legends: ["disability"],
+    labels: ["I don't have a disability,", "I do not have a disability"],
   },
 ];
-
-interface Interactions {
-  legend: string;
-  label: string;
-}

@@ -1,53 +1,55 @@
 export const cyrilSkills = [
   // General web development skills
-  "JavaScript",
-  "TypeScript",
-  "HTML",
   "CSS",
-  "Responsive Design",
-  "Web Performance",
-  "Front End",
-  "Full Stack",
   "Developer",
+  "Front End",
+  "Frontend",
+  "Full Stack",
+  "HTML",
+  "JavaScript",
+  "Responsive Design",
+  "TypeScript",
+  "Web Performance",
+  "Web3",
 
   // Front-end frameworks and libraries
-  "React",
-  "Next.js",
   "Astro",
+  "Next.js",
+  "React",
 
   // State management
-  "Redux",
   "React Query",
+  "Redux",
   "Zustand",
 
   // Styling and UI frameworks
-  "Tailwind CSS",
+  "Material-UI",
   "Radix",
   "Shadcn",
-  "Material-UI",
+  "Tailwind CSS",
 
   // Back-end technologies
+  "Express.js",
   "Node.js",
   "Node",
-  "Express.js",
 
   // Databases
+  "Firebase",
   "MongoDB",
-  "PostgreSQL",
   "MySQL",
+  "PostgreSQL",
   "SQLite",
   "Supabase",
-  "Firebase",
 
   // Other technologies and tools
-  "GraphQL",
-  "REST APIs",
+  "Babel",
   "Docker",
   "Git",
   "Github",
-  "Webpack",
-  "Babel",
+  "GraphQL",
+  "REST APIs",
   "Testing",
+  "Webpack",
 
   // Design tools
   "Figma",

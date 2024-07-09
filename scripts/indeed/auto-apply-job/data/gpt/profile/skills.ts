@@ -2,8 +2,11 @@ export const cyrilSkills = [
   // General web development skills
   "CSS",
   "Developer",
-  "Front End",
   "Frontend",
+  "Front-end",
+  "Front End",
+  "FullStack",
+  "Full-Stack",
   "Full Stack",
   "HTML",
   "JavaScript",

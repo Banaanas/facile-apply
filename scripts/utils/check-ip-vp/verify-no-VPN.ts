@@ -31,11 +31,7 @@ export const verifyNoVPNUsage = async () => {
       process.exit(1); // Exit the process if the IP location does not match the expected location
     }
 
-    console.log(
-      chalk.green(
-        "Correct configuration: you are NOT using a VPN.",
-      ),
-    );
+    console.log(chalk.green("Correct configuration: you are NOT using a VPN."));
   } catch (error) {
     console.error(
       chalk.red("An error occurred while fetching the IP address:"),
@@ -43,6 +39,3 @@ export const verifyNoVPNUsage = async () => {
     );
   }
 };
-
-// Run the function
-verifyNoVPNUsage();

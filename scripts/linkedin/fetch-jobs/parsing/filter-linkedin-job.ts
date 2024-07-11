@@ -20,12 +20,10 @@ export const filterLinkedinJobResults = (
       titleLowercase.includes(keyword.toLowerCase()),
     );
 
-    // Convert filtersLocation to lowercase for comparison
     const hasLocationInJobLocation = filtersLocation
       .map((location) => location.toLowerCase())
       .some((location) => locationLowercase.includes(location));
 
-    // Convert filtersCompanies to lowercase for comparison
     const hasCompanyInJobCompany = filtersCompanies
       .map((company) => company.toLowerCase())
       .includes(companyLowercase.trim());

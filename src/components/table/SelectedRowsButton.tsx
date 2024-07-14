@@ -8,20 +8,22 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu";
-import { JobStatus } from "@prisma/client";
+import { IndeedJob, JobStatus, LinkedinJob } from "@prisma/client";
 import { Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 
 import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
 
-const SelectedRowsButton = <TData,>({
+const SelectedRowsButton = <TData extends Job>({
   jobPlatform,
   selectedRows,
 }: {
   jobPlatform: JobPlatform;
   selectedRows: Row<TData>[];
 }) => {
-  const handleEditRows = async (newStatus: JobStatus) => {
+  const handleEditRows = async (newStatusString: string) => {
+    const newStatus = newStatusString as JobStatus; // Cast string to JobStatus
+
     // Use map to create an array of promises for each update operation
     const updatePromises = selectedRows.map(async (row) => {
       const job = row.original; // Assuming row.original contains the job data
@@ -80,3 +82,5 @@ const SelectedRowsButton = <TData,>({
 };
 
 export default SelectedRowsButton;
+
+type Job = IndeedJob | LinkedinJob;

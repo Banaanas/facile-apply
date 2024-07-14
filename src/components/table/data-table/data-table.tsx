@@ -40,6 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { IndeedJob, LinkedinJob } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -76,7 +77,7 @@ const jobPlatformFilters = {
   linkedinPost: linkedinPostFilters,
 };
 
-export const DataTable = <TData, TValue>({
+export const DataTable = <TData extends Job, TValue>({
   columns,
   data,
   jobPlatform,
@@ -231,3 +232,4 @@ export const DataTable = <TData, TValue>({
 };
 
 export type JobPlatform = "indeed" | "linkedinJob" | "linkedinPost";
+type Job = IndeedJob | LinkedinJob;

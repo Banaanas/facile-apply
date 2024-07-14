@@ -8,7 +8,6 @@ import { executeFastApply } from "@/scripts/indeed/auto-apply-job/execute-fast-a
 import { launchLocalBrowser } from "@/scripts/indeed/auto-apply-job/launch-browser/launch-local-browser";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 import { verifyNoVPNUsage } from "@/scripts/utils/check-ip-vp/verify-no-VPN";
-import { blockResourcesAndAds } from "@/scripts/utils/playwright-block-ressources";
 
 export const runIndeedPlaywrightSession = async (
   headless: Headless,
@@ -20,7 +19,7 @@ export const runIndeedPlaywrightSession = async (
 
   await checkDatabaseConnection();
   await verifyNoVPNUsage();
-  await blockResourcesAndAds(page);
+  // await blockResourcesAndAds(page);
   await page.goto(url);
   await page.waitForTimeout(2000);
 

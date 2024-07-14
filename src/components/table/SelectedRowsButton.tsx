@@ -17,9 +17,11 @@ import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
 const SelectedRowsButton = <TData extends Job>({
   jobPlatform,
   selectedRows,
+  resetRowSelection,
 }: {
   jobPlatform: JobPlatform;
   selectedRows: Row<TData>[];
+  resetRowSelection: (defaultState?: boolean) => void;
 }) => {
   const handleEditRows = async (newStatusString: string) => {
     const newStatus = newStatusString as JobStatus; // Cast string to JobStatus
@@ -41,6 +43,12 @@ const SelectedRowsButton = <TData extends Job>({
     try {
       await Promise.all(updatePromises);
       console.log(`Updated status to ${newStatus} for selected rows.`);
+
+      // Clear selection if the new status is "Ignored"
+      if (newStatus === "Ignored") {
+        resetRowSelection();
+      }
+
       // Optionally, refresh the data or UI here
     } catch (error) {
       console.error("Error updating job statuses:", error);

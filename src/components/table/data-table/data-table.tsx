@@ -113,6 +113,10 @@ export const DataTable = <TData extends Job, TValue>({
     },
   });
 
+  const resetRowSelection = () => {
+    table.resetRowSelection();
+  };
+
   const isFiltered = table.getState().columnFilters.length > 0;
 
   const facetFilters = jobPlatformFilters[jobPlatform];
@@ -122,6 +126,8 @@ export const DataTable = <TData extends Job, TValue>({
       <SelectedRowsButton
         jobPlatform={jobPlatform}
         selectedRows={table.getFilteredSelectedRowModel().rows}
+        resetRowSelection={resetRowSelection}
+
       />
       <div className="flex items-center p-4">
         {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (

@@ -73,6 +73,14 @@ const DataTableRowActions = <TData,>({
     }
     setCurrentStatus(newStatus);
   };
+
+  // To prevent TS error, we had to convert the type to string
+  const handleStringValueChange = async (value: string) => {
+    // Assuming JobStatus and PostStatus are string enums
+    const newStatus = value as JobStatus | PostStatus;
+    await handleOnValueChange(newStatus);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -87,7 +95,7 @@ const DataTableRowActions = <TData,>({
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuRadioGroup
           value={status}
-          onValueChange={handleOnValueChange}
+          onValueChange={handleStringValueChange}
         >
           {statuses.map(({ value, label }) => {
             return (

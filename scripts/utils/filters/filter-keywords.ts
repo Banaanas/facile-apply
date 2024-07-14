@@ -26,6 +26,7 @@ export const filterKeywords = [
   "core",
   "customer",
   "data",
+  "design",
   "designer",
   "devops",
   "director",

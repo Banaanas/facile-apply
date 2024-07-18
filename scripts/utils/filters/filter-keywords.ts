@@ -13,6 +13,7 @@ export const filterKeywords = [
   "architect",
   "assurance",
   "auditor",
+  "atlassian",
   "aws",
   "azure",
   "back end",

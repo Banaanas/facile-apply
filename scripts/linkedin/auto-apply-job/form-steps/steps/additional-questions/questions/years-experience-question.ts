@@ -1,7 +1,7 @@
 import { Page } from "playwright";
 import { ElementHandleForTag } from "playwright-core/types/structs";
 
-import { cyrilSkills } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/skills";
+import { cyrilSkills, noCyrilSkills } from "@/scripts/indeed/auto-apply-job/data/gpt/profile/skills";
 
 export const isYearsOfExperienceQuestion = (labelText: string): boolean => {
   const keywords = [
@@ -35,6 +35,7 @@ export const handleYearsOfExperienceQuestion = async (
   }
 
   const WORK_EXPERIENCE_YEARS = "3";
+  const NO_WORK_EXPERIENCE_YEARS = "0";
   const lowerCaseLabel = labelText.toLowerCase();
   let skillFound = false;
 
@@ -47,6 +48,21 @@ export const handleYearsOfExperienceQuestion = async (
       break;
     }
   }
+
+
+  // Check if the label includes any of the NO Cyril skills or technologies
+  if (!skillFound) {
+    for (const skill of noCyrilSkills) {
+      if (lowerCaseLabel.includes(skill.toLowerCase())) {
+        console.log(`NO Cyril skill '${skill}' found in label text`);
+        await inputField.fill(NO_WORK_EXPERIENCE_YEARS);
+        skillFound = true;
+        break;
+      }
+    }
+  }
+
+
 
   // If no skill matches, log the URL and label text, then pause for manual intervention
   if (!skillFound) {

@@ -54,7 +54,6 @@ export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
   },
 
   {
-    header: "Country",
     accessorKey: "authorCountry",
     header: ({ column }) => {
       return <SortingButton column={column}>Location</SortingButton>;

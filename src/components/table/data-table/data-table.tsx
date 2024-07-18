@@ -40,7 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { IndeedJob, LinkedinJob } from "@prisma/client";
+import { IndeedJob, LinkedinJob, LinkedinPost } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -77,19 +77,15 @@ const jobPlatformFilters = {
   linkedinPost: linkedinPostFilters,
 };
 
-export const DataTable = <TData extends Job, TValue>({
+export const DataTable = <TData extends IndeedJob | LinkedinJob |  LinkedinPost, TValue>({
   columns,
   data,
   jobPlatform,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([
-    /*   {
-      id: "createDate", // Must be equal to the accessorKey of the column you want sorted by default
-      desc: true,
-    }, */
     {
-      id: "location", // Must be equal to the accessorKey of the column you want sorted by default
-      desc: false,
+      id: "postDate", // Must be equal to the accessorKey of the column you want sorted by default
+      desc: true,
     },
   ]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -127,7 +123,6 @@ export const DataTable = <TData extends Job, TValue>({
         jobPlatform={jobPlatform}
         selectedRows={table.getFilteredSelectedRowModel().rows}
         resetRowSelection={resetRowSelection}
-
       />
       <div className="flex items-center p-4">
         {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (

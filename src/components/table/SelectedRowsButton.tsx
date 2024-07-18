@@ -8,13 +8,20 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu";
-import { IndeedJob, JobStatus, LinkedinJob } from "@prisma/client";
+import {
+  IndeedJob,
+  JobStatus,
+  LinkedinJob,
+  LinkedinPost,
+} from "@prisma/client";
 import { Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 
 import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
 
-const SelectedRowsButton = <TData extends Job>({
+const SelectedRowsButton = <
+  TData extends IndeedJob | LinkedinJob | LinkedinPost,
+>({
   jobPlatform,
   selectedRows,
   resetRowSelection,
@@ -23,6 +30,8 @@ const SelectedRowsButton = <TData extends Job>({
   selectedRows: Row<TData>[];
   resetRowSelection: (defaultState?: boolean) => void;
 }) => {
+  console.log(selectedRows);
+
   const handleEditRows = async (newStatusString: string) => {
     const newStatus = newStatusString as JobStatus; // Cast string to JobStatus
 
@@ -90,5 +99,3 @@ const SelectedRowsButton = <TData extends Job>({
 };
 
 export default SelectedRowsButton;
-
-type Job = IndeedJob | LinkedinJob;

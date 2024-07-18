@@ -17,7 +17,11 @@ import {
 import { Row } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 
-import { updateIndeedJobStatus, updateLinkedinJobStatus } from "@/actions";
+import {
+  updateIndeedJobStatus,
+  updateLinkedinJobStatus,
+  updateLinkedinPostStatus,
+} from "@/actions";
 
 const SelectedRowsButton = <
   TData extends IndeedJob | LinkedinJob | LinkedinPost,
@@ -46,6 +50,12 @@ const SelectedRowsButton = <
       if (jobPlatform === "linkedinJob") {
         return updateLinkedinJobStatus(job.id, newStatus);
       }
+      if (jobPlatform === "linkedinPost") {
+        return updateLinkedinPostStatus(job.id, newStatus);
+      }
+
+      // Throw an error if none of the platforms match
+      throw new Error(`Unsupported job platform: ${jobPlatform}`);
     });
 
     // Use Promise.all to wait for all update operations to complete

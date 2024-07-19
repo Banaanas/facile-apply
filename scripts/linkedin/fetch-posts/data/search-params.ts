@@ -8,7 +8,7 @@ export const LINKEDIN_POST_SEARCH_COMMON_PARAMS: CommonParams = {
   flagshipSearchIntent: FlagshipSearchIntent.SEARCH_SRP,
   queryParameters: {
     contentType: ["jobs"],
-    datePosted: [DatePosted.LastWeek],
+    datePosted: [DatePosted.Last24Hours],
     resultType: ["CONTENT"],
     sortBy: [SortBy.Relevance],
   },

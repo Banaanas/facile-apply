@@ -5,13 +5,13 @@ import {
   initialGPTContext,
   openai,
 } from "@/scripts/indeed/auto-apply-job/url-handlers.ts/pages/openai-setup";
+import { gptModel } from "@/scripts/config";
 
 export const generateAnswer = async (question: string): Promise<string> => {
   const instructionContext = gptInstructions.join(" ");
 
   const response = await openai.chat.completions.create({
-    // BEWARE OF MODEL PRICING
-    model: "gpt-3.5-turbo",
+    model: gptModel,
     messages: [
       {
         role: "system",

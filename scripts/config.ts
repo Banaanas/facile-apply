@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import OpenAI from "openai";
+import ChatModel = OpenAI.ChatModel;
 
 // __dirname is not available in ES modules, so we derive it
 const __filename = fileURLToPath(import.meta.url);
@@ -33,8 +35,12 @@ export const openAiConfig = {
   apiKey: process.env.OPENAI_API_KEY,
 };
 
+// BEWARE OF MODEL PRICING
+export const gptModel:  ChatModel = "gpt-4o"
+
 // GMAIL
 export const gmailConfig = {
   user: process.env.GOOGLE_MAIL_USER,
   facileApplyPassword: process.env.GMAIL_FACILE_APPLY_PASSWORD,
 };
+

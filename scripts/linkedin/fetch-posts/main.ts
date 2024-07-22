@@ -4,9 +4,9 @@ import { registerTransformedPostResultsInDB } from "@/scripts/database/register-
 import { POST_SEARCH_CONFIGURATIONS } from "@/scripts/linkedin/fetch-posts/data/post-search-configs";
 import { getPostResults } from "@/scripts/linkedin/fetch-posts/parsing/get-post-results";
 import { buildLinkedInQueryUrl } from "@/scripts/linkedin/fetch-posts/requests/linkedin-posts-request-builder";
-import { normalizeAndMatchCountry } from "@/scripts/linkedin/fetch-posts/utils/normalize-match-countries";
 import { checkDatabaseConnection } from "@/scripts/utils/check-ip-vp/check-running-database";
 import { logCommonLinkedinPostSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
+import { filterLinkedinPostResults } from "@/scripts/linkedin/fetch-posts/parsing/filter-linkedin-post";
 
 const main = async () => {
   await checkDatabaseConnection();
@@ -21,9 +21,8 @@ const main = async () => {
     const searchUrl = buildLinkedInQueryUrl(keywords);
     try {
       const postResults = await getPostResults(searchUrl);
-      const filteredResults = postResults.filter(
-        (post) => normalizeAndMatchCountry(post?.authorCountry) !== null,
-      );
+
+      const filteredResults = filterLinkedinPostResults(postResults);
 
       await registerTransformedPostResultsInDB(filteredResults);
     } catch (error) {

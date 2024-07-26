@@ -4,6 +4,7 @@ export const filtersCompanies = [
   "Jobot",
   "Job Zapper",
   "Noir",
+  "Publidata",
   "RemoteYeah",
   "Ucaya",
 ];

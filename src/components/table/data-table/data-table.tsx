@@ -77,14 +77,19 @@ const jobPlatformFilters = {
   linkedinPost: linkedinPostFilters,
 };
 
-export const DataTable = <TData extends IndeedJob | LinkedinJob |  LinkedinPost, TValue>({
+export const DataTable = <
+  TData extends IndeedJob | LinkedinJob | LinkedinPost,
+  TValue,
+>({
   columns,
   data,
   jobPlatform,
 }: DataTableProps<TData, TValue>) => {
+  const dateField = getDateField(jobPlatform);
+
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "postDate", // Must be equal to the accessorKey of the column you want sorted by default
+      id: dateField, // Use the dynamically determined date field
       desc: true,
     },
   ]);
@@ -233,4 +238,15 @@ export const DataTable = <TData extends IndeedJob | LinkedinJob |  LinkedinPost,
 };
 
 export type JobPlatform = "indeed" | "linkedinJob" | "linkedinPost";
-type Job = IndeedJob | LinkedinJob;
+
+const getDateField = (jobPlatform: string) => {
+  switch (jobPlatform) {
+    case "linkedinPost":
+      return "postDate";
+    case "indeedJob":
+    case "linkedinJob":
+      return "createDate";
+    default:
+      return "createDate"; // Default fallback
+  }
+};

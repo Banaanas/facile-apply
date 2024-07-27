@@ -1,6 +1,9 @@
 import { columnsLinkedinJob } from "@components/table/columns/columns-linkedin/columns-linkedin-job";
 import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
+import { Button } from "@components/ui/button";
+import { autoApplyLinkedinJob } from "@/actions";
+import ApplyAllJobsButton from "@components/ApplyAllJobsButton";
 
 const LinkedinJobsPage = async () => {
   const jobs = await prisma.linkedinJob.findMany({
@@ -19,7 +22,12 @@ const LinkedinJobsPage = async () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <h1 className="text-4xl font-bold text-blue-700">Linkedin Job Results</h1>
+      <div className="flex flex-col gap-y-10">
+        <h1 className="text-4xl font-bold text-blue-700">
+          Linkedin Job Results
+        </h1>
+        <ApplyAllJobsButton platform="linkedin" allJobs={jobs} />
+      </div>
       <div className="container mx-auto py-10">
         <DataTable
           jobPlatform="linkedinJob"

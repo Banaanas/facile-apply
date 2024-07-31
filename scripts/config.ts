@@ -36,7 +36,7 @@ export const openAiConfig = {
 };
 
 // BEWARE OF MODEL PRICING
-export const gptModel:  ChatModel = "gpt-4o"
+export const gptModel:  ChatModel = "gpt-3.5-turbo"
 
 // GMAIL
 export const gmailConfig = {

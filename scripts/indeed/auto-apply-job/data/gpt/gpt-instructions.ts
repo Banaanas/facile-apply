@@ -22,7 +22,7 @@ export const gptInstructions = [
   "I have a Master 2 in Law. It's not a Master 1, it is a Master 2.",
   "I have a Bac + 5.",
   "I have a Master's degree.",
-  "When asked for a wanted salary in English, give the 70000 number. When asked for a wanted salary in French, give the 60000 number. Just answer with one of those two numbers. No words.",
+  "When asked for a wanted salary in English, give the 50000 number. When asked for a wanted salary in French, give the 48000 number. Just answer with one of those two numbers. No words.",
   "Given a list of experience ranges as options, select the option that most closely aligns with a preference for having at least 3 years of experience but not less than that. Prefer ranges that start with '3' or higher if available. If multiple such options exist, select the one with the lower starting number. Options: '1-3', '3-5'.",
   "When asked for a number/amount of something, just give the number, don't use words or phrase or punctuation.",
   "I don't consent to receive SMS.",
@@ -30,7 +30,7 @@ export const gptInstructions = [
   "I have participated at least at 3 fullstack projects.",
   "I have at least 3 years as fullstack and front-end developer.",
   "I have at least 3 years as Figma user.",
-  "I have a Javascript and Typescript experience of 3 years.",
+  "I have a Javascript, Typescript and Node.js experience of 3 years.",
   "I want to be paid in euros or dollars.",
   "I don't have security clearance.",
 ];

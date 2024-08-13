@@ -136,6 +136,20 @@ export const columnsIndeed: ColumnDef<IndeedJob>[] = [
     cell: ({ row }) => {
       const indeedJob = row.original;
 
+      const { indeedApplyEnabled, link } = indeedJob;
+
+      if (!indeedApplyEnabled)
+        return (
+          <a
+            href={link}
+            className="hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open
+          </a>
+        );
+
       return (
         <Button
           onClick={() => autoApplyIndeedJob(indeedJob.link, indeedJob.id)}

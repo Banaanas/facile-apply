@@ -5,11 +5,21 @@ export const franceUrls: CountryUrls["FR"] = {
   searches: {
     "next-js": {
       query: "next.js",
-      remoteFilter: true,
+      remoteFilter: false,
+    },
+    "next-js-2": {
+      query: "next.js",
+      remoteFilter: false,
+      location: "Rhône-Alpes",
     },
     react: {
       query: "react",
       remoteFilter: true,
+    },
+    "react-2": {
+      query: "react",
+      remoteFilter: false,
+      location: "Rhône-Alpes",
     },
     "integrateur-web": {
       query: "integrateur web",
@@ -18,6 +28,11 @@ export const franceUrls: CountryUrls["FR"] = {
     "developpeur-ui": {
       query: "développeur ui",
       remoteFilter: false,
+    },
+    "developpeur-ui-2": {
+      query: "développeur ui",
+      remoteFilter: false,
+      location: "Rhône-Alpes",
     },
     "developpeur-ux": {
       query: "développeur ux",

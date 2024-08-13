@@ -26,9 +26,20 @@ export const buildSearchUrl = (
   const encodedQuery = encodeURIComponent(query);
 
   let url = `https://${domain}/jobs?q=${encodedQuery}&fromage=${searchRangeDays}`;
+
+  // Include location in the URL if it's provided
+  if (search.location) {
+    const encodedLocation = encodeURIComponent(search.location);
+    url += `&l=${encodedLocation}`;
+  }
+
   if (search.remoteFilter) {
-    const remoteQuery = "remotejob=032b3046-06a3-4876-8dfd-474eb5e7ed11";
-    url += `&${remoteQuery}`;
+    // Applying the filter for "total remote" jobs
+    const totalRemoteQueryParam = "0kf%3Aattr%28DSQF7%29%3B";
+    url += `&sc=${totalRemoteQueryParam}`;
+
+    // Note: This filter is for "total remote" jobs.
+    // If partial remote is needed in the future, replace "DSQF7" with 'PAXZC' or the appropriate code.
   }
 
   return url;

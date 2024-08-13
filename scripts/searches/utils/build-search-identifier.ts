@@ -1,10 +1,10 @@
 export const buildSearchIdentifier = (
-  location: string,
-  keyword: string,
+  domain: string,
+  query: string,
+  location?: string,
+  remoteFilter?: boolean,
 ): string => {
-  // Standardize keyword by replacing spaces with hyphens to ensure URL friendliness and adherence to identifier standards.
-  const formattedKeyword = keyword.replace(/\s/g, "-");
-
-  // Default format assumed to be suitable for Indeed or other platforms
-  return `${location}-${formattedKeyword}`;
+  const locationPart = location ? `_loc_${location.replace(/\s+/g, "_")}` : "";
+  const remotePart = remoteFilter ? "_remote" : "";
+  return `${domain}_${query}${locationPart}${remotePart}`;
 };

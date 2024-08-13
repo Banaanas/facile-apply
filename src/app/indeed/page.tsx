@@ -7,7 +7,7 @@ const IndeedPage = async () => {
   const jobs = await prisma.indeedJob.findMany({
     where: {
       status: "NotReviewed",
-      indeedApplyEnabled: true,
+      //indeedApplyEnabled: false,
     },
   });
 

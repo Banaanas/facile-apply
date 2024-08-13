@@ -10,10 +10,11 @@ export type TransformedScrapedIndeedJob = Omit<IndeedJob, "id">;
 // URL Builder
 export interface Search {
   query: string;
+  location?: string;
   remoteFilter: boolean;
 }
 
-export type Country = "CA" | "CH" | "FR" | "US";
+export type Country = "CH" | "FR";
 
 type CASearchKeys =
   | "front-end"
@@ -26,27 +27,30 @@ type CASearchKeys =
 type CHSearchKeys = "integrateur-web" | "react" | "next-js";
 
 type FRSearchKeys =
-  | "developpeur-ui"
-  | "integrateur-web"
   | "next-js"
+  | "next-js-2"
   | "react"
+  | "react-2"
+  | "integrateur-web"
+  | "developpeur-ui"
+  | "developpeur-ui-2"
   | "developpeur-ux";
 
 type USSearchKeys = "next-js" | "react" | "ui-developer" | "ux-developer";
 
 export type CountryUrls = {
-  US: {
+  /*   US: {
     domain: string;
     searches: {
       [key in USSearchKeys]: Search;
     };
-  };
-  CA: {
+  }; */
+  /*   CA: {
     domain: string;
     searches: {
       [key in CASearchKeys]: Search;
     };
-  };
+  }; */
   CH: {
     domain: string;
     searches: {

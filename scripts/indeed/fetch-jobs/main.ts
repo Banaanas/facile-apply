@@ -37,7 +37,10 @@ const main = async () => {
       const queryIdentifier = buildSearchIdentifier(
         details.domain,
         search.query,
+        search.location,
+        search.remoteFilter,
       );
+
       const searchRangeDays = await calculateDaysRange(queryIdentifier);
 
       await logIndeedJobSearchParams(
@@ -94,7 +97,9 @@ const main = async () => {
     }
   }
 
-  console.log(chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(
+    chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"),
+  );
   await browser.close();
 };
 

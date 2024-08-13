@@ -73,9 +73,11 @@ model IndeedJobSearchMeta {
   identifier   String   @unique
   domain       String
   query        String
+  location     String? // Optional field
+  remoteFilter Boolean  @default(false)
   lastSearchAt DateTime @default(now())
 
-  @@unique([domain, query])
+  @@unique([domain, query, location, remoteFilter])
 }
 
 // Model for Indeed searches

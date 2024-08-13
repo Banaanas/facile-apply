@@ -5,7 +5,7 @@ import { buildSearchIdentifier } from "@/scripts/searches/utils/build-search-ide
 
 const seedLinkedinJobSearchMeta = async () => {
   // RESET TABLE
-  //  await prisma.linkedinJobSearchMeta.deleteMany({});
+  await prisma.linkedinJobSearchMeta.deleteMany({});
 
   // Set the date X days ago
   const twoDaysAgo = new Date();

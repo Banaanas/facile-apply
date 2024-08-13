@@ -130,6 +130,20 @@ export const columnsLinkedinJob: ColumnDef<LinkedinJob>[] = [
     cell: ({ row }) => {
       const linkedinJob = row.original;
 
+      const { easyApply, link } = linkedinJob;
+
+      if (!easyApply)
+        return (
+          <a
+            href={link}
+            className="underline hover:text-gray-400 text-center w-full flex justify-center font-bold"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lien
+          </a>
+        );
+
       return (
         <Button
           onClick={() => autoApplyLinkedinJob(linkedinJob.link, linkedinJob.id)}

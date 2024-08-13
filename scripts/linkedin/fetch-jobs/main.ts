@@ -16,6 +16,7 @@ import {
   skipSearchMessage,
 } from "@/scripts/utils/console/console-messages";
 import { logLinkedinJobSearchParams } from "@/scripts/utils/console/console-messages-linkedin-launch";
+import { WorkplaceType } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
 
 const main = async () => {
   await checkDatabaseConnection();
@@ -23,13 +24,25 @@ const main = async () => {
   fetchingWithMessage(LINKEDIN_CURRENT_PROVIDER);
 
   for (const region in SEARCH_CONFIGURATIONS) {
-    const { geoId, keywords } = SEARCH_CONFIGURATIONS[region];
+    const {
+      geoId,
+      keywords,
+      applyWithLinkedin,
+      workplaceType,
+      lessThan10Candidatures,
+    } = SEARCH_CONFIGURATIONS[region];
+
     for (const keyword of keywords) {
       const queryIdentifier = buildSearchIdentifier(geoId, keyword);
       const timePostedRange = await calculateTimePostedRange(queryIdentifier);
 
-      await logLinkedinJobSearchParams(timePostedRange, queryIdentifier);
-
+      await logLinkedinJobSearchParams(
+        timePostedRange,
+        queryIdentifier,
+        workplaceType,
+        applyWithLinkedin,
+        lessThan10Candidatures,
+      );
       // Check if the search has been performed recently
       const searchAlreadyPerformed =
         await hasSearchBeenPerformedWithinThreshold(
@@ -48,25 +61,40 @@ const main = async () => {
           ),
         );
 
-        await processSearchConfig(geoId, keyword, timePostedRange);
+        await processSearchConfig(
+          geoId,
+          keyword,
+          timePostedRange,
+          applyWithLinkedin,
+          workplaceType,
+          lessThan10Candidatures,
+        );
 
         await updateLastSearchDateLinkedIn(queryIdentifier, geoId, keyword);
       }
     }
   }
 
-  console.log(chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"));
+  console.log(
+    chalk.bgMagentaBright.whiteBright.bold("ALL SEARCHES HAVE BEEN COMPLETED"),
+  );
 };
 
 const processSearchConfig = async (
   geoId: string,
   keyword: string,
   timePostedRange: string,
+  applyWithLinkedin?: boolean,
+  workplaceType?: WorkplaceType,
+  lessThan10Candidatures?: boolean,
 ) => {
   const searchConfig = {
     keywords: keyword,
     geoId,
     timePostedRange,
+    applyWithLinkedin,
+    workplaceType,
+    lessThan10Candidatures,
   };
 
   const searchUrl = await buildSearchRequest(searchConfig);

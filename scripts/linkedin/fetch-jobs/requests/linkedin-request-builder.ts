@@ -3,14 +3,36 @@ import { SearchConfig } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
 // Function to build the query string
 const buildQuery = async (searchConfig: SearchConfig) => {
-  const { keywords, geoId, timePostedRange } = searchConfig;
-  const { sortBy, experience, workplaceType, applyWithLinkedin } =
-    LINKEDIN_JOB_SEARCH_COMMON_PARAMS;
+  const {
+    keywords,
+    geoId,
+    timePostedRange,
+    applyWithLinkedin,
+    workplaceType,
+    lessThan10Candidatures,
+  } = searchConfig;
 
+  const { sortBy, experience } = LINKEDIN_JOB_SEARCH_COMMON_PARAMS;
   const experienceList = experience.map((level) => level).join(",");
-  const workplaceTypeList = [workplaceType].join(",");
 
-  return `(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:${keywords},locationUnion:(geoId:${geoId}),selectedFilters:(sortBy:List(${sortBy}),applyWithLinkedin:List(${applyWithLinkedin}),experience:List(${experienceList}),timePostedRange:List(${timePostedRange}),workplaceType:List(${workplaceTypeList})),spellCorrectionEnabled:true)`;
+  const filters = [
+    `sortBy:List(${sortBy})`,
+    `applyWithLinkedin:List(${applyWithLinkedin})`,
+    `experience:List(${experienceList})`,
+    `timePostedRange:List(${timePostedRange})`,
+  ];
+
+  if (workplaceType) {
+    filters.push(`workplaceType:List(${workplaceType})`);
+  }
+
+  if (lessThan10Candidatures) {
+    filters.push("f_EA=true");
+  }
+
+  return `(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:${keywords},locationUnion:(geoId:${geoId}),selectedFilters:(${filters.join(
+    ",",
+  )}),spellCorrectionEnabled:true)`;
 };
 
 // Function to build the final URL

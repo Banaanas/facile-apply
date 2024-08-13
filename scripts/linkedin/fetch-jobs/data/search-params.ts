@@ -5,8 +5,6 @@ import {
 } from "@/scripts/linkedin/fetch-jobs/data/linkedin-search-enums";
 
 export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
-  applyWithLinkedin: true,
-  earlyApplicant: false,
   experience: [
     ExperienceLevel.Entry,
     ExperienceLevel.Mid,
@@ -17,8 +15,6 @@ export const LINKEDIN_JOB_SEARCH_COMMON_PARAMS: CommonParams = {
 };
 
 interface CommonParams {
-  applyWithLinkedin: boolean;
-  earlyApplicant: boolean;
   experience: Array<ExperienceLevel>;
   sortBy: SortBy;
   workplaceType: WorkplaceType;

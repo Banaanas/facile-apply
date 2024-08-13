@@ -54,6 +54,9 @@ const mapWorkplaceType = (workplaceType: WorkplaceType) => {
 export const logLinkedinJobSearchParams = async (
   timePostedRange: string,
   queryIdentifier: string,
+  workplaceType?: WorkplaceType, // New parameter
+  applyWithLinkedin?: boolean, // New parameter
+  lessThan10Candidatures?: boolean, // New parameter
 ) => {
   const querySearch = await prisma.linkedinJobSearchMeta.findFirst({
     where: {
@@ -61,15 +64,15 @@ export const logLinkedinJobSearchParams = async (
     },
   });
 
-  console.log(
-    chalk.cyan("Initializing search with the following common parameters:"),
-  );
+  console.log(chalk.cyan("Initializing search with the following parameters:"));
 
   console.log(
     chalk.bgBlue(
       chalk.yellow(
         chalk.bold(
-          `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString("fr-FR")}`,
+          `- Last Search Date: ${querySearch?.lastSearchAt.toLocaleDateString(
+            "fr-FR",
+          )}`,
         ),
       ),
     ),
@@ -84,21 +87,30 @@ export const logLinkedinJobSearchParams = async (
   // Log workplace type preference
   console.log(
     chalk.yellow(
-      `- Workplace Type: ${mapWorkplaceType(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
+      `- Workplace Type: ${mapWorkplaceType(workplaceType || LINKEDIN_JOB_SEARCH_COMMON_PARAMS.workplaceType)}`,
     ),
   );
 
   // Log whether applying with LinkedIn is enabled
   console.log(
-    chalk.yellow(
-      `- Apply With LinkedIn: ${LINKEDIN_JOB_SEARCH_COMMON_PARAMS.applyWithLinkedin ? "Yes" : "No"}`,
-    ),
+    chalk.yellow(`- Apply With LinkedIn: ${applyWithLinkedin ? "Yes" : "No"}`),
   );
+
+  // Log whether Less than 10 candidatures is enabled
+  if (lessThan10Candidatures !== undefined) {
+    console.log(
+      chalk.yellow(
+        `- Less than 10 Candidatures: ${lessThan10Candidatures ? "Yes" : "No"}`,
+      ),
+    );
+  }
 
   // Log experience levels
   console.log(
     chalk.yellow(
-      `- Experience Levels: ${mapExperienceLevel(LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience)}`,
+      `- Experience Levels: ${mapExperienceLevel(
+        LINKEDIN_JOB_SEARCH_COMMON_PARAMS.experience,
+      )}`,
     ),
   );
 

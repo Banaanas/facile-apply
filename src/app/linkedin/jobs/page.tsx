@@ -1,8 +1,6 @@
 import { columnsLinkedinJob } from "@components/table/columns/columns-linkedin/columns-linkedin-job";
 import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
-import { Button } from "@components/ui/button";
-import { autoApplyLinkedinJob } from "@/actions";
 import ApplyAllJobsButton from "@components/ApplyAllJobsButton";
 
 const LinkedinJobsPage = async () => {

@@ -15,7 +15,12 @@
     "indeed-jobs": "tsx scripts/indeed/fetch-jobs/main.ts",
     "linkedin-jobs": "tsx scripts/linkedin/fetch-jobs/main.ts",
     "linkedin-posts": "tsx scripts/linkedin/fetch-posts/main.ts",
-    "linkedin-obsolete": "tsx scripts/linkedin/fetch-obsolete-jobs/main.ts"
+    "linkedin-obsolete": "tsx scripts/linkedin/fetch-obsolete-jobs/main.ts",
+    "------------*-----------": "echo 'dummy-script-for-visual-separation'",
+    "run-docker": "bash scripts/bash/run_docker.sh",
+    "run-jobs": "npm run run-docker && npm run indeed-jobs && npm run linkedin-jobs",
+    "run-jobs-and-posts": "npm run run-docker && npm run indeed-jobs && npm run linkedin-jobs && npm run linkedin-posts",
+    "erase-jobs-meta": "tsx ./prisma/seed/seed-indeed-jobsearch-meta.ts && tsx ./prisma/seed/seed-linkedin-jobsearch-meta.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",

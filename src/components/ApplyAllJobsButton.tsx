@@ -5,16 +5,27 @@ import { IndeedJob, LinkedinJob } from "@prisma/client";
 import { Button } from "@components/ui/button";
 
 const ApplyAllJobsButton = ({ allJobs, platform }: ApplyAllJobsButtonProps) => {
+  const applyLinkedinJob = async (job: LinkedinJob) => {
+    if (!job.easyApply) return;
+
+    await autoApplyLinkedinJob(job.link, job.id);
+  };
+
+  const applyIndeedJob = async (job: IndeedJob) => {
+    if (!job.indeedApplyEnabled) return;
+
+    await autoApplyIndeedJob(job.link, job.id);
+  };
+
   const applyAllJobs = async () => {
     for (const job of allJobs) {
       try {
-        if (platform === "linkedin") {
-          await autoApplyLinkedinJob(job.link, job.id);
-        } else if (platform === "indeed") {
-          await autoApplyIndeedJob(job.link, job.id);
+        if (platform === "linkedin" && isLinkedinJob(job)) {
+          await applyLinkedinJob(job);
+        } else if (platform === "indeed" && isIndeedJob(job)) {
+          await applyIndeedJob(job);
         }
         console.log(`Successfully applied to job ${job.id}`);
-        // Optionally, update the job status to "Reviewed" here
       } catch (error) {
         console.error(`Error applying to job ${job.id}:`, error);
       }
@@ -32,10 +43,17 @@ const ApplyAllJobsButton = ({ allJobs, platform }: ApplyAllJobsButtonProps) => {
     </Button>
   );
 };
-
 export default ApplyAllJobsButton;
 
 interface ApplyAllJobsButtonProps {
   allJobs: Array<IndeedJob | LinkedinJob>;
   platform: "linkedin" | "indeed";
 }
+
+const isIndeedJob = (job: IndeedJob | LinkedinJob): job is IndeedJob => {
+  return (job as IndeedJob).indeedApplyEnabled !== undefined;
+};
+
+const isLinkedinJob = (job: IndeedJob | LinkedinJob): job is LinkedinJob => {
+  return (job as LinkedinJob).easyApply !== undefined;
+};

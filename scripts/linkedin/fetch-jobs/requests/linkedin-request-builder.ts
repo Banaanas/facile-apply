@@ -1,6 +1,11 @@
 import { LINKEDIN_JOB_SEARCH_COMMON_PARAMS } from "@/scripts/linkedin/fetch-jobs/data/search-params";
 import { SearchConfig } from "@/scripts/linkedin/fetch-jobs/fetch-jobs.types";
 
+// Note: The final URL is constructed based on the LinkedIn API request format.
+// This URL is not the same as the one you see in the browser's address bar.
+// Instead, it is based on the API requests observed through the developer tools (Network tab).
+
+
 // Function to build the query string
 const buildQuery = async (searchConfig: SearchConfig) => {
   const {
@@ -27,8 +32,9 @@ const buildQuery = async (searchConfig: SearchConfig) => {
   }
 
   if (lessThan10Candidatures) {
-    filters.push("f_EA=true");
+    filters.push("earlyApplicant:List(true)");
   }
+
 
   return `(origin:JOB_SEARCH_PAGE_JOB_FILTER,keywords:${keywords},locationUnion:(geoId:${geoId}),selectedFilters:(${filters.join(
     ",",

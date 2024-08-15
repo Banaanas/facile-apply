@@ -43,7 +43,7 @@ export const columnsLinkedinJob: ColumnDef<LinkedinJob>[] = [
       return (
         <a
           href={linkedinJob.link}
-          className="hover:underline"
+          className="hover:underline text-left flex"
           target="_blank"
           rel="noopener noreferrer"
         >

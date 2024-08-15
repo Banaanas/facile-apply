@@ -36,7 +36,7 @@ const ApplyAllJobsButton = ({ allJobs, platform }: ApplyAllJobsButtonProps) => {
   return (
     <Button
       variant="outline"
-      className="font-bold text-2xl"
+      className="font-bold text-sm md:text-2xl "
       onClick={applyAllJobs}
     >
       Apply all Jobs

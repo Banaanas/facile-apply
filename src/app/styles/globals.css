@@ -70,16 +70,17 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  html {
+    @apply h-full;
   }
 
   body {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
     width: 100%;
+    min-width: 100%;
     min-height: 100%;
     isolation: isolate; /* Create a stacking context without a z-index. This ensures that all portal content (modals and tooltips) will float above the Next app */
   }

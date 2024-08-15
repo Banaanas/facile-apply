@@ -2,6 +2,9 @@ import { columnsLinkedinJob } from "@components/table/columns/columns-linkedin/c
 import { DataTable } from "@components/table/data-table/data-table";
 import { prisma } from "@prisma/db.server";
 import ApplyAllJobsButton from "@components/ApplyAllJobsButton";
+import Main from "@components/Main";
+import { MaxWidthWrapper } from "@components/MaxWidthWrapper";
+import { globalMaxWidth } from "@app/styles/common-styles";
 
 const LinkedinJobsPage = async () => {
   const jobs = await prisma.linkedinJob.findMany({
@@ -19,21 +22,21 @@ const LinkedinJobsPage = async () => {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <div className="flex flex-col gap-y-10">
-        <h1 className="text-4xl font-bold text-blue-700">
-          Linkedin Job Results
-        </h1>
+    <Main>
+      <MaxWidthWrapper
+        maxWidth={globalMaxWidth}
+        className="flex flex-col gap-y-4 items-end"
+      >
         <ApplyAllJobsButton platform="linkedin" allJobs={jobs} />
-      </div>
-      <div className="container mx-auto py-10">
-        <DataTable
-          jobPlatform="linkedinJob"
-          columns={columnsLinkedinJob}
-          data={jobs}
-        />
-      </div>
-    </main>
+        <div className="w-full overflow-x-auto">
+          <DataTable
+            jobPlatform="linkedinJob"
+            columns={columnsLinkedinJob}
+            data={jobs}
+          />
+        </div>
+      </MaxWidthWrapper>
+    </Main>
   );
 };
 

@@ -34,8 +34,6 @@ const SelectedRowsButton = <
   selectedRows: Row<TData>[];
   resetRowSelection: (defaultState?: boolean) => void;
 }) => {
-  console.log(selectedRows);
-
   const handleEditRows = async (newStatusString: string) => {
     const newStatus = newStatusString as JobStatus; // Cast string to JobStatus
 
@@ -82,7 +80,7 @@ const SelectedRowsButton = <
       <DropdownMenuTrigger asChild>
         <Button
           variant="default"
-          className="flex items-center justify-center gap-x-2"
+          className="flex items-center justify-center gap-x-2 w-fit bg-white text-black"
           disabled={isButtonDisable}
         >
           <Edit className="size-4" />
@@ -90,7 +88,7 @@ const SelectedRowsButton = <
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <div className="flex-1 text-sm text-muted-foreground">
+      <div className="bg-red w-fit text-sm text-muted-foreground">
         {selectedRows.length} row(s) selected.
       </div>
       <DropdownMenuContent align="end" className="w-[160px]">

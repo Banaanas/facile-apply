@@ -46,7 +46,7 @@ export const columnsIndeed: ColumnDef<IndeedJob>[] = [
       return (
         <a
           href={indeedJob.link}
-          className="hover:underline"
+          className="hover:underline text-left flex"
           target="_blank"
           rel="noopener noreferrer"
         >

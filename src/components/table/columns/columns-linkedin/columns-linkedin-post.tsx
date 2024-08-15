@@ -9,6 +9,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { autoApplyLinkedinPost } from "@/actions";
 import { Checkbox } from "@/components/ui/checkbox";
+import { extractEmailAddress } from "@lib/utils";
 
 export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
   {
@@ -89,7 +90,7 @@ export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
       return (
         <a
           href={linkedinPost.postUrl}
-          className="hover:underline"
+          className="hover:underline flex text-left"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -129,6 +130,10 @@ export const columnsLinkedinPost: ColumnDef<LinkedinPost>[] = [
     id: "applyButton",
     cell: ({ row }) => {
       const linkedinPost = row.original;
+
+      const emailTo = extractEmailAddress(linkedinPost.summary);
+
+      if (!emailTo) return;
 
       return (
         <Button onClick={() => autoApplyLinkedinPost(linkedinPost)}>

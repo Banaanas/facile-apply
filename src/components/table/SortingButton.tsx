@@ -14,6 +14,7 @@ const SortingButton = ({
   return (
     <Button
       variant="ghost"
+      className="items-center justify-center font-bold uppercase"
       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
     >
       {children}

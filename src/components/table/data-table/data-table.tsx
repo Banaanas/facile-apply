@@ -22,7 +22,6 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { XIcon as CrossIcon } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -41,6 +40,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { IndeedJob, LinkedinJob, LinkedinPost } from "@prisma/client";
+import { X as CrossIcon } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -123,71 +123,74 @@ export const DataTable = <
   const facetFilters = jobPlatformFilters[jobPlatform];
 
   return (
-    <div className="rounded-md border">
-      <SelectedRowsButton
-        jobPlatform={jobPlatform}
-        selectedRows={table.getFilteredSelectedRowModel().rows}
-        resetRowSelection={resetRowSelection}
-      />
-      <div className="flex items-center p-4">
-        {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (
-          <Input
-            placeholder="Filter title..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-        ) : null}
-        <div className="flex flex-wrap px-2">
-          {facetFilters.map(({ columnId, title, options }) =>
-            table.getColumn(columnId) ? (
-              <DataTableFacetedFilter
-                key={columnId}
-                column={table.getColumn(columnId)}
-                title={title}
-                options={options}
-              />
-            ) : null,
-          )}
-        </div>
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <CrossIcon className="ml-2 size-4" />
-          </Button>
-        )}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
+    <div className="rounded-md border bg-white ">
+      <div className="bg-blue-200 p-4 flex flex-col justify-center gap-y-2 ">
+        <SelectedRowsButton
+          jobPlatform={jobPlatform}
+          selectedRows={table.getFilteredSelectedRowModel().rows}
+          resetRowSelection={resetRowSelection}
+        />
+        <div className="flex items-center gap-x-2 p-4">
+          {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (
+            <Input
+              placeholder="Filter title..."
+              value={
+                (table.getColumn("title")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("title")?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
+          ) : null}
+          <div className="flex flex-wrap px-2">
+            {facetFilters.map(({ columnId, title, options }) =>
+              table.getColumn(columnId) ? (
+                <DataTableFacetedFilter
+                  key={columnId}
+                  column={table.getColumn(columnId)}
+                  title={title}
+                  options={options}
+                />
+              ) : null,
+            )}
+          </div>
+          {isFiltered && (
+            <Button
+              variant="ghost"
+              onClick={() => table.resetColumnFilters()}
+              className="h-8 p-2 bg-white"
+            >
+              <CrossIcon className="size-4" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <Table>
         <TableHeader>
@@ -224,7 +227,10 @@ export const DataTable = <
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell
+                colSpan={columns.length}
+                className="h-24 text-center font-bold italic"
+              >
                 No results.
               </TableCell>
             </TableRow>

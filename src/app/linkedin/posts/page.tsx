@@ -19,7 +19,6 @@ const LinkedinPostsPage = async () => {
         maxWidth={globalMaxWidth}
         className="flex flex-col gap-y-4 items-end"
       >
-        <ApplyAllJobsButton platform="linkedin" allJobs={jobs} />
         <div className="w-full overflow-x-auto">
           <DataTable
             jobPlatform="linkedinPost"

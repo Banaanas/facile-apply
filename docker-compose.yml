@@ -1,14 +1,17 @@
 version: "3.9"
 services:
-  postgres:
+  postgres-db:
     image: postgres:16-alpine
+    container_name: facile-apply-postgres-db
     restart: on-failure
     env_file:
       - database.env
     ports:
       - "5434:5432"
     volumes:
-      - indeed_apply_data:/var/lib/postgresql/data
+      - facile-apply_data:/var/lib/postgresql/data
 
 volumes:
-  indeed_apply_data:
+  facile-apply_data:
+    external: true
+    name: facile-apply_data

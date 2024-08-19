@@ -142,6 +142,17 @@ export const DataTable = <
               }
               className="max-w-sm"
             />
+          ) : null}          {jobPlatform === "indeed" || jobPlatform === "linkedinJob" ? (
+            <Input
+              placeholder="Filter company..."
+              value={
+                (table.getColumn("company")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("company")?.setFilterValue(event.target.value)
+              }
+              className="max-w-sm"
+            />
           ) : null}
           <div className="flex flex-wrap px-2">
             {facetFilters.map(({ columnId, title, options }) =>

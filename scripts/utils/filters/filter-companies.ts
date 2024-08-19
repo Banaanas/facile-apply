@@ -1,6 +1,7 @@
 export const filtersCompanies = [
   "Crossover",
   "CyberCoders",
+  "Hiremee",
   "Jobot",
   "Job Zapper",
   "Luxoft",

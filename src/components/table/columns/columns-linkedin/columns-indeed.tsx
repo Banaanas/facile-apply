@@ -142,7 +142,7 @@ export const columnsIndeed: ColumnDef<IndeedJob>[] = [
         return (
           <a
             href={link}
-            className="hover:underline"
+            className="underline hover:no-underline"
             target="_blank"
             rel="noopener noreferrer"
           >

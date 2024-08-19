@@ -7,10 +7,10 @@ export const usUrls: CountryUrls["US"] = {
       query: "next.js",
       remoteFilter: true,
     },
-    react: {
+/*     react: {
       query: "react",
       remoteFilter: true,
-    },
+    }, */
     "ui-developer": {
       query: "Ui Developer",
       remoteFilter: true,

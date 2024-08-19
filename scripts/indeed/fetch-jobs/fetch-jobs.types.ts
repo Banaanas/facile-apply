@@ -36,15 +36,15 @@ type FRSearchKeys =
   | "developpeur-ui-2"
   | "developpeur-ux";
 
-type USSearchKeys = "next-js" | "react" | "ui-developer" | "ux-developer";
+type USSearchKeys = "next-js" | "ui-developer" | "ux-developer";
 
 export type CountryUrls = {
-  /*   US: {
+  US: {
     domain: string;
     searches: {
       [key in USSearchKeys]: Search;
     };
-  }; */
+  };
   /*   CA: {
     domain: string;
     searches: {

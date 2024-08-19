@@ -8,5 +8,5 @@ export const countryUrls: CountryUrls = {
   // CA: canadaUrls,
   CH: switzerlandUrls,
   FR: franceUrls,
-  // US: usUrls,
+  US: usUrls,
 };

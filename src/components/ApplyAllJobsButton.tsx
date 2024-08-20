@@ -22,7 +22,9 @@ const ApplyAllJobsButton = ({ allJobs, platform }: ApplyAllJobsButtonProps) => {
       try {
         if (platform === "linkedin" && isLinkedinJob(job)) {
           await applyLinkedinJob(job);
-        } else if (platform === "indeed" && isIndeedJob(job)) {
+        }
+
+        if (platform === "indeed" && isIndeedJob(job)) {
           await applyIndeedJob(job);
         }
         console.log(`Successfully applied to job ${job.id}`);

@@ -86,7 +86,7 @@ const DataTableRowActions = <TData,>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="flex size-8 p-0 data-[state=open]:bg-muted"
+          className="flex justify-center items-center size-8 p-0 data-[state=open]:bg-muted"
         >
           <Edit className="size-4" />
           <span className="sr-only">Open menu</span>

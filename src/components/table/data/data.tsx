@@ -39,22 +39,22 @@ export const countries = [
 
 export const indeedApplyEnableOptions = [
   {
-    value: "true",
+    value: true,
     label: "Enabled",
   },
   {
-    value: "false",
+    value: false,
     label: "Not Enabled",
   },
 ];
 
 export const linkedinEasyApplyOptions = [
   {
-    value: "true",
+    value: true,
     label: "Enabled",
   },
   {
-    value: "false",
+    value: false,
     label: "Not Enabled",
   },
 ];

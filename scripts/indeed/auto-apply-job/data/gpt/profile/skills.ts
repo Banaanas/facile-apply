@@ -42,6 +42,7 @@ export const cyrilSkills = [
   "MongoDB",
   "MySQL",
   "PostgreSQL",
+  "Prisma",
   "SQLite",
   "Supabase",
 

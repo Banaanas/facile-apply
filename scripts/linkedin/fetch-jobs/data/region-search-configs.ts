@@ -30,14 +30,14 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
   },
   USA: {
     geoId: "103644278",
-    keywords: ["next.js", "react"],
+    keywords: ["next.js"],
     workplaceType: WorkplaceType.Remote,
     applyWithLinkedin: false,
     lessThan10Candidatures: true,
   },
   Canada: {
     geoId: "101174742",
-    keywords: ["next.js", "react"],
+    keywords: ["next.js"],
     workplaceType: WorkplaceType.Remote,
     applyWithLinkedin: false,
     lessThan10Candidatures: true,

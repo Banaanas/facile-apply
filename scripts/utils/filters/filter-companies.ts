@@ -7,6 +7,7 @@ export const filtersCompanies = [
   "Luxoft",
   "Noir",
   "Publidata",
+  "Recruter.tn,",
   "RemoteYeah",
   "Ucaya",
 ];

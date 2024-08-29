@@ -1,23 +1,17 @@
+// SVG copy-pasted from https://catamphetamine.gitlab.io/country-flag-icons/3x2/
+
 const FlagCH = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
+      viewBox="0 85.333 513 342"
       height="32"
-      viewBox="0 0 32 32"
     >
-      <rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#c93927" />
+      <path fill="red" d="M0 85.337h513v342H0z" />
       <path
-        d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z"
-        opacity=".15"
+        fill="#FFF"
+        d="M356.174 222.609h-66.783v-66.783h-66.782v66.783h-66.783v66.782h66.783v66.783h66.782v-66.783h66.783z"
       />
-      <path
-        d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z"
-        fill="#fff"
-        opacity=".2"
-      />
-      <path fill="#fff" d="M14 10H18V22H14z" />
-      <path transform="rotate(90 16 16)" fill="#fff" d="M14 10H18V22H14z" />
     </svg>
   );
 };

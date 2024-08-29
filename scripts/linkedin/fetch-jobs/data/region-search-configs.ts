@@ -12,7 +12,7 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
     geoId: "101018157",
     keywords: ["next.js", "react", "developpeur UI", "intégrateur Web"],
     applyWithLinkedin: false,
-    lessThan10Candidatures: true,
+    lessThan10Candidatures: false,
   },
   Europe: {
     geoId: "91000000",
@@ -42,6 +42,36 @@ export const SEARCH_CONFIGURATIONS: SearchConfigurations = {
     applyWithLinkedin: false,
     lessThan10Candidatures: true,
   },
+
+  Denmark: {
+    geoId: "104514075",
+    keywords: ["next.js", "react"],
+    workplaceType: WorkplaceType.Remote,
+    applyWithLinkedin: false,
+    lessThan10Candidatures: true,
+  },
+  Finland: {
+    geoId: "100456013",
+    keywords: ["next.js", "react"],
+    workplaceType: WorkplaceType.Remote,
+    applyWithLinkedin: false,
+    lessThan10Candidatures: true,
+  },
+  Netherlands: {
+    geoId: "102890719",
+    keywords: ["next.js", "react"],
+    workplaceType: WorkplaceType.Remote,
+    applyWithLinkedin: false,
+    lessThan10Candidatures: true,
+  },
+  Sweden: {
+    geoId: "105117694",
+    keywords: ["next.js", "react"],
+    workplaceType: WorkplaceType.Remote,
+    applyWithLinkedin: false,
+    lessThan10Candidatures: true,
+  },
+
   /*   World: {
     geoId: "92000000",
     keywords: ["React Developer", "UI developer", "UX developer"],

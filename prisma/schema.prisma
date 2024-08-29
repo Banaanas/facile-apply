@@ -26,6 +26,12 @@ enum CountryCode {
   CH
   FR
   US
+
+  DK
+  FI
+  NL
+  NO
+  SE
 }
 
 enum JobStatus {

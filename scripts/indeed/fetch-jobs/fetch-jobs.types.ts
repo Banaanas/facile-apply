@@ -38,6 +38,8 @@ type FRSearchKeys =
 
 type USSearchKeys = "next-js" | "ui-developer" | "ux-developer";
 
+type GenericSearchKeys = "react" | "next-js";
+
 export type CountryUrls = {
   US: {
     domain: string;
@@ -61,6 +63,16 @@ export type CountryUrls = {
     domain: string;
     searches: {
       [key in FRSearchKeys]: Search;
+    };
+  };
+} & OtherCountryUrls<"DK" | "FI" | "NL" | "NO" | "SE">;
+
+// Define a generic type for other countries (e.g., European countries)
+export type OtherCountryUrls<C extends string> = {
+  [key in C]: {
+    domain: string;
+    searches: {
+      [key in GenericSearchKeys]: Search;
     };
   };
 };

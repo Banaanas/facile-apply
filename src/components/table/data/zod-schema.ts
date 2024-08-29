@@ -1,6 +1,16 @@
 import { z } from "zod";
 
-const CountryCodeEnum = z.enum(["CA", "CH", "FR", "US"]); // Example values
+const CountryCodeEnum = z.enum([
+  "CA",
+  "CH",
+  "FR",
+  "US",
+  "DK",
+  "FI",
+  "NL",
+  "NO",
+  "SE",
+]); // Example values
 const JobStatusEnum = z.enum(["Applied", "Ignored", "NotReviewed"]); // Example values
 const PostStatusEnum = z.enum(["Applied", "Ignored", "NotReviewed"]); // Example values
 

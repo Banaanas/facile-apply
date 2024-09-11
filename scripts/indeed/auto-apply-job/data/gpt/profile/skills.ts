@@ -37,6 +37,12 @@ export const cyrilSkills = [
   "Node.js",
   "Node",
 
+  // Testing
+  "Cypress",
+  "Jest",
+  "Playwright",
+  "Selenium",
+
   // Databases
   "Firebase",
   "MongoDB",
@@ -108,5 +114,5 @@ export const noCyrilSkills = [
   "Swift",
   "VMware",
   "Vue",
-  "Web3"
+  "Web3",
 ];

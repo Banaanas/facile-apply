@@ -7,6 +7,7 @@ export const filtersCompanies = [
   "Jobot",
   "Job Zapper",
   "Jooble",
+  "Lumenalta",
   "Luxoft",
   "Noir",
   "Publidata",

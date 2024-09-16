@@ -41,18 +41,19 @@ type USSearchKeys = "next-js" | "ui-developer" | "ux-developer";
 type GenericSearchKeys = "react" | "next-js";
 
 export type CountryUrls = {
-  US: {
-    domain: string;
-    searches: {
-      [key in USSearchKeys]: Search;
-    };
+  /*
+US: {
+  domain: string;
+  searches: {
+    [key in USSearchKeys]: Search;
   };
-  /*   CA: {
-    domain: string;
-    searches: {
-      [key in CASearchKeys]: Search;
-    };
-  }; */
+};
+CA: {
+  domain: string;
+  searches: {
+    [key in CASearchKeys]: Search;
+  };
+}; */
   CH: {
     domain: string;
     searches: {

@@ -5,6 +5,7 @@ export const filtersCompanies = [
   "Exadel",
   "Fresher",
   "Hiremee",
+  "Hirespace",
   "Jobot",
   "Job Zapper",
   "Jooble",
@@ -15,4 +16,5 @@ export const filtersCompanies = [
   "Recruter.tn",
   "RemoteYeah",
   "Ucaya",
+  "Upcloud",
 ];

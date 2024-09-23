@@ -10,7 +10,10 @@ export const filterLinkedinJobResults = (
   return jobResults.filter((jobResult) => {
     const titleLowercase = jobResult.title.toLowerCase();
     const locationLowercase = jobResult.location.toLowerCase();
-    const companyLowercase = jobResult.company.toLowerCase();
+    // Remove any text in parentheses from the company name for comparison
+    const companyLowercase = jobResult.company
+      .toLowerCase()
+      .replace(/\s*\(.*?\)\s*/g, "");
 
     const hasLanguageInTitle = filterLanguages.some((language) =>
       titleLowercase.includes(language.toLowerCase()),

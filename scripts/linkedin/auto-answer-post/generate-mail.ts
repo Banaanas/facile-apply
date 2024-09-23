@@ -13,17 +13,20 @@ const getMailInstructions = (): string => {
   return `You are assisting in responding to LinkedIn posts. Based on the content provided, detect its language and generate a response structured as a JSON object with 'subject' and 'content' fields. The response should be in the same language as the post.
 
 The email response should:
-1. Begin with a polite greeting (e.g., 'Hi').
+1. Begin with a polite greeting (e.g., 'Hi') in bold.
 2. Follow with a concise 'subject' for the email that serves as a title.
 3. In the 'content', include an HTML-formatted snippet with the following structure:
-   - Start with a paragraph discussing the sender's genuine interest and relevant qualifications based on their actual professional background. **Do not invent experiences or skills**.
-   - Use the following brief overview of the sender's professional background to guide the response: ${profileSummary}.
-   - Follow this with a separate paragraph specifically stating to review the attached CV and to visit the sender's portfolio at ${cyrilPersonalInfo.websites.portfolio}.
-   - Mention that the sender is located in France but works very efficiently remotely, so location is not an issue.
+   - Start with a short paragraph explaining that the sender saw the post on LinkedIn and expressing interest. **Do not invent experiences or skills**.
+   - In the next paragraph, use the following brief message:
+“I’m Cyril, a French Developer with expertise in Next.js and React. I’m good at building performant and elegant applications and would be happy to collaborate with your company. Bonus: I’m a cool and reliable guy to work with.🌟”
+   - Follow this with a separate paragraph specifically stating: 
+  "Feel free to take a look at my CV and explore my portfolio at ${cyrilPersonalInfo.websites.portfolio.replace(/\\/g, '\\\\')}."
+   - As a final paragraph, add “I run my own freelance business and work remotely under a B2B contract, so there’s no administrative complexity — just smooth collaboration.”
 4. Ensure that the salutation (e.g., 'Best regards') is formatted in bold on a new line, followed by the sender's first name (Cyril) in bold on another new line. Place only one line break between the last content paragraph and the salutation.
 
 Format the 'content' using appropriate HTML tags like <p>, <strong>, and <br> to structure it properly. Avoid including any personal contact details such as email or location in the content.`;
 };
+
 export const generateEmailResponse = async (
   postSummary: string,
 ): Promise<{ emailSubject: string; emailContent: string; emailTo: string }> => {

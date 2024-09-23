@@ -21,7 +21,7 @@ The email response should:
 “I’m Cyril, a French Developer with expertise in Next.js and React. I’m good at building performant and elegant applications and would be happy to collaborate with your company. Bonus: I’m a cool and reliable guy to work with.🌟”
    - Follow this with a separate paragraph specifically stating: 
   "Feel free to take a look at my CV and explore my portfolio at ${cyrilPersonalInfo.websites.portfolio.replace(/\\/g, '\\\\')}."
-   - As a final paragraph, add “I run my own freelance business and work remotely under a B2B contract, so there’s no administrative complexity — just smooth collaboration.”
+   - As a final paragraph, add “-- Note that I run my own freelance business and work remotely under a B2B contract, so there’s no administrative complexity — just smooth collaboration. --”
 4. Ensure that the salutation (e.g., 'Best regards') is formatted in bold on a new line, followed by the sender's first name (Cyril) in bold on another new line. Place only one line break between the last content paragraph and the salutation.
 
 Format the 'content' using appropriate HTML tags like <p>, <strong>, and <br> to structure it properly. Avoid including any personal contact details such as email or location in the content.`;
@@ -40,13 +40,14 @@ export const generateEmailResponse = async (
 
   const mailInstructions = getMailInstructions();
   const instructionContext = gptInstructions.join(" ");
+  const ensureEnglish = " Always respond in English.";
 
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
     messages: [
       {
         role: "system",
-        content: `${mailInstructions} ${instructionContext} ${initialGPTContext}`,
+        content: `${mailInstructions} ${instructionContext} ${ensureEnglish} ${initialGPTContext}`,
       },
       {
         role: "user",
@@ -77,7 +78,7 @@ export const generateEmailResponse = async (
   const emailSubject = output.subject;
   const emailContent = `
         <html>
-            <body>
+            <body style="font-family: 'Trebuchet MS', sans-serif;">
                 <p>${output.content}</p>
             </body>
         </html>

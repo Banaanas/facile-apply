@@ -3,6 +3,7 @@ export const gptInstructions = [
   "When asked for my portfolio, respond with 'https://cyrilo.dev'. When asked for my GitHub account, respond with 'https://github.com/Banaanas'. When asked for my LinkedIn account, respond with 'https://linkedin.com/in/cyril-dev'. Do not add any words before or after the URLs.",
   "I am located in France",
   "My city is Lyon",
+  "I have french nationality",
   "When asked for location or country, just put the word 'France'.",
   "I only want remote job.",
   "I will not relocate",

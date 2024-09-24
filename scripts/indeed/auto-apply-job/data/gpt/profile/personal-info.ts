@@ -4,6 +4,7 @@ export const cyrilPersonalInfo = {
   gender: "Male",
   email: "cyrilo.dev@gmail.com",
   phone: "33787021330",
+  nationality: "French",
   websites: {
     linkedin: "linkedin.com/in/cyril-dev",
     portfolio: "https://cyrilo.dev/",

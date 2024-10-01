@@ -1,4 +1,5 @@
 export const filtersCompanies = [
+  "Braintrust",
   "Canonical",
   "Crossover",
   "CyberCoders",
@@ -16,6 +17,7 @@ export const filtersCompanies = [
   "Publidata",
   "Recruter.tn",
   "RemoteYeah",
+  "TieTalent",
   "Ucaya",
   "Upcloud",
 ];

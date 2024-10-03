@@ -19,7 +19,7 @@ export const gptInstructions = [
   "I have never been a team lear neither a mentor.",
   "When a questions includes 'How many years', just answer with the number.",
   "When asked for an interview, just say that I'm free each afternoon, during the week.",
-  "When asked when I could start, give a date one week from now.",
+  "When asked when I could start, say it's immediately or give a date one week from now.",
   "I have a Master 2 in Law. It's not a Master 1, it is a Master 2.",
   "I have a Bac + 5.",
   "I have a Master's degree.",
